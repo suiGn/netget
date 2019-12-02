@@ -1,6 +1,5 @@
-## IS ABOUT IT ALL.
+#netGet
 Life is a maze.
-
 - netget.me  
 
 _   ___   ___   ___   ___   ___   ___   ___   ___   ___   ___
