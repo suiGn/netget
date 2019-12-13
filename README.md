@@ -1,16 +1,4 @@
 # NEURONS ART AND TECHNOLOGY
- _________
-|  _____  |\
-| |\ ___| | \
-| | |   | | |
-| | |___| | |
-\ | |____\| |
- \|_________|   
- 
-
- READ ME!!!
- 
- # NEURONS ART AND TECHNOLOGY
 
  
                                    _______
