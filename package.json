@@ -1,0 +1,38 @@
+{
+  "name": "natsynapses",
+  "version": "0.1.0",
+  "description": "the Synapses",
+  "engines": {
+    "node": "10.x"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "bufferutil": "4.0.1",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "express-validator": "^5.3.1",
+    "node-uuid": "^1.4.8",
+    "pg": "^7.9.0",
+    "utf-8-validate": "5.0.2",
+    "ws": "6.2.1"
+  },
+  "devDependencies": {
+    "request": "^2.81.0",
+    "tape": "^4.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suiGn/netget"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
+}

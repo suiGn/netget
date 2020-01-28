@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--  This site was created in Webflow. http://www.webflow.com  -->
+<!--  Last Published: Mon Apr 22 2019 15:55:05 GMT+0000 (UTC)  -->
+<html data-wf-page="5cbdc332ef4522126b929060" data-wf-site="5ca985147177dc87e3d2f4c6">
+<head>
+  <meta charset="utf-8">
+  <title>Commands-sheat</title>
+  <meta content="Incredible is a template, that combines a minimal modern design with the right amount of features to help you create an outstanding web for your business in no time." name="description">
+  <meta content="Commands-sheat" property="og:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  
+   <% include ../../partials/header.ejs %>
+   
+</head>
+<body class="natbody">
+	
+   <% include ../../partials/nav.ejs %>
+   
+  <div class="w-row">
+    <div class="w-col w-col-3">
+      <h1 class="heading-25">Menu:</h1>
+      <ul>
+        <% include ../../partials/codemmandsmenu.ejs %>
+      </ul>
+    </div>
+    <div class="column-12 w-col w-col-9">
+      <h1 class="heading-26">Heroku</h1>
+	  <div class="text-block-18">I don't really love Heroku but it solves my problems.</div>
+	  <div style="margin-bottom: 55px;" id="spacer"></div>
+	  
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//Heroku Commands</h1>
+        <a href="https://devcenter.heroku.com/articles/heroku-cli-commands" style="text-decoration: none;"><p class="paragraph-8">Click here for the official: Heroku CLI Commands</p></a>
+      </div>
+	  
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//Heroku Exec is a feature for creating secure TCP and SSH tunnels into a dyno. It allows for SSH sessions, port forwarding, remote debugging, and inspection with popular Java diagnostic tools.</h1>
+        <p class="paragraph-8">
+			heroku ps:exec 
+		</p>
+      </div>
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//Add a custom root domain
+Root domains must be added in addition to any subdomains. The process for adding root domains is the same in the Heroku CLI:</h1>
+        <p class="paragraph-8">
+			heroku domains:add example.com -a app
+		</p>
+      </div>
+	  
+	  
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//list who has access to an app</h1>
+        <p class="paragraph-8">$ heroku access</p>
+      </div>
+	  
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//If you want to deploy your apps in a much faster way so that you dont have to be doing the git add and commit and then push to master, use this python script, place it on your root directory and then just run the script: python deploy.py to deploy everything successfully with just one command, it will even ask for a commit name.</br>
+			 Save it as deploy.py</h1>
+        <p class="paragraph-8">import os</br>
+			# save the answer to a variable</br>
+			commit_name = raw_input("Commit Name: ")</br>
+			os.system("git add .")</br>
+			os.system("git commit -m \""+ commit_name + "\"")</br>
+			os.system("git push heroku master")</br>
+			os.system("heroku open")</p>
+      </div>
+	  
+	  
+	 
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//To add a custom domain with a subdomain, use the domains:</h1>
+        <p class="paragraph-8">heroku domains:add www.example.com</p>
+		<p class="comments">After you add a domain with the heroku domains:add command, you need to point your DNS provider at the DNS target provided by Heroku. You can view this DNS target with the heroku domains command</p>
+      </div>
+	  
+	  
+     
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+    </div>
+  </div>
+  <div class="footer-cheatsheet">
+    <h1 class="heading-27">Code-CheatSheet</h1>
+  </div>
+  <script src="https://d1tdp7z6w94jbb.cloudfront.net/js/jquery-3.3.1.min.js" type="text/javascript" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+</body>
+</html>

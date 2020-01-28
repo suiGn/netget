@@ -1,0 +1,7 @@
+{
+  "name": "Natsynapses",
+  "description": "It used to be that, now is not.",
+  "repository": "https://github.com/suiGn/netget",
+  "keywords": ["node", "express", "heroku", "netGet"],
+  "image": "heroku/nodejs"
+}
