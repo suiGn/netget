@@ -1,11 +1,11 @@
 {
-  "name": "natsynapses",
+  "name": "netget",
   "version": "0.1.0",
   "description": "the Synapses",
   "engines": {
     "node": "10.x"
   },
-  "main": "index.js",
+  "main": "netGet_index.js",
   "scripts": {
     "start": "node index.js",
     "test": "node test.js"

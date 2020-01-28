@@ -1,76 +1,24 @@
-# NEURONS ART AND TECHNOLOGY
+# netGet : Get it from the Net.
 
+net get: (Origin latin: rete posside-bit OR rete adepto)
+The Right Adepto.
+
+
+  Net | Definition of Net by Merriam-Webster
+  
+- b
+ 1: something made of net: such as
+ (1): a device for catching fish, birds, or insects
  
-                                   _______
-                            _,,ad7777777777bba,_
-                         ,ad77777I777777777777777ba,
-                       ,77777777I77777777777777777777a,
-                     ,d777777777I7777777777777777777777b,
-                    d77777PP"""" ""YY77777777777777777777b,
-                  ,d77"'__,,--------,,,,.;ZZZY7777777777777,
-                 ,7IIl'"                ;;l"ZZZIII7777777777,
-                ,I77l;'                  ;lZZZZZ777III7777777,
-              ,II77Zl;.                  ;llZZZZZ777777I777777,
-             ,II777Zl;.                .;;;;;lllZZZ777777I7777b
-            ,II7777Z;;                 `;;;;;''llZZ7777777I7777,
-            II77777Z;'                        .;lZZZ7777777I777b
-            II77777Z; _,aaa,      .,aaaaa,__.l;llZZZ77777777I777
-            II77777IZZZZZZZZZ,  .ZZZZZZZZZZZZZZ;llZZ77777777I777,
-            II77777IZZ<'(())>Z|  |ZZZ<'())>ZZZZ;;llZZ777777777I77I
-           ,II77777;   `""" ;|  |ZZ; `"""     ;;llZ7777777777I777
-           II777777l            `;;          .;llZZ7777777777I777,
-          ,II777777Z;           ;;;        .;;llZZZ7777777777I777I
-          III777777Zl;    ..,   `;;       ,;;lllZZZ77777777777I777
-          II77777777Z;;...;(_    _)      ,;;;llZZZZ77777777777I777,
-          II77777777Zl;;;;;' `--'Z;.   .,;;;;llZZZZ77777777777I777b
-          ]I777777777Z;;;;'   ";llllll;..;;;lllZZZZ77777777777I7777,
-          II777777777Zl.;;"Y770--777P";;,..;lllZZZZZ77777777777I7777I
-          II7777777777Zl;.; `"aaa";;;,..;lllZZZZZZZ77777777777I77777
-          II777777777777Zl;;. `;;;l;;;;lllZZZZZZZZW77777777777I77777
-          `II7777777777777Zl;.    ,;;lllZZZZZZZZWMZ77777777777I77777
-           II7777777777777777ZbaalllZZZZZZZZZWWMZZZ7777777777I777777,
-           `II77777777777777777b"WWZZZZZWWWMMZZZZZZI777777777I777777b
-            `II77777777777777777;ZZMMMMMMZZZZZZZZllI777777777I7777777
-             `II7777777777777777 `;lZZZZZZZZZZZlllll777777777I7777777,
-              II7777777777777777, `;lllZZZZllllll;;.Y77777777I7777777b,
-             ,II7777777777777777b   .;;lllllll;;;.;..77777777I77777777b,
-             II777777777777777PZI;.  .`;;;.;;;..; ...77777777I7777777777,
-             II777777777777PZ;;';;.   ;. .;.  .;. .. Y7777777I77777777777b,
-            ,II777777777PZ;;'                        `7777777I7777777777777b,
-            II777777777'                              777777I7777777777777777b
-           ,II777777777                              ,777777I77777777777777777
-          ,d77777777777                              d777777I7777777777ZZZZZZZ
-       ,ad777777777777I                              7777777I7777ZZZZZZZZZZZZZ
-     ,d777777777777777'                              777777IZZZZZZZZZZZZZZZZZZ
-   ,d777777777777P'7P'                               Y777ZZZZZZZZZZZZZZZZZZZZZ
-  ,7777777777777,  "                                 ,ZZZZZZZZZZZZZZZZZZZZZZZZ
- d777777777777777,                                ,ZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-
-
-
-
-## CODED BY SUI GENERIS
-
-         _______
-        |.-----.|
-        ||0 . 0||
-        ||_[-]_||
-        `--)-(--`
-       __[===++]___
-      |------------|
-									 _      xxxx      _
-									/_;-.__ / _\  _.-;_\
-									   `-._`'`_/'`.-'
-									       `\   /`
-									        |  /
-									       /-.(
-									       \_._\
-									        \ \`;
-									         > |/
-									        / //
-									        |//
-									        \(\
-									         ``
-		
-			
-			
+ 2: something resembling a net in reticulation (as of lines, fibers, or figures)
+ 
+ the net of global communication
+ … the systemic net of restrictions …
+ — John Edgar Wideman
+ 
+ 
+ 3: to cover with or as if with a network
+ 
+ 4: excluding all nonessential considerations : BASIC, FINAL
+ the net result
+ 
