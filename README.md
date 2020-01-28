@@ -22,3 +22,11 @@ The Right Adepto.
  4: excluding all nonessential considerations : BASIC, FINAL
  the net result
  
+ Get | Definition of Net by Merriam-Webster
+ 
+ 5a: to cause to come or go
+ b: to cause to move
+ 11a: to find out by calculation
+ b: to reach or enter into a certain condition
+ 3a: to be able
+ 3a: to seek out and obtain
