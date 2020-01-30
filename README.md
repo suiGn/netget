@@ -1,6 +1,7 @@
 # netGet : Get it from the Net.
 
 net get: (Origin latin: rete posside-bit OR rete adepto)
+
 The Right Adepto.
 
 
