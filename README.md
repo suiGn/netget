@@ -34,3 +34,5 @@ The Right Adepto.
 
 
 Commits as explicit as possible some for the sake of doing commits.
+
+Commiting to daily Commits.
