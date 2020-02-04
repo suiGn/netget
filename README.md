@@ -31,3 +31,6 @@ The Right Adepto.
  b: to reach or enter into a certain condition
  3a: to be able
  3a: to seek out and obtain
+
+
+Commits as explicit as possible some for the sakes of doing commits.
