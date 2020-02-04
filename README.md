@@ -33,4 +33,4 @@ The Right Adepto.
  3a: to seek out and obtain
 
 
-Commits as explicit as possible some for the sakes of doing commits.
+Commits as explicit as possible some for the sake of doing commits.
