@@ -1,7 +1,7 @@
 {
-  "name": "natsynapses",
+  "name": "netGet",
   "version": "0.1.0",
-  "description": "the Synapses",
+  "description": "netGet",
   "engines": {
     "node": "10.x"
   },
