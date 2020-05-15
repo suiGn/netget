@@ -1,4 +1,5 @@
 # NETGET
+ON PAUSE
 netGet : Get it from the Net.
 (Origin latin: rete posside-bit OR rete adepto)
 
