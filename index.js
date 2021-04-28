@@ -1,8 +1,4 @@
-/** SERVER APP: NATSYNAPSES **
-  _  _     ___    _____    ___   __   __  _  _     ___    ___    ___    ___     ___
- | \| |   /   \  |_   _|  / __|  \ \ / / | \| |   /   \  | _ \  / __|  | __|   / __|  
- | .` |   | - |    | |    \__ \   \ V /  | .` |   | - |  |  _/  \__ \  | _|    \__ \  
- |_|\_|   |_|_|    |_|    |___/    |_|   |_|\_|   |_|_|  |_|_   |___/  |___|   |___/  
+/** SERVER APP: netget **
 *** CODED BY SUI GENERIS NEURONS ART & TECHNOLOGY ****/
 
 //Module dependencies
@@ -32,7 +28,6 @@ module.exports = app;
 	app.use(express.static(path.join(__dirname, 'public')))
 	app.set('views', path.join(__dirname, 'views'))
 	app.set('view engine', 'ejs')
-
 		//ROUTING
 		app.get('/', routes.home);
 	   /*
@@ -42,14 +37,10 @@ module.exports = app;
 	    '  `'  '     '     ' '   
 	   	ROBOTS SECTION */
 		app.get('/robots.txt', routes.welcomeRobots);
-		
-		
-		
 		//Developement Purposes
 		app.get('/cool', function (req, res) {
 		  res.send('cool is working!');
 		});	
-		
 		//CODEMMANDS SECTION
 		app.get('/codemmands', routes.codemmands);
 		app.get('/cs-postgresql', routes.csPostgresql);
@@ -58,9 +49,7 @@ module.exports = app;
 		app.get('/cs-metasploit', routes.csMetasploit);
 		app.get('/cs-netcat', routes.csNetcat);
 		app.get('/client-information-javascript', routes.viaJs);
-		
-		
-		
+
 		// Route not found (404)
 		app.use(function(req, res, next) {
 		  return res.status(404).render('pages/404')
@@ -86,7 +75,7 @@ module.exports = app;
     | |       Tech        | |  |
     | |                   | |  |
     | |         On:${PORT}     |
-    | |        natsynapses| | ,|
+    | |        netget	  | | ,|
     | !___________________! |(c|
     !_______________________!__!
     |    ___ -=      ___ -= | ,|
