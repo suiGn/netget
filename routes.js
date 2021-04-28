@@ -14,7 +14,6 @@ BY NEURONS ART AND TECHNOLOGY.
 
 //NATSYNAPSES ROUTES
 exports.home = function(req, res){res.render('pages/index')};
-exports.cleaker = function(req, res){res.render('pages/cleaker')};
 /*
  ,_   _,  __   _,  ___,_, 
  |_) / \,'|_) / \,' | (_, 

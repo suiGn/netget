@@ -35,7 +35,6 @@ module.exports = app;
 
 		//ROUTING
 		app.get('/', routes.home);
-		app.get('/cleaker', routes.cleaker);
 	   /*
 	    ,_   _,  __   _,  ___,_, 
 	    |_) / \,'|_) / \,' | (_, 
