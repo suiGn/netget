@@ -60,11 +60,6 @@ module.exports = app;
 		  return res.status(500).send({ error: err });
 		});
 						
-
-		
-
- 
- 
  app.listen(PORT, () => console.log(`    
 	 .__________________________.
     | .___________________. |==|
