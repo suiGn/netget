@@ -1,5 +1,6 @@
 # NETGET
-ON PAUSE
+
+
 netGet : Get it from the Net.
 (Origin latin: rete posside-bit OR rete adepto)
 
@@ -23,6 +24,8 @@ Get | Definition of Net by Merriam-Webster
 Commits as explicit as possible some for the sake of doing commits.
 
 Commiting to daily Commits.
+
+
 
 
 			
