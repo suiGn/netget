@@ -1,6 +1,0 @@
-QUE LLEGA PRIMERO
-La coneccion del cliente
-la coneccion del servidor
-
-Primero recibe el mensaje el servidor.
-Ese mensaje lo procesa el servidor y responde.

@@ -1,7 +1,0 @@
-{
-  "name": "netGet",
-  "description": "The Right Adepto.",
-  "repository": "https://github.com/suiGn/netget",
-  "keywords": ["node", "express", "heroku", "netGet"],
-  "image": "heroku/nodejs"
-}
