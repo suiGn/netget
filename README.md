@@ -1,12 +1,8 @@
 # netget
 mLearning - Lisa
 
-There is no use in server / client communication model.
-Monads are both server && client.
-Everything else are just modules.
-
-We will be using netget as our communication protocol module but
-then again everything can be used.
+NetGet communication protocol module.
+Cleaker id protocol.
 
 Technologies used:
 - websockets
