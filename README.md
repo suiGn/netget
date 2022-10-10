@@ -1,8 +1,12 @@
 # netget
 mLearning - Lisa
 
-NetGet communication protocol module.
-Cleaker id protocol.
+netGet Protocol usage and examples.
+
+netGet installable:
+host = ws.netget.me;
+
+
 
 Technologies used:
 - websockets
