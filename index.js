@@ -1,43 +1,34 @@
-const http = require('http');
-class Netget {
-  constructor(host, port, protocol) {
-    this.host = host;
-    this.port = port;
-    this.protocol = protocol;
-    this.server = null; // We'll store our server instance here
-  }
+// index.js
+const express = require('express');
+const axios = require('axios');  // Remember to install it.
+const { registerWithRegistry } = require('./lib/networkManager');
 
-  listen() {
-    switch (this.protocol) {
-      case 'http':
-        // Create and listen on an HTTP server
-        this.server = http.createServer((req, res) => {
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'text/plain');
-          res.end('Hello, World!\n');
-        });
-        this.server.listen(this.port, this.host, () => {
-          console.log(`HTTP server listening at http://${this.host}:${this.port}`);
-        });
-        break;
-      case 'ssh':
-        // Create and listen on an SSH server
-        // ...
-        break;
-      // More cases for other protocols...
-      default:
-        throw new Error(`Unsupported protocol: ${this.protocol}`);
+const app = express();
+const PORT = process.env.PORT || 3000;
+const REGISTRY_URL = 'https://registry.netget.me'; // Placeholder for your registry
+
+// Define a basic route
+app.get('/', (req, res) => {
+    res.send('Welcome to netget service node!');
+});
+
+app.get('/discover/:nodeName', async (req, res) => {
+    // Use a placeholder in-memory store for simplicity
+    const nodes = {
+        YourNodeName: 'http://localhost:3000',
+        // ... other nodes ...
+    };
+
+    const nodeAddress = nodes[req.params.nodeName];
+    if (nodeAddress) {
+        res.json({ address: nodeAddress });
+    } else {
+        res.status(404).json({ error: 'Node not found' });
     }
-  }
+});
 
-  close() {
-    // Close the server
-    if (this.server) {
-      this.server.close(() => {
-        console.log('Server has been closed');
-      });
-    }
-  }
-}
+app.listen(PORT, () => {
+    console.log(`Service node started on http://localhost:${PORT}`);
+    registerWithRegistry(REGISTRY_URL, PORT);  // Pass required parameters to the function.
+});
 
-module.exports = Netget;
