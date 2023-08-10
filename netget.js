@@ -8,6 +8,19 @@ class Netget {
         // Additional properties as needed...
     }
 
+    start() {
+        if (this.nodeType === 'service') {
+            this.initializeAsServiceNode();
+            this.registerWithNetwork();
+            // Any other logic specific to starting a service node
+        } else if (this.nodeType === 'registry') {
+            // Initialization logic for a registry node
+            // For instance: this.initializeAsRegistryNode();
+        } else {
+            throw new Error(`Unsupported node type: ${this.nodeType}`);
+        }
+    }
+
     // Service Node Initialization
     initializeAsServiceNode() {
         // Handle the process of setting up as a service node
