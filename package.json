@@ -1,10 +1,10 @@
 {
     "name": "netget",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "description": "Rette Adepto/ Recibido Directamente.",
-    "main": "index.js",
+    "main": "netget.js",
     "scripts": {
-        "start": "node index.js",
+        "start": "node netget.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
