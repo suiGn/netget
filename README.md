@@ -23,7 +23,6 @@ constructor(options = {}) {
 The node can be classified as either a 'service' node or a 'registry' node. Metadata contains information about the node, and the network determines which environment the node belongs to (e.g., 'development', 'production').
 
 ### 2. Registry Node Management:
-
 These methods allow the system to keep track of registry nodes. If `Netget` is initialized as a service node, it will use these registry nodes to register itself.
 
 ```js
@@ -161,8 +160,6 @@ In essence, `Netget` acts as a facilitator for nodes in a network. If a new serv
 
 This modular design ensures that `Netget` remains separate from the application logic. Whether the end application uses Express, Next.js, or any other framework, `Netget` can be easily integrated to manage networking tasks, ensuring that application developers can focus on building their application without worrying about the complexities of the network layer.
 
-
-
 Enhance netget to support the concept of registry nodes and service nodes.
 Service nodes, when initialized, use netget to register with the network.
 netget handles the process of finding registry nodes, validating the service node, and updating its status.
@@ -171,7 +168,6 @@ Additionally, netget can provide methods for service discovery, where clients ca
 ### netget Architecture & Features:
 
 Service Node Initialization:
-
 netget will provide a simple API that allows any node to initialize itself as a service node.
 During initialization, the service node will specify its metadata, including service details, preferred network (e.g., development, production, custom), and other information.
 Registry Node Management:
@@ -203,3 +199,36 @@ Node Health & Monitoring:
 netget could have built-in features to periodically check the health of registered nodes.
 If a node is found to be offline or unresponsive, it could be temporarily removed from the active nodes list.
 
+# THIS Sandbox DEMO Playground
+Welcome to the THIS.ME Playground, where the entire THIS.ME suite comes together with NEURONS.ME to provide a rich development and execution environment for your AI adventures.
+## Quick Start
+### 1. Clone the Repository
+```bash
+git clone https://github.com/suiGn/.me.git
+```
+### 2. Navigate to the Project Directory
+```bash
+cd .me
+```
+### 3. Install Dependencies
+You can use either Yarn or npm to install the necessary dependencies.
+Using Yarn:
+```bash
+yarn install 
+```
+Using npm:
+```bash
+npm install
+```
+### 4. Launch the Application
+```
+npx electron index.js
+```
+## Contributing
+If you have suggestions or issues, please open an issue. We encourage contributions from the community.
+## License & Policies
+- **License**: MIT License (see LICENSE for details).
+- **Privacy Policy**: Respects user privacy; no collection/storage of personal data.
+- **Terms of Usage**: Use responsibly. No guarantees/warranties provided. [Terms](https://www.neurons.me/terms-of-use) | [Privacy](https://www.neurons.me/privacy-policy)
+
+<img src="./_._.svg" alt="SVG Image" width="69" height="69" style="width69px; height:69px;">

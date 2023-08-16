@@ -1,6 +1,6 @@
 {
     "name": "netget",
-    "version": "2.2.3",
+    "version": "2.2.5",
     "description": "Rette Adepto/ Recibido Directamente.",
     "main": "netget.js",
     "scripts": {
