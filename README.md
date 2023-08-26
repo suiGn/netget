@@ -8,7 +8,6 @@ npm i netget
 ```
 
 ### 1. Initialization:
-
 When a node (be it service or registry) is created, the constructor will gather details about the node.
 
 ```js
@@ -36,7 +35,6 @@ removeRegistryNode(node) {
 ```
 
 ### 3. Service Registration:
-
 When a node wants to register itself as a service node, the `registerWithNetwork` method communicates with the registry nodes to do so.
 
 ```js
@@ -47,7 +45,6 @@ registerWithNetwork() {
 ```
 
 ### 4. Service Discovery:
-
 This function allows other services or clients to discover and retrieve details of a specific service node.
 
 ```js
@@ -58,11 +55,9 @@ discoverServiceNode(serviceName) {
 ```
 
 ### 5. Decentralization:
-
-If needed, `Netget` can manage a distributed list of nodes and sync them. This would likely involve more advanced methods, such as using a Distributed Hash Table (DHT) or a decentralized protocol.
+`Netget` can manage a distributed list of nodes and sync them. Using a Distributed Hash Table (DHT) or a decentralized protocol.
 
 ### 6. Security & Validation:
-
 Security is vital. The module will have private methods (prefixed with `_` for convention) to ensure communications are secure and validate node authenticity during registration.
 
 ```js
@@ -72,11 +67,9 @@ _validateNode() {
 ```
 
 ### 7. Network Management:
-
 The `network` property determines the environment the node belongs to. This allows for separation and management of different networks.
 
 ### 8. Node Health & Monitoring:
-
 A private method can periodically check the health status of nodes. This ensures that all nodes in the network are active and responsive.
 
 ```js
