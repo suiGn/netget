@@ -1,6 +1,8 @@
-<img src="./_._.svg" alt="SVG Image" width="123" height="123" style="width123px; height:123px;">
+<img src="./src/_._.svg" alt="SVG Image" width="123" height="123" style="width123px; height:123px;">
 
 # The Netget Protocol
+
+This README file provides a clear overview of the protocol, its features, how to use it, and considerations for security and scalability, while leaving room for further details and modifications according to your actual implementation and requirements.
 
 The Netget Protocol is designed to facilitate real-time communication between **web clients and servers using a handshaker** mechanism. It enables seamless and secure information exchanges and can be readily integrated into any domain.
 
@@ -12,80 +14,83 @@ Netget is available as an npm package:
 npm i netget
 ```
 
-https://netget.me
-
 ## Features
-- **Versatile Handshaker**: Easily embeddable script that can be added to various websites to establish WebSocket connections.
+
+- **Versatile Handshaker**: Easily embed the script to any domain. The handshaker script can be embedded into any HTML or React application. It automatically establishes a WebSocket connection to the specified server endpoint upon loading.
+
 - **Domain Pointing**: The handshaker relies on communication to a specified domain, allowing for dynamic endpoint determination.
+
 - **Conditional Filtering**: Utilizes advanced filtering to perform checks like authentication before proceeding, ensuring secure and condition-based communications.
+
 - **Real-Time Communication**: Leverages WebSocket technology for bi-directional, real-time interaction between clients and servers.
 
-## Usage
+## Usage - QuickStart:
 
-### Embedding the Handshaker
+**The handshaker** script can be **embedded into any HTML**. It automatically establishes a WebSocket connection to the specified server endpoint upon loading.
 
-The handshaker script can be embedded into any HTML or React application. It automatically establishes a WebSocket connection to the specified server endpoint upon loading.
-
-```
-htmlCopy code
-<script src="path-to-netget-handshaker.js"></script>
+```html
+<script src="/path-to-your-netget-protocol"></script>
 ```
 
-### Specifying Server Endpoint
+## Embedding the Handshaker with a CDN-like URL.
+
+```js
+<script src="https://suign.github.io/netget/netget.js"></script>
+```
+
+## Specifying Server Endpoint
 
 Determine the server endpoint to which the WebSocket connection should be established.
 
-```
-javascriptCopy code
+```js
 const serverEndpoint = 'ws://your-websocket-server-endpoint';
 const socket = new WebSocket(serverEndpoint);
 ```
 
-### Handling Messages
+## Handling Messages
 
 Implement handling for incoming and outgoing messages based on user interactions or other events on the client side.
 
-This README file provides a clear overview of the protocol, its features, how to use it, and considerations for security and scalability, while leaving room for further details and modifications according to your actual implementation and requirements.
+## Initialization:
 
-### 1. Initialization:
-
-When a node (be it service or registry) is created, the constructor will gather details about the node.
+When a node is created, the constructor will gather details about the node.
 
 ```js
 constructor(options = {}) {
     this.nodeType = options.nodeType || 'service'; // 'service' or 'registry'
     this.metadata = options.metadata || {};
-    this.network = options.network || 'development';
+    this.domain = options.domain || 'domain';
+  	this.network = options.network;
+  	this.host = options.host || 'host';
     this.registryNodes = new Set(options.registryNodes || []);
 }
 ```
 
-The node can be classified as either a 'service' node or a 'registry' node. Metadata contains information about the node, and the network determines which environment the node belongs to (e.g., 'development', 'production').
+The node can be classified as either a **'service'** node or a **'registry'** node. **Metadata** contains information **about the node**, the **domain** determines which environment **the node belongs to**, the **host** is **who** the node is.
 
-### 2. Registry Node Management:
-These methods allow the system to keep track of registry nodes. If `Netget` is initialized as a service node, it will use these registry nodes to register itself.
+## Registry Node Management:
+These methods allow the system to keep track of registry nodes. `Netget`  will use these registry nodes to register itself.
 
 ```js
 addRegistryNode(node) {
     this.registryNodes.add(node);
 }
-
 removeRegistryNode(node) {
     this.registryNodes.delete(node);
 }
 ```
 
-### 3. Service Registration:
-When a node wants to register itself as a service node, the `registerWithNetwork` method communicates with the registry nodes to do so.
+## - Service Registration:
+When a node wants to register `WithNetwork` method communicates with the registry nodes to do so.
 
 ```js
 registerWithNetwork() {
-    // Communicate with registry nodes to register this node.
+    // Communicate to register this node.
     // Send necessary details like metadata, IP address, etc.
 }
 ```
 
-### 4. Service Discovery:
+## - Service Discovery:
 This function allows other services or clients to discover and retrieve details of a specific service node.
 
 ```js
@@ -95,11 +100,8 @@ discoverServiceNode(serviceName) {
 }
 ```
 
-### 5. Decentralization:
-`Netget` can manage a distributed list of nodes and sync them. Using a Distributed Hash Table (DHT) or a decentralized protocol.
-
-### 6. Security & Validation:
-Security is vital. The module will have private methods (prefixed with `_` for convention) to ensure communications are secure and validate node authenticity during registration.
+## - Security & Validation:
+Private methods (prefixed with `_` for convention) to ensure communications are secure and validate node authenticity during registration.
 
 ```js
 _validateNode() {
@@ -107,10 +109,7 @@ _validateNode() {
 }
 ```
 
-### 7. Network Management:
-The `network` property determines the environment the node belongs to. This allows for separation and management of different networks.
-
-### 8. Node Health & Monitoring:
+## Node Health & Monitoring:
 A private method can periodically check the health status of nodes. This ensures that all nodes in the network are active and responsive.
 
 ```js
@@ -122,9 +121,9 @@ _checkNodeHealth() {
 
 ------
 
-The classification of a node as either a 'service' node or a 'registry' node dictates its primary responsibilities and functionalities within the `Netget` framework. Let's break down each type of node:
+The classification of a node as either a **'service' node or a 'registry'** node dictates its primary responsibilities and functionalities within the `Netget` framework. Let's break down each type of node:
 
-### Service Node:
+# Service Node:
 
 A **Service Node** is essentially a participant in the network that provides a specific functionality or service. This could be anything from a database service, an API endpoint, a web application, or any other service that other nodes or clients might want to interact with.
 
@@ -151,7 +150,7 @@ const node = new Netget({
 node.registerWithNetwork();
 ```
 
-### Registry Node:
+# Registry Node:
 
 A **Registry Node** serves as a directory or lookup service for the network. It maintains a list of all Service Nodes, allowing clients or other nodes to discover and communicate with any Service Node they need.
 
@@ -201,11 +200,9 @@ Additionally, netget can provide methods for service discovery, where clients ca
 
 # netget Architecture & Features.
 
-
-
 ### Service Node Initialization:
 
-netget will provide a simple API that allows any node to initialize itself as a service node.
+netget  provides a simple API that allows any node to initialize itself as a service node.
 During initialization, the service node will specify its metadata, including service details, preferred network (e.g., development, production, custom), and other information.
 Registry Node Management:
 
@@ -235,6 +232,10 @@ Node Health & Monitoring:
 
 **netget** could have built-in features to periodically check the health of registered nodes.
 If a node is found to be offline or unresponsive, it could be temporarily removed from the active nodes list.
+
+## Decentralization:
+
+`Netget` can manage a distributed list of nodes and sync them. Using a Distributed Hash Table (DHT) or a decentralized protocol.
 
 ## Security Considerations
 
