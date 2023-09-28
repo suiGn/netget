@@ -1,6 +1,6 @@
 <img src="./_._.svg" alt="SVG Image" width="123" height="123" style="width123px; height:123px;">
 
-# Netget Protocol
+# The Netget Protocol
 
 The Netget Protocol is designed to facilitate real-time communication between **web clients and servers using a handshaker** mechanism. It enables seamless and secure information exchanges and can be readily integrated into any domain.
 
