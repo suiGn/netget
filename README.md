@@ -2,11 +2,9 @@
 
 # The Netget Protocol
 
-This README file provides a clear overview of the protocol, its features, how to use it, and considerations for security and scalability, while leaving room for further details and modifications according to your actual implementation and requirements.
+The Netget Protocol is designed to facilitate real-time communication between **web nodes using a handshaker** mechanism. It enables seamless and secure information exchanges and can be readily integrated into any domain.
 
-The Netget Protocol is designed to facilitate real-time communication between **web clients and servers using a handshaker** mechanism. It enables seamless and secure information exchanges and can be readily integrated into any domain.
-
-## Installation
+## Installation:
 
 Netget is available as an npm package:
 
@@ -14,59 +12,28 @@ Netget is available as an npm package:
 npm i netget
 ```
 
-## Features
+## Features:
 
-- **Versatile Handshaker**: Easily embed the script to any domain. The handshaker script can be embedded into any HTML or React application. It automatically establishes a WebSocket connection to the specified server endpoint upon loading.
-
+- **Versatile Handshaker**: Easily embed the script to any domain. The handshaker script can be embedded into any HTML application. It automatically establishes a WebSocket connection to the specified server endpoint upon loading.
 - **Domain Pointing**: The handshaker relies on communication to a specified domain, allowing for dynamic endpoint determination.
-
 - **Conditional Filtering**: Utilizes advanced filtering to perform checks like authentication before proceeding, ensuring secure and condition-based communications.
-
 - **Real-Time Communication**: Leverages WebSocket technology for bi-directional, real-time interaction between clients and servers.
 
-## Usage - QuickStart:
-
+## QuickStart:
 **The handshaker** script can be **embedded into any HTML**. It automatically establishes a WebSocket connection to the specified server endpoint upon loading.
 
 ```html
-<script src="/path-to-your-netget-protocol"></script>
+<script src="/path-to-netget-protocol"></script>
 ```
 
-## Embedding the Handshaker with a CDN-like URL.
-
+## Embedding with a CDN:
 ```js
 <script src="https://suign.github.io/netget/netget.js"></script>
 ```
 
-## Specifying Server Endpoint
-
-Determine the server endpoint to which the WebSocket connection should be established.
-
-```js
-const serverEndpoint = 'ws://your-websocket-server-endpoint';
-const socket = new WebSocket(serverEndpoint);
-```
-
+## ServerEndpoint:
 ## Handling Messages
-
 Implement handling for incoming and outgoing messages based on user interactions or other events on the client side.
-
-## Initialization:
-
-When a node is created, the constructor will gather details about the node.
-
-```js
-constructor(options = {}) {
-    this.nodeType = options.nodeType || 'service'; // 'service' or 'registry'
-    this.metadata = options.metadata || {};
-    this.domain = options.domain || 'domain';
-  	this.network = options.network;
-  	this.host = options.host || 'host';
-    this.registryNodes = new Set(options.registryNodes || []);
-}
-```
-
-The node can be classified as either a **'service'** node or a **'registry'** node. **Metadata** contains information **about the node**, the **domain** determines which environment **the node belongs to**, the **host** is **who** the node is.
 
 ## Registry Node Management:
 These methods allow the system to keep track of registry nodes. `Netget`  will use these registry nodes to register itself.
@@ -82,7 +49,6 @@ removeRegistryNode(node) {
 
 ## - Service Registration:
 When a node wants to register `WithNetwork` method communicates with the registry nodes to do so.
-
 ```js
 registerWithNetwork() {
     // Communicate to register this node.
@@ -92,7 +58,6 @@ registerWithNetwork() {
 
 ## - Service Discovery:
 This function allows other services or clients to discover and retrieve details of a specific service node.
-
 ```js
 discoverServiceNode(serviceName) {
     // Contact registry nodes to find the service node by name.
@@ -102,7 +67,6 @@ discoverServiceNode(serviceName) {
 
 ## - Security & Validation:
 Private methods (prefixed with `_` for convention) to ensure communications are secure and validate node authenticity during registration.
-
 ```js
 _validateNode() {
     // Logic to validate a node's authenticity during registration

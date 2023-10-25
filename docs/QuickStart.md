@@ -6,12 +6,11 @@ Here's an example where we use predefined constants as defaults, and the user ha
 
 ```js
 class Netget {
-    constructor(options = {}) {
-        // Auto-detect or use predefined defaults
-        this.serverEndpoint = options.serverEndpoint || 'ws://default-websocket-server-endpoint';
-        this.domain = options.domain || 'default-domain';
-        this.type = options.type || 'Service'; // Default type is Service if not provided
-        
+  constructor(options = {}) {
+  //Auto-detect or use predefined defaults
+    		this.serverEndpoint = options.serverEndpoint || 'ws://default-websocket-server-endpoint';
+    	  this.domain = options.domain || 'default-domain';
+        this.type = options.type || 'Service'; //Default Service if not provided
         // Create WebSocket connection
         this.socket = new WebSocket(this.serverEndpoint);
         
