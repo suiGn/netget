@@ -10,8 +10,6 @@
     "keywords": [
         "netget"
     ],
-    "author": "Sui Gn",
-    "license": "MIT License",
     "repository": {
         "type": "git",
         "url": "https://github.com/suiGn/netget"
@@ -28,5 +26,7 @@
         "docdash": "^2.0.2",
         "taffydb": "^2.7.3"
     },
+    "author": "Sui Gn",
+    "license": "MIT License",
     "repoType": "NPM Package"
 }
