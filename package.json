@@ -10,14 +10,9 @@
     "keywords": [
         "netget"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/suiGn/netget"
-    },
     "bugs": {
         "url": "https://github.com/suiGn/netget/issues"
     },
-    "homepage": "https://github.com/suiGn/netget#readme",
     "dependencies": {
         "axios": "^1.4.0",
         "dotenv": "^16.3.1",
@@ -26,6 +21,12 @@
         "docdash": "^2.0.2",
         "taffydb": "^2.7.3"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/suiGn/netget.git"
+      },
+    "homepage": "https://www.npmjs.com/package/netget",
+    "docs": "https://suiGn.github.io/netget",
     "author": "Sui Gn",
     "license": "MIT License",
     "repoType": "NPM Package"
