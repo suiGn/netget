@@ -1,0 +1,7 @@
+{
+    "name": "DefaultDomains",
+    "domains": {
+        "cleaker.me": "cleakerHandler",
+        "neurons.me": "neuronsHandler"
+    }
+}

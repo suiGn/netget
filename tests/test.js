@@ -1,8 +1,8 @@
-// Load the mLearning module
-const netget = require('../index');
+import Gateway from '../src/Gateway.js';
+// Configura aquí la ruta al archivo de configuración de dominios si es necesario
+const gateway = new Gateway({
+    port: 3000,
+    domainsConfigPath: './config/domains.json'
+});
 
-// Test the functionality of the waves method
-netget.listen(3000);
-
-// Test the functionality of the lastUsed utility
-netget.connect('localhost', 3000);
+gateway.listen();

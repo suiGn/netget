@@ -2,29 +2,35 @@
     "name": "netget",
     "version": "2.2.7",
     "description": "Rette Adepto/ Recibido Directamente.",
-    "main": "netget.js",
+    "type": "module",
+    "main": "index.js",
     "scripts": {
-        "start": "node netget.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "doc": "jsdoc -c jsdoc.json"
     },
     "keywords": [
-        "netget"
+        "netget",
+        "gateway",
+        "networking",
+        "express-middleware",
+        "dynamic-routing",
+        "service-mesh",
+        "api-gateway",
+        "local-development",
+        "modular-network",
+        "nodejs"
     ],
     "bugs": {
         "url": "https://github.com/suiGn/netget/issues"
     },
     "dependencies": {
-        "axios": "^1.4.0",
-        "dotenv": "^16.3.1",
-        "express": "^4.18.2",
-        "better-docs": "^2.7.2",
-        "docdash": "^2.0.2",
-        "taffydb": "^2.7.3"
+        "morgan": "^1.10.0"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/suiGn/netget.git"
-      },
+    },
     "homepage": "https://www.npmjs.com/package/netget",
     "docs": "https://suiGn.github.io/netget",
     "author": "Sui Gn",
