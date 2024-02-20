@@ -2,9 +2,11 @@
 
 # NetGet
 
-**NetGet** is a modular gateway framework designed for Node.js applications. It provides a flexible routing mechanism to create and manage digital domains in a networked environment.
+# Unleash the Cyberspace Within
 
-It acts as a dynamic **gateway** to direct internet traffic to various local services based on domain names. It is particularly useful in environments where multiple services or applications must be accessible through a single entry point, commonly known as a **reverse proxy setup.**
+**NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. This **modular gateway framework,** designed for Node.js applications, acts as a dynamic conduit, **directing internet traffic to local services** with unparalleled ease. Inspired by the vast digital landscapes of cyberpunk lore, NetGet empowers developers to manage and expand their digital footprints without the complexities traditionally associated with network configurations.
+
+Visit [netget.me](https://netget.me)
 
 ## Installation
 
@@ -14,30 +16,14 @@ Install NetGet via npm:
 npm install netget
 ```
 
-### Scalable Web Services
-
-In a microservices architecture, **NetGet can route requests to different services** within your infrastructure, making it an ideal solution for developers looking to scale their applications horizontally. Each service can have its own domain, and **NetGet** will ensure that requests are forwarded to the correct service.
-
-### Development and Testing
-
-During the development phase, NetGet can be employed to simulate a production environment where multiple domains point to different local services. This allows developers to test domain-based routing without the need to deploy to a live server.
-
-### Personal Hosting Solutions
-
-For personal web hosting, **NetGet** provides an **easy-to-set-up gateway** for routing traffic to various self-hosted applications. Users with several web applications running on a home server can use NetGet to manage access to these applications through different domains.
-
 ## Usage
 
 Import NetGet in your Node.js application:
 
 ```js
 import { Gateway } from 'netget';
-// Configure your gateway instance
-const gateway = new Gateway({
-  port: 3000,
-  domainsConfigPath: './config/domains.json'
-});
-// Start the gateway
+// Initialize and configure your Gateway
+const gateway = new Gateway();
 gateway.listen();
 ```
 
@@ -57,6 +43,20 @@ NetGet relies on a `domains.json` file for routing configuration, structured as 
 
 Each domain key maps to a handler module that exports a function to handle requests for that domain.
 
+By default, NetGet searches for a `domains.json` configuration in the `./config` directory, streamlining the setup process.
+
+
+
+**NetGet** is particularly useful in environments where multiple services or applications must be accessible through a single entry point, commonly known as a **reverse proxy setup.**
+
+### Scalable Web Services
+
+In a microservices architecture, **NetGet can route requests to different services** within your infrastructure, making it an ideal solution for developers looking to scale their applications horizontally. Each service can have its own domain, and **NetGet** will ensure that requests are forwarded to the correct service.
+
+### Personal Hosting Solutions
+
+For personal web hosting, **NetGet** provides an **easy-to-set-up gateway** for routing traffic to various self-hosted applications. Users with several web applications running on a home server can use **NetGet** to manage access to these applications through different domains.
+
 ### Secure Access Control
 
 Combined with authentication layers, NetGet can control access to various parts of a web infrastructure, ensuring that only authorized users can access specific services.
@@ -69,7 +69,7 @@ With NetGet, the complexity of setting up a domain routing system is abstracted 
 
 NetGet can be extended to include load balancing capabilities, distributing incoming requests across multiple instances of a service to balance the load and improve performance.
 
-By using NetGet, developers and system administrators can create a more organized and efficient network topology, where the flow of requests is handled systematically, aligning with the concept of futuristic control and management of digital spaces as depicted in cyberpunk narratives.
+By using **NetGet,** developers and system administrators can create a more organized and efficient network topology, where the flow of requests is handled systematically, aligning with the concept of futuristic control and management of digital spaces.
 
 ------
 

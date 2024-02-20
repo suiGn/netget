@@ -54,10 +54,23 @@
         }
 
         h1 {
-            color: #ff6347; /* #ff6347 */
+            color: #ff6347; /* Tomato */
             text-shadow: 3.5px 3.5px 0 #333;
             font-size: 1.6rem;
             line-height: 2.5rem;
+        }
+
+        .action-button {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #333;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px auto;
+            cursor: pointer;
         }
 
         @media (max-width: 768px) {
@@ -71,7 +84,8 @@
 <body>
     <div class="container">
         <h1><%= title %></h1>
-        Welcome to the NetGet.
+        Welcome to the NetGet Gateway.
+        <a href="/domainList" class="action-button">View Domain List</a>
     </div>
 </body>
 </html>

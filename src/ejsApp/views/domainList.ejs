@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Configuration List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #0a0a0a;
+            color: #00ff00;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 600px; /* Adjust based on your preference */
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #005500;
+        }
+        th, td {
+            padding: 8px; /* Reduced padding */
+            text-align: left;
+            font-size: 0.8rem; /* Smaller font size */
+        }
+        th {
+            background-color: #003300;
+            color: #00ff00;
+        }
+        tr:nth-child(even) {
+            background-color: #001100;
+        }
+        h1 {
+            color: #00ff00;
+            text-align: center;
+            font-size: 1.2rem; /* Adjusted for compactness */
+        }
+        .action-button {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #333;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px auto;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1rem;
+            }
+            th, td {
+                font-size: 0.7rem; /* Even smaller font size for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Domain Configuration List</h1>
+        <table>
+            <tr>
+                <th>Domain Name</th>
+                <th>Handler</th>
+            </tr>
+            <% for(const domain in domains) { %>
+                <tr>
+                    <td><%= domain %></td>
+                    <td><%= domains[domain] %></td>
+                </tr>
+            <% } %>
+        </table>
+        <button class="action-button">Add Domain</button>
+        <a href="/" class="action-button">Go Back</a>
+    </div>
+</body>
+</html>
