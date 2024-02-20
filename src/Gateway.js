@@ -9,6 +9,7 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
+import morgan from 'morgan';
 
 /**
  * Represents a gateway server with customizable settings.
@@ -32,10 +33,16 @@ class Gateway {
      * Asynchronously initializes the server, setting up static file serving, view engine, and domain routing.
      */
     async initialize() {
-        this.app.use(express.static(path.join(this.domainsConfigPath, '..', 'public')));
-        this.app.set('view engine', 'ejs');
-        this.app.set('views', path.join(this.domainsConfigPath, '..', 'views'));
-
+        // Calculate the base directory for the gateway, assuming the gateway class is in 'src'
+         const baseDir = path.dirname(fileURLToPath(import.meta.url));
+         this.app.use(express.static(path.join(baseDir, 'ejsApp', 'public')));
+         this.app.set('view engine', 'ejs');
+         this.app.set('views', path.join(baseDir, 'ejsApp', 'views'));
+         this.app.use(morgan('dev')); // 'dev' is a predefined format string in Morgan
+         // Define a route handler for the root path to render the index.ejs view
+         this.app.get('/', (req, res) => {
+            res.render('index', { title: 'Gateway Initiated.' });
+        });
         await this.loadDomainConfig();
     }
 

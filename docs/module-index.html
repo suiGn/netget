@@ -5,7 +5,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet Home</title>
+  <title>NetGet index</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -118,92 +118,99 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Module</p>
+                    <h1>index</h1>
                 </header>
                 
 
 
 
+
+<section>
+
+<header>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Entry point of the application.
+It exports all NetGet tools.</div>
+        
+
+        
+
+
+<dl class="details">
+
     
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
+    
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line1">line 1</a>
+            </span>
+        </p>
+    
+</dl>
 
 
+        
+    
+    </div>
+    
+    
 
-    <section>
-        <article><img src="./netget.png" alt="SVG Image" width="244" height="203">
-<h1>NetGet</h1>
-<p><strong>NetGet</strong> is a modular gateway framework designed for Node.js applications. It provides a flexible routing mechanism to create and manage digital domains in a networked environment.</p>
-<p>It acts as a dynamic <strong>gateway</strong> to direct internet traffic to various local services based on domain names. It is particularly useful in environments where multiple services or applications must be accessible through a single entry point, commonly known as a <strong>reverse proxy setup.</strong></p>
-<h2>Installation</h2>
-<p>Install NetGet via npm:</p>
-<pre class="prettyprint source lang-bash"><code>npm install netget
-</code></pre>
-<h3>Scalable Web Services</h3>
-<p>In a microservices architecture, <strong>NetGet can route requests to different services</strong> within your infrastructure, making it an ideal solution for developers looking to scale their applications horizontally. Each service can have its own domain, and <strong>NetGet</strong> will ensure that requests are forwarded to the correct service.</p>
-<h3>Development and Testing</h3>
-<p>During the development phase, NetGet can be employed to simulate a production environment where multiple domains point to different local services. This allows developers to test domain-based routing without the need to deploy to a live server.</p>
-<h3>Personal Hosting Solutions</h3>
-<p>For personal web hosting, <strong>NetGet</strong> provides an <strong>easy-to-set-up gateway</strong> for routing traffic to various self-hosted applications. Users with several web applications running on a home server can use NetGet to manage access to these applications through different domains.</p>
-<h2>Usage</h2>
-<p>Import NetGet in your Node.js application:</p>
-<pre class="prettyprint source lang-js"><code>import { Gateway } from 'netget';
-// Configure your gateway instance
-const gateway = new Gateway({
-  port: 3000,
-  domainsConfigPath: './config/domains.json'
-});
-// Start the gateway
-gateway.listen();
-</code></pre>
-<h2>Configuration</h2>
-<p>NetGet relies on a <code>domains.json</code> file for routing configuration, structured as follows:</p>
-<pre class="prettyprint source lang-json"><code>{
-  &quot;name&quot;: &quot;YourDomainConfigName&quot;,
-  &quot;domains&quot;: {
-    &quot;example.com&quot;: &quot;exampleHandler&quot;,
-    &quot;anotherdomain.com&quot;: &quot;anotherHandler&quot;
-  }
-}
-</code></pre>
-<p>Each domain key maps to a handler module that exports a function to handle requests for that domain.</p>
-<h3>Secure Access Control</h3>
-<p>Combined with authentication layers, NetGet can control access to various parts of a web infrastructure, ensuring that only authorized users can access specific services.</p>
-<h3>Simplified Configuration</h3>
-<p>With NetGet, the complexity of setting up a domain routing system is abstracted away. Users can define their routing logic in a simple JSON configuration file, making the management of domain routes straightforward and maintainable.</p>
-<h3>Dynamic Load Balancing</h3>
-<p>NetGet can be extended to include load balancing capabilities, distributing incoming requests across multiple instances of a service to balance the load and improve performance.</p>
-<p>By using NetGet, developers and system administrators can create a more organized and efficient network topology, where the flow of requests is handled systematically, aligning with the concept of futuristic control and management of digital spaces as depicted in cyberpunk narratives.</p>
-<hr>
-<p>Remember to replace placeholders like <code>YourDomainConfigName</code>, <code>example.com</code>, <code>exampleHandler</code>, etc., with the actual data relevant to your package.</p>
-<h2>Contributing</h2>
-<p>Contributions to the Netget are welcome. Please read <a href="https://chat.openai.com/c/CONTRIBUTING.md">CONTRIBUTING.md</a> for details on our code of conduct and the process for submitting pull requests.</p>
-<h2>Acknowledgments</h2>
-<p>Special thanks to all contributors and users of the Netget Protocol for making real-time, secure, and scalable communications possible.</p>
-<h2>License &amp; Policies</h2>
-<ul>
-<li><strong>License</strong>: MIT License (see LICENSE for details).</li>
-<li><strong>Privacy Policy</strong>: Respects user privacy; no collection/storage of personal data.</li>
-<li><strong>Terms of Usage</strong>: Use responsibly. No guarantees/warranties are provided. <a href="https://www.neurons.me/terms-of-use">Terms</a> | <a href="https://www.neurons.me/privacy-policy">Privacy</a></li>
-</ul>
-<img src="./_._.svg" alt="SVG Image" width="69" height="69" style="width69px; height:69px;"></article>
-    </section>
+    
 
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

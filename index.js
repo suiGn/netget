@@ -1,8 +1,14 @@
 /**
  * Entry point of the application.
- * It exports the Express application instance.
+ * It exports all NetGet tools.
  * @module index
  */
-console.log("NetGet Loaded Successfully.")
-import Gateway from './src/Gateway.js';
-export default Gateway;
+
+// Log the successful loading of NetGet
+console.log("NetGet Loaded Successfully.");
+
+/**
+ * Gateway class for handling domain-based routing and server initialization.
+ * @see Gateway
+ */
+export { default as Gateway } from './src/gateway.js';

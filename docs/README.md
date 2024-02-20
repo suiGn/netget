@@ -1,226 +1,93 @@
-<img src="./src/_._.svg" alt="SVG Image" width="123" height="123" style="width123px; height:123px;">
+<img src="./netget.png" alt="SVG Image" width="244" height="203">
 
-# The Netget Protocol
+# NetGet
 
-The Netget Protocol is designed to facilitate real-time communication between **web nodes using a handshaker** mechanism. It enables seamless and secure information exchanges and can be readily integrated into any domain.
+**NetGet** is a modular gateway framework designed for Node.js applications. It provides a flexible routing mechanism to create and manage digital domains in a networked environment.
 
-## Installation:
+It acts as a dynamic **gateway** to direct internet traffic to various local services based on domain names. It is particularly useful in environments where multiple services or applications must be accessible through a single entry point, commonly known as a **reverse proxy setup.**
 
-Netget is available as an npm package:
+## Installation
+
+Install NetGet via npm:
 
 ```bash
-npm i netget
+npm install netget
 ```
 
-## Features:
+### Scalable Web Services
 
-- **Versatile Handshaker**: Easily embed the script to any domain. The handshaker script can be embedded into any HTML application. It automatically establishes a WebSocket connection to the specified server endpoint upon loading.
-- **Domain Pointing**: The handshaker relies on communication to a specified domain, allowing for dynamic endpoint determination.
-- **Conditional Filtering**: Utilizes advanced filtering to perform checks like authentication before proceeding, ensuring secure and condition-based communications.
-- **Real-Time Communication**: Leverages WebSocket technology for bi-directional, real-time interaction between clients and servers.
+In a microservices architecture, **NetGet can route requests to different services** within your infrastructure, making it an ideal solution for developers looking to scale their applications horizontally. Each service can have its own domain, and **NetGet** will ensure that requests are forwarded to the correct service.
 
-## QuickStart:
-**The handshaker** script can be **embedded into any HTML**. It automatically establishes a WebSocket connection to the specified server endpoint upon loading.
+### Development and Testing
 
-```html
-<script src="/path-to-netget-protocol"></script>
-```
+During the development phase, NetGet can be employed to simulate a production environment where multiple domains point to different local services. This allows developers to test domain-based routing without the need to deploy to a live server.
 
-## Embedding with a CDN:
-```js
-<script src="https://suign.github.io/netget/netget.js"></script>
-```
+### Personal Hosting Solutions
 
-## ServerEndpoint:
-## Handling Messages
-Implement handling for incoming and outgoing messages based on user interactions or other events on the client side.
+For personal web hosting, **NetGet** provides an **easy-to-set-up gateway** for routing traffic to various self-hosted applications. Users with several web applications running on a home server can use NetGet to manage access to these applications through different domains.
 
-## Registry Node Management:
-These methods allow the system to keep track of registry nodes. `Netget`  will use these registry nodes to register itself.
+## Usage
+
+Import NetGet in your Node.js application:
 
 ```js
-addRegistryNode(node) {
-    this.registryNodes.add(node);
-}
-removeRegistryNode(node) {
-    this.registryNodes.delete(node);
-}
+import { Gateway } from 'netget';
+// Configure your gateway instance
+const gateway = new Gateway({
+  port: 3000,
+  domainsConfigPath: './config/domains.json'
+});
+// Start the gateway
+gateway.listen();
 ```
 
-## - Service Registration:
-When a node wants to register `WithNetwork` method communicates with the registry nodes to do so.
-```js
-registerWithNetwork() {
-    // Communicate to register this node.
-    // Send necessary details like metadata, IP address, etc.
+## Configuration
+
+NetGet relies on a `domains.json` file for routing configuration, structured as follows:
+
+```json
+{
+  "name": "YourDomainConfigName",
+  "domains": {
+    "example.com": "exampleHandler",
+    "anotherdomain.com": "anotherHandler"
+  }
 }
 ```
 
-## - Service Discovery:
-This function allows other services or clients to discover and retrieve details of a specific service node.
-```js
-discoverServiceNode(serviceName) {
-    // Contact registry nodes to find the service node by name.
-    // Return the details of the found service node.
-}
-```
+Each domain key maps to a handler module that exports a function to handle requests for that domain.
 
-## - Security & Validation:
-Private methods (prefixed with `_` for convention) to ensure communications are secure and validate node authenticity during registration.
-```js
-_validateNode() {
-    // Logic to validate a node's authenticity during registration
-}
-```
+### Secure Access Control
 
-## Node Health & Monitoring:
-A private method can periodically check the health status of nodes. This ensures that all nodes in the network are active and responsive.
+Combined with authentication layers, NetGet can control access to various parts of a web infrastructure, ensuring that only authorized users can access specific services.
 
-```js
-_checkNodeHealth() {
-    // Logic to periodically check the health of nodes.
-    // Remove or flag nodes that are offline or unresponsive.
-}
-```
+### Simplified Configuration
+
+With NetGet, the complexity of setting up a domain routing system is abstracted away. Users can define their routing logic in a simple JSON configuration file, making the management of domain routes straightforward and maintainable.
+
+### Dynamic Load Balancing
+
+NetGet can be extended to include load balancing capabilities, distributing incoming requests across multiple instances of a service to balance the load and improve performance.
+
+By using NetGet, developers and system administrators can create a more organized and efficient network topology, where the flow of requests is handled systematically, aligning with the concept of futuristic control and management of digital spaces as depicted in cyberpunk narratives.
 
 ------
 
-The classification of a node as either a **'service' node or a 'registry'** node dictates its primary responsibilities and functionalities within the `Netget` framework. Let's break down each type of node:
+Remember to replace placeholders like `YourDomainConfigName`, `example.com`, `exampleHandler`, etc., with the actual data relevant to your package.
 
-# Service Node:
 
-A **Service Node** is essentially a participant in the network that provides a specific functionality or service. This could be anything from a database service, an API endpoint, a web application, or any other service that other nodes or clients might want to interact with.
-
-**Characteristics of a Service Node**:
-
-1. **Service Provision**: Primarily, it provides a service to the network. This service can be queried and used by other nodes or clients.
-2. **Registration**: When a Service Node starts up, it registers itself with the Registry Node(s) so that it can be discovered by other nodes or clients.
-3. **Dynamic Nature**: Service Nodes can come and go. As new services are added to the network, new Service Nodes can be spun up, and as services are decommissioned, they can be shut down.
-
-**Initiation of a Service Node**:
-
-```js
-const node = new Netget({
-    nodeType: 'service',
-    metadata: {
-        name: 'DatabaseService',
-        description: 'Provides database functionalities',
-        // ... other metadata
-    },
-    network: 'development',
-    registryNodes: ['http://registry1.netget.me', 'http://registry2.netget.me']
-});
-
-node.registerWithNetwork();
-```
-
-# Registry Node:
-
-A **Registry Node** serves as a directory or lookup service for the network. It maintains a list of all Service Nodes, allowing clients or other nodes to discover and communicate with any Service Node they need.
-
-**Characteristics of a Registry Node**:
-
-1. **Discovery**: It aids in the discovery of Service Nodes. When a client wants to find a particular service, it can query a Registry Node to get the address/details of the desired Service Node.
-2. **Maintains Node List**: It holds a continuously updated list of all Service Nodes in the network.
-3. **Health Checks**: Optionally, a Registry Node might periodically check the health of Service Nodes to ensure they're still responsive.
-4. **Static Nature (to some extent)**: Compared to Service Nodes, Registry Nodes are less dynamic. There are fewer of them, and they aren't spun up and down as frequently.
-
-**Initiation of a Registry Node**:
-
-```js
-const registry = new Netget({
-    nodeType: 'registry',
-    network: 'development',
-    registryNodes: [] // Note: It's a registry node itself, so it might not need to register with other registry nodes.
-});
-
-// Additional initialization specific to registry functionalities...
-```
-
-### Differences:
-
-1. Purpose
-   - **Service Node**: Provides a specific service.
-   - **Registry Node**: Acts as a directory for Service Nodes.
-2. Life Cycle
-   - **Service Node**: More dynamic, can be spun up and down as services change.
-   - **Registry Node**: More stable and persistent, there are fewer of them and they have a longer lifespan.
-3. Interactions
-   - **Service Node**: Registers with Registry Node(s) and waits for requests from clients.
-   - **Registry Node**: Keeps track of Service Nodes and responds to discovery requests.
-
-In the `Netget` system, these two types of nodes work in tandem. Service Nodes ensure that services are available and operational, while Registry Nodes make sure that these services can be easily found and accessed.
-
------------
-
-In essence, `Netget` acts as a facilitator for nodes in a network. If a new service is spun up and wants to be discoverable, it will use `Netget` to register with the known registry nodes. When another service or client wants to find a service, it will ask `Netget` to discover it for them. The entire module serves as a manager for network-related tasks, abstracting away the intricacies of node management, service discovery, and network health.
-
-This modular design ensures that `Netget` remains separate from the application logic. Whether the end application uses Express, Next.js, or any other framework, `Netget` can be easily integrated to manage networking tasks, ensuring that application developers can focus on building their application without worrying about the complexities of the network layer.
-
-Enhance netget to support the concept of registry nodes and service nodes.
-Service nodes, when initialized, use netget to register with the network.
-netget handles the process of finding registry nodes, validating the service node, and updating its status.
-Additionally, netget can provide methods for service discovery, where clients can find the address and service details of a particular node.
-
-# netget Architecture & Features.
-
-### Service Node Initialization:
-
-netget  provides a simple API that allows any node to initialize itself as a service node.
-During initialization, the service node will specify its metadata, including service details, preferred network (e.g., development, production, custom), and other information.
-Registry Node Management:
-
-netget must have a way to identify and communicate with registry nodes.
-It could come pre-configured with a list of trusted registry nodes, or nodes might specify them during initialization.
-Service Registration:
-
-When a service node is initialized, netget will handle the registration process with the registry nodes.
-This includes sharing the node's metadata, IP address, and validating its authenticity.
-Service Discovery:
-
-**netget** will provide APIs that allow any client or service to query for a specific service node.
-It will connect to registry nodes, find the requested service details, and return them to the client.
-Decentralization Support:
-
-If decentralization is a goal, netget needs mechanisms to manage a distributed list of nodes and synchronize this data.
-For example, using a DHT approach as mentioned previously.
-Security & Validation:
-
-**netget** should ensure all communications are secure, possibly using cryptographic techniques.
-It should provide methods for validating the authenticity of nodes during the registration process.
-Network Management:
-
-Nodes should be able to specify which network they want to be part of (e.g., development, production).
-netget will manage these networks separately, ensuring isolation between them.
-Node Health & Monitoring:
-
-**netget** could have built-in features to periodically check the health of registered nodes.
-If a node is found to be offline or unresponsive, it could be temporarily removed from the active nodes list.
-
-## Decentralization:
-
-`Netget` can manage a distributed list of nodes and sync them. Using a Distributed Hash Table (DHT) or a decentralized protocol.
-
-## Security Considerations
-
-- **CORS**: Configure Cross-Origin Resource Sharing on your WebSocket server to accept connections from different origins.
-- **WSS**: Use Secure WebSocket for encrypted connections when dealing with sensitive information.
-
-## Scalability Considerations
-
-Architect your WebSocket server to handle multiple concurrent connections based on your expected load.
 
 ## Contributing
 
-Contributions to the Netget Protocol are welcome. Please read [CONTRIBUTING.md](https://chat.openai.com/c/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Contributions to the Netget are welcome. Please read [CONTRIBUTING.md](https://chat.openai.com/c/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
-## Acknowledgements
+## Acknowledgments
 
 Special thanks to all contributors and users of the Netget Protocol for making real-time, secure, and scalable communications possible.
 
 ## License & Policies
 - **License**: MIT License (see LICENSE for details).
 - **Privacy Policy**: Respects user privacy; no collection/storage of personal data.
-- **Terms of Usage**: Use responsibly. No guarantees/warranties provided. [Terms](https://www.neurons.me/terms-of-use) | [Privacy](https://www.neurons.me/privacy-policy)
+- **Terms of Usage**: Use responsibly. No guarantees/warranties are provided. [Terms](https://www.neurons.me/terms-of-use) | [Privacy](https://www.neurons.me/privacy-policy)
 
 <img src="./_._.svg" alt="SVG Image" width="69" height="69" style="width69px; height:69px;">
