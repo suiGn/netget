@@ -2,7 +2,7 @@
 
 # NetGet
 
-# Unleash the Cyberspace Within
+### Unleash the Cyberspace Within
 
 **NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. This **modular gateway framework,** designed for Node.js applications, acts as a dynamic conduit, **directing internet traffic to local services** with unparalleled ease. Inspired by the vast digital landscapes of cyberpunk lore, NetGet empowers developers to manage and expand their digital footprints without the complexities traditionally associated with network configurations.
 
@@ -26,6 +26,14 @@ import { Gateway } from 'netget';
 const gateway = new Gateway();
 gateway.listen();
 ```
+
+Now you can:
+
+```bash
+npm start
+```
+
+Your main application and the gateway will be hosted at localhost.
 
 ## Configuration
 
