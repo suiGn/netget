@@ -35,5 +35,6 @@
     "docs": "https://suiGn.github.io/netget",
     "author": "Sui Gn",
     "license": "MIT License",
-    "repoType": "NPM Package"
+    "repoType": "NPM Package",
+    "category": "utils"
 }
