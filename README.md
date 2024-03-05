@@ -1,4 +1,4 @@
-<img src="https://suign.github.io/assets/imgs/netget.png" alt="SVG Image" width="244" height="203">
+<img src="https://suign.github.io/assets/imgs/netget.png" alt="netget.me" width="244" height="203">
 
 # NetGet
 
