@@ -32,7 +32,7 @@
         "url": "git+https://github.com/suiGn/netget.git"
     },
     "homepage": "https://www.npmjs.com/package/netget",
-    "docs": "https://suiGn.github.io/netget",
+    "docs": "https://suign.github.io/netget",
     "author": "Sui Gn",
     "license": "MIT License",
     "repoType": "NPM Package",
