@@ -2,7 +2,17 @@
 
 # NetGet
 
-### Unleash the Cyberspace Within
+-----------
+
+### [Project Status : Experimental and Under Development, Subject to Major Changes]
+
+The module is in active development, and as such, it is subject to significant changes as we refine our approach and methodologies to best support our goals.
+
+visit: https://neurons.me to learn more.
+
+----------
+
+# Unleash the Cyberspace Within
 
 **NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. This **modular gateway framework,** designed for Node.js applications, acts as a dynamic conduit, **directing internet traffic to local services** with unparalleled ease. Inspired by the vast digital landscapes of cyberpunk lore, NetGet empowers developers to manage and expand their digital footprints without the complexities traditionally associated with network configurations.
 
@@ -79,23 +89,38 @@ NetGet can be extended to include load balancing capabilities, distributing inco
 
 By using **NetGet,** developers and system administrators can create a more organized and efficient network topology, where the flow of requests is handled systematically, aligning with the concept of futuristic control and management of digital spaces.
 
-------
+----------
 
-Remember to replace placeholders like `YourDomainConfigName`, `example.com`, `exampleHandler`, etc., with the actual data relevant to your package.
+# About All.This
 
+## Modular Data Structures:
 
+**[this.me](https://suign.github.io/this.me)  - [this.audio](https://suign.github.io/this.audio) - [this.text](https://suign.github.io/this.text) - [this.wallet](https://suign.github.io/this.wallet) - [this.img](https://suign.github.io/this.img) - [this.pixel](https://suign.github.io/Pixels) - [be.this](https://suign.github.io/be.this) - [this.DOM](https://suign.github.io/this.DOM) - [this.env](https://suign.github.io/this.env/) - [this.GUI](https://suign.github.io/this.GUI) - [this.be](https://suign.github.io/this.be) - [this.video](https://suign.github.io/this.video) - [this.atom](https://suign.github.io/this.atom) - [this.dictionaries](https://suign.github.io/this.dictionaries/)**
 
-## Contributing
+**Each module** in **[all.this](https://neurons.me/all-this)** represents a specific **datastructure**. These classes encapsulate the functionalities and **data specific to their domain.**
 
-Contributions to the Netget are welcome. Please read [CONTRIBUTING.md](https://chat.openai.com/c/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+## **Utils**
 
-## Acknowledgments
+**[all.this](https://neurons.me/all-this)** not only aggregates these modules but also provides utilities to facilitate the integration, management, and enhancement of these data structures. **For example:**
 
-Special thanks to all contributors and users of the Netget Protocol for making real-time, secure, and scalable communications possible.
+*The integration with [cleaker](https://suign.github.io/cleaker/) ensures each module instance has a **unique cryptographic identity**, enhancing security and data integrity.*
+
+### Neurons.me Ecosystem Glossary:
+
+visit: [Neurons.me Glossary](https://suign.github.io/neurons.me/Glossary) 
 
 ## License & Policies
-- **License**: MIT License (see LICENSE for details).
-- **Privacy Policy**: Respects user privacy; no collection/storage of personal data.
-- **Terms of Usage**: Use responsibly. No guarantees/warranties are provided. [Terms](https://www.neurons.me/terms-of-use) | [Privacy](https://www.neurons.me/privacy-policy)
 
-<img src="./_._.svg" alt="SVG Image" width="69" height="69" style="width69px; height:69px;">
+- **License**: MIT License (see LICENSE for details).
+
+- **Privacy Policy**: Respects user privacy; no collection/storage of personal data.
+
+- **Terms of Usage**: Use responsibly. No guarantees/warranties provided. [Terms](https://www.neurons.me/terms-of-use) | [Privacy](https://www.neurons.me/privacy-policy)
+
+  **Learn more** at https://neurons.me
+
+  **Author:** SuiGn
+
+  [By neurons.me](https://neurons.me)
+
+  <img src="https://suign.github.io/neurons.me/neurons_logo.png" alt="neurons.me logo" width="123" height="123" style="width123px; height:123px;">
