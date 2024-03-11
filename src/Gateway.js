@@ -12,7 +12,6 @@ import { fileURLToPath } from 'url';
 import morgan from 'morgan';
 import initializeRoutes from './routes/routes.js';
 import { loadDomainConfig } from './config/domainConfigUtils.js';
-
 // Calculate the equivalent of __dirname in ES Module scope
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -23,17 +22,16 @@ class Gateway {
     /**
      * Creates a Gateway instance with provided configuration.
      * @param {Object} config Configuration for the Gateway.
-     * @param {number} [config.port=3000] Port on which the server will listen.
+     * @param {number} [config.port=3432] Port on which the server will listen.
      * @param {string} [config.domainsConfigPath='./config/domains.json'] Path to the domain configuration file.
      */
-    constructor({ port = 3000, domainsConfigPath = './config/domains.json' } = {}) {
+    constructor({ port = 3432, domainsConfigPath = './config/domains.json' } = {}) {
         this.port = port;
         // Adjust the path to the domains configuration file
         this.domainsConfigPath = path.resolve(__dirname, domainsConfigPath);
         this.app = express();
         this.initialize().catch(err => console.error('Initialization error:', err));
     }
-
     /**
      * Initializes the server setup including static file serving, view engine setup, and domain routing.
      */
@@ -45,16 +43,13 @@ class Gateway {
      this.app.set('views', path.join(baseDir, 'ejsApp', 'views'));
         // Use morgan for logging
         this.app.use(morgan('dev'));
-    
         // Load the domain configuration
         await this.loadDomainConfig();
-    
         // Initialize and use the routes with the provided domainsConfigPath
         // This should come after loading your domain configuration and before starting the server
         const router = initializeRoutes(this.domainsConfigPath);
         this.app.use(router);
     }
-
     /**
      * Loads the domain configuration from a specified JSON file.
      */

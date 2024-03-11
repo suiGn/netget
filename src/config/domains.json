@@ -1,7 +1,20 @@
 {
     "name": "DefaultDomains",
     "domains": {
+        "cleaker.me": {"handler": "cleakerHandler", "state": "Active"},
+        "neurons.me": {"handler": "neuronsHandler", "state": "Active"},
+        "mlearning.me": {"handler": "mlearningHandler", "state": "Maintenance"}
+        },
+    "domains2": {
         "cleaker.me": "cleakerHandler",
-        "neurons.me": "neuronsHandler"
-    }
+        "neurons.me": "neuronsHandler",
+        "mlearning.me": "mlearningHandler",
+        "mlearning.com": "mlearningHandler",
+        "mlearning.studio": "mlearningHandler",
+        "mdrn.me": "mdrnHandler",
+        "monadlisa.me": "monadlisaHandler",
+        "monadlisa.com": "monadlisaHandler",
+        "netget.me": "netgetHandler",
+        "orgboat.me": "orgboatHandler"
+    } 
 }

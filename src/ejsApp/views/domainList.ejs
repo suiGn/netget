@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Press Start 2P', cursive;
-            background-color: #0a0a0a;
+            background-color: #01161d;
             color: #00ff00;
             padding: 20px;
             display: flex;
@@ -67,20 +67,47 @@
 <body>
     <div class="container">
         <h1>Domain Configuration List</h1>
-        <table>
-            <tr>
-                <th>Domain Name</th>
-                <th>Handler</th>
-            </tr>
-            <% for(const domain in domains) { %>
-                <tr>
-                    <td><%= domain %></td>
-                    <td><%= domains[domain] %></td>
-                </tr>
-            <% } %>
-        </table>
+        
         <button class="action-button">Add Domain</button>
         <a href="/" class="action-button">Go Back</a>
     </div>
+   
+<table>
+    <tr>
+        <th>Domain Name</th>
+        <th>Handler</th>
+        <th>State</th>
+    </tr>
+    <% for(const domain in domains) { %>
+        <tr>
+            <td><%= domain %></td>
+            <td><%= domains[domain].handler %></td>
+            <td><%= domains[domain].state %></td>
+        </tr>
+    <% } %>
+</table>
+
+ <!-- Add Domain Form -->
+ <div id="addDomainForm" style="display: none;">
+    <h2>Add New Domain</h2>
+    <form action="/addDomain" method="post">
+        <label for="domain">Domain Name:</label>
+        <input type="text" id="domain" name="domain"><br><br>
+        <label for="handler">Handler:</label>
+        <input type="text" id="handler" name="handler"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<script>
+    document.querySelector('.action-button').addEventListener('click', () => {
+        // Toggle the form visibility
+        const form = document.getElementById('addDomainForm');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+</script>
+
+
+
 </body>
 </html>

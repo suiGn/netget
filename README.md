@@ -5,21 +5,17 @@
 -----------
 
 ### [Project Status : Experimental and Under Development, Subject to Major Changes]
-
 The module is in active development, and as such, it is subject to significant changes as we refine our approach and methodologies to best support our goals.
-
 visit: https://neurons.me to learn more.
 
 ----------
 
 # Unleash the Cyberspace Within
-
 **NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. This **modular gateway framework,** designed for Node.js applications, acts as a dynamic conduit, **directing internet traffic to local services** with unparalleled ease. Inspired by the vast digital landscapes of cyberpunk lore, NetGet empowers developers to manage and expand their digital footprints without the complexities traditionally associated with network configurations.
 
 Visit [netget.me](https://netget.me)
 
 ## Installation
-
 Install NetGet via npm:
 
 ```bash
@@ -27,7 +23,6 @@ npm install netget
 ```
 
 ## Usage
-
 Import NetGet in your Node.js application:
 
 ```js
@@ -46,7 +41,6 @@ npm start
 Your main application and the gateway will be hosted at localhost.
 
 ## Configuration
-
 NetGet relies on a `domains.json` file for routing configuration, structured as follows:
 
 ```json
@@ -60,31 +54,31 @@ NetGet relies on a `domains.json` file for routing configuration, structured as 
 ```
 
 Each domain key maps to a handler module that exports a function to handle requests for that domain.
-
 By default, NetGet searches for a `domains.json` configuration in the `./config` directory, streamlining the setup process.
-
-
 
 **NetGet** is particularly useful in environments where multiple services or applications must be accessible through a single entry point, commonly known as a **reverse proxy setup.**
 
-### Scalable Web Services
+Scenario: Local and Remote NetGet Interaction
+Local NetGet Setup: On your local machine, NetGet operates within your Node.js environment, managing local traffic and processing requests according to your configured rules. It doesn't directly face the internet and instead communicates with an external NetGet instance that does.
 
+Remote NetGet as a Reverse Proxy: The main.netget.me hosted on Nginx acts as your gateway to the internet. It receives internet traffic and forwards it to the appropriate local NetGet instance based on the domain routing configured.
+
+Handshaker Mechanism: For machines not directly accessible via a public IP, the remote NetGet instance (main.netget.me) can act as a handshaker. Your local NetGet instance communicates with this handshaker, which then relays traffic between the internet and your local network.
+
+
+### Scalable Web Services
 In a microservices architecture, **NetGet can route requests to different services** within your infrastructure, making it an ideal solution for developers looking to scale their applications horizontally. Each service can have its own domain, and **NetGet** will ensure that requests are forwarded to the correct service.
 
 ### Personal Hosting Solutions
-
 For personal web hosting, **NetGet** provides an **easy-to-set-up gateway** for routing traffic to various self-hosted applications. Users with several web applications running on a home server can use **NetGet** to manage access to these applications through different domains.
 
 ### Secure Access Control
-
 Combined with authentication layers, NetGet can control access to various parts of a web infrastructure, ensuring that only authorized users can access specific services.
 
 ### Simplified Configuration
-
 With NetGet, the complexity of setting up a domain routing system is abstracted away. Users can define their routing logic in a simple JSON configuration file, making the management of domain routes straightforward and maintainable.
 
 ### Dynamic Load Balancing
-
 NetGet can be extended to include load balancing capabilities, distributing incoming requests across multiple instances of a service to balance the load and improve performance.
 
 By using **NetGet,** developers and system administrators can create a more organized and efficient network topology, where the flow of requests is handled systematically, aligning with the concept of futuristic control and management of digital spaces.
