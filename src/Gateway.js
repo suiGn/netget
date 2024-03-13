@@ -27,7 +27,6 @@ class Gateway {
      */
     constructor({ port = 3432, domainsConfigPath = './config/domains.json' } = {}) {
         this.port = port;
-        // Adjust the path to the domains configuration file
         this.domainsConfigPath = path.resolve(__dirname, domainsConfigPath);
         this.app = express();
         this.initialize().catch(err => console.error('Initialization error:', err));
@@ -42,7 +41,13 @@ class Gateway {
      this.app.use(express.static(path.join(baseDir, 'ejsApp', 'public')));
      this.app.set('view engine', 'ejs');
      this.app.set('views', path.join(baseDir, 'ejsApp', 'views'));
-        // Use morgan for logging
+        // Enhanced logging setup
+        // Define a custom token 'host'
+          morgan.token('host', (req) => {
+              return req.hostname || req.headers['host'] || '-';
+         });
+         this.app.use(morgan(':method :url :status :res[content-length] - :response-time ms - Host: :host'));
+         // Use morgan for logging
         this.app.use(morgan('dev'));
         // Load the domain configuration
         await this.loadDomainConfig();
