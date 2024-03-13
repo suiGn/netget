@@ -36,8 +36,9 @@ class Gateway {
      * Initializes the server setup including static file serving, view engine setup, and domain routing.
      */
     async initialize() {
-     // Calculate the base directory for the gateway, assuming the gateway class is in 'src'
-     const baseDir = path.dirname(fileURLToPath(import.meta.url));
+     const baseDir = path.dirname(fileURLToPath(import.meta.url)); // Calculate the base directory for the gateway, assuming the gateway class is in 'src'
+     this.app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies (as sent by HTML forms)
+     this.app.use(express.json()); // Parse JSON bodies (as sent by API clients)
      this.app.use(express.static(path.join(baseDir, 'ejsApp', 'public')));
      this.app.set('view engine', 'ejs');
      this.app.set('views', path.join(baseDir, 'ejsApp', 'views'));

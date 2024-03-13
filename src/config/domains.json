@@ -1,20 +1,15 @@
 {
-    "name": "DefaultDomains",
+       "name": "DefaultDomains",
     "domains": {
         "cleaker.me": {"handler": "cleakerHandler", "state": "Active"},
         "neurons.me": {"handler": "neuronsHandler", "state": "Active"},
-        "mlearning.me": {"handler": "mlearningHandler", "state": "Maintenance"}
-        },
-    "domains2": {
-        "cleaker.me": "cleakerHandler",
-        "neurons.me": "neuronsHandler",
-        "mlearning.me": "mlearningHandler",
-        "mlearning.com": "mlearningHandler",
-        "mlearning.studio": "mlearningHandler",
-        "mdrn.me": "mdrnHandler",
-        "monadlisa.me": "monadlisaHandler",
-        "monadlisa.com": "monadlisaHandler",
-        "netget.me": "netgetHandler",
-        "orgboat.me": "orgboatHandler"
-    } 
+        "mlearning.me": {"handler": "mlearningHandler", "state": "Maintenance"},
+        "mlearning.com": {"handler": "mlearningHandler", "state": "Active"},
+        "mlearning.studio": {"handler": "mlearningHandler", "state": "Active"},
+        "mdrn.me": {"handler": "mdrnHandler", "state": "Active"},
+        "monadlisa.me": {"handler": "monadlisaHandler", "state": "Active"},
+        "monadlisa.com": {"handler": "monadlisaHandler", "state": "Active"},
+        "netget.me": {"handler": "netgetHandler", "state": "Active"},
+        "orgboat.me": {"handler": "orgboatHandler", "state": "Active"}
+        }
 }
