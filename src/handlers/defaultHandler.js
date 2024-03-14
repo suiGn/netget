@@ -1,0 +1,26 @@
+// ./src/handlers/defaultHandler.js
+/**
+ * Renders a default response when no specific handler is found for a request.
+ * This function serves as a fallback handler to provide informative feedback to the user or administrator.
+ * It indicates whether no handlers are defined at all or if a specific handler for the requested domain is missing.
+ * 
+ * @param {Object} req - The HTTP request object provided by Express.js.
+ * @param {Object} res - The HTTP response object provided by Express.js.
+ * @param {boolean} [noHandlersDefined=false] - Indicates whether no handlers have been defined in the gateway.
+ */
+export default function defaultHandler(req, res, noHandlersDefined = false) {
+  let message = " ";
+  if (noHandlersDefined) {
+    message += " No handlers have been defined.<br/> To configure your domain handlers, please refer to Docs: <br/>  https://netget.me ";
+  } else {
+    message += ` No specific handler found for ${req.hostname}.<br/> If you are the administrator, please define a handler for this domain.`;
+  }
+
+  const showDomainListLink = !noHandlersDefined;
+
+  res.render('index', {
+      title: "Gateway Initiated!",
+      message: message,
+      showDomainListLink: showDomainListLink
+  });
+}

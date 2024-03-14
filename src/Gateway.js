@@ -1,84 +1,59 @@
-/*
-🅜🅞🅝🅐🅓🅛🅘🅢🅐
-🅃🄷🄴🄶🄰🅃🄴🅆🄰🅈    
-ⓝⓔⓤⓡⓞⓝⓢ.ⓜⓔ
-🄽🄴🅃🄶🄴🅃
-🆂🆄🅸🅶🅽
-*/
 import express from 'express';
 import path from 'path';
-import fs from 'fs/promises';
-import { fileURLToPath } from 'url';
 import morgan from 'morgan';
-import initializeRoutes from './routes/routes.js';
-import { loadDomainConfig } from './config/domainConfigUtils.js';
-// Calculate the equivalent of __dirname in ES Module scope
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import defaultHandler from './handlers/defaultHandler.js';
+import { fileURLToPath } from 'url';
+
+// Determine the base directory for static file serving and view engine setup
+const baseDir = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * Class representing a customizable gateway server using Express.js.
+ * Represents a customizable gateway server.
  */
 class Gateway {
-    /**
-     * Creates a Gateway instance with provided configuration.
-     * @param {Object} config Configuration for the Gateway.
-     * @param {number} [config.port=3432] Port on which the server will listen.
-     * @param {string} [config.domainsConfigPath='./config/domains.json'] Path to the domain configuration file.
-     */
-    constructor({ port = 3432, domainsConfigPath = './config/domains.json' } = {}) {
-        this.port = port;
-        this.domainsConfigPath = path.resolve(__dirname, domainsConfigPath);
-        this.app = express();
-        this.initialize().catch(err => console.error('Initialization error:', err));
-    }
-    /**
-     * Initializes the server setup including static file serving, view engine setup, and domain routing.
-     */
-    async initialize() {
-     const baseDir = path.dirname(fileURLToPath(import.meta.url)); // Calculate the base directory for the gateway, assuming the gateway class is in 'src'
-     this.app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies (as sent by HTML forms)
-     this.app.use(express.json()); // Parse JSON bodies (as sent by API clients)
-     this.app.use(express.static(path.join(baseDir, 'ejsApp', 'public')));
-     this.app.set('view engine', 'ejs');
-     this.app.set('views', path.join(baseDir, 'ejsApp', 'views'));
-        // Enhanced logging setup
-        // Define a custom token 'host'
-          morgan.token('host', (req) => {
-              return req.hostname || req.headers['host'] || '-';
-         });
-         this.app.use(morgan(':method :url :status :res[content-length] - :response-time ms - Host: :host'));
-         // Use morgan for logging
-        this.app.use(morgan('dev'));
-        // Load the domain configuration
-        await this.loadDomainConfig();
-        // Initialize and use the routes with the provided domainsConfigPath
-        // This should come after loading your domain configuration and before starting the server
-        const router = initializeRoutes(this.domainsConfigPath);
-        this.app.use(router);
-    }
-    /**
-     * Loads the domain configuration from a specified JSON file.
-     */
-    async loadDomainConfig() {
-        try {
-            // Pass the resolved path to the utility function
-            const config = await loadDomainConfig(this.domainsConfigPath);
-            console.log('Loaded Domain Configuration:', config);
-        } catch (err) {
-            console.error('Failed to load domain configuration:', err);
-            throw new Error('Failed to initialize domain configuration');
-        }
-    }
+  /**
+   * Initializes a new instance of the Gateway class.
+   * @param {Object} config - The configuration object for the gateway.
+   * @param {number} [config.port=3432] - The port number on which the gateway will listen.
+   * @param {Object} [config.handlers={}] - An object mapping domains to their respective request handlers.
+   */
+  constructor({ port = 3432, handlers = {} } = {}) {
+    this.port = port;
+    this.handlers = handlers;
+    this.app = express();
+    this.initialize().catch(err => console.error('Initialization error:', err));
+  }
 
-    /**
-     * Starts listening on the configured port.
-     */
-    listen() {
-        this.app.listen(this.port, () => {
-            console.log(`Gateway listening at http://localhost:${this.port}`);
-        });
-    }
+  /**
+   * Initializes the express application with middleware, static file serving, and view engine setup.
+   */
+  async initialize() {
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.json());
+    this.app.use(express.static(path.join(baseDir, 'ejsApp', 'public')));
+    this.app.set('view engine', 'ejs');
+    this.app.set('views', path.join(baseDir, 'ejsApp', 'views'));
+  
+    morgan.token('host', (req) => req.hostname || req.headers['host'] || '-');
+    this.app.use(morgan(':method :url :status :res[content-length] - :response-time ms - Host: :host'));
+  
+    // This middleware checks the request's hostname and uses the corresponding handler or the default one
+    this.app.use((req, res) => {
+        // Check if handlers object is empty (no handlers defined at all)
+        const noHandlersDefined = Object.keys(this.handlers).length === 0;
+        const handler = this.handlers[req.hostname] || ((req, res) => defaultHandler(req, res, noHandlersDefined));
+        handler(req, res);
+      });
+  }
+
+  /**
+   * Starts the gateway, making it listen on the configured port.
+   */
+  listen() {
+    this.app.listen(this.port, () => {
+      console.log(`Gateway listening at http://localhost:${this.port}`);
+    });
+  }
 }
 
 export default Gateway;
-

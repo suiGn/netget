@@ -6,6 +6,16 @@
     <title>Netget Gateway</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        p {
+          font-family: 'Roboto', sans-serif;
+            }
+
+            .main {
+  font-size: 18px; /* Or any size you prefer */
+  font-weight: 700; /* Bold */
+}
         
         body, html {
             margin: 0;
@@ -84,8 +94,10 @@
 <body>
     <div class="container">
         <h1><%= title %></h1>
-        Welcome to the NetGet Gateway.
-        <a href="/domainList" class="action-button">View Domain List</a>
+        <p><b><%- message %></b></p>
+        <% if (showDomainListLink) { %>
+          <a href="/domainList" class="action-button">View Domain List</a>
+        <% } %>
     </div>
 </body>
 </html>
