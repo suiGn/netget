@@ -1,6 +1,7 @@
 /**
  * Entry point of the application.
- * It exports all NetGet tools.
+ * It exports all NetGet tools as default NetGet
+ * Gateway is a customizable gateway server.
  * @module index
  */
 

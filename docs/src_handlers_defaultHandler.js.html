@@ -7,7 +7,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet index.js</title>
+  <title>NetGet src/handlers/defaultHandler.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -121,7 +121,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>index.js</h1>
+                    <h1>src/handlers/defaultHandler.js</h1>
                 </header>
                 
 
@@ -130,17 +130,33 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Entry point of the application.
- * It exports all NetGet tools as default NetGet
- * Gateway is a customizable gateway server.
- * @module index
+            <pre class="prettyprint source linenums"><code>// ./src/handlers/defaultHandler.js
+/**
+ * Renders a default response when no specific handler is found for a request.
+ * This function serves as a fallback handler to provide informative feedback to the user or administrator.
+ * It indicates whether no handlers are defined at all or if a specific handler for the requested domain is missing.
+ * 
+ * @param {Object} req - The HTTP request object provided by Express.js.
+ * @param {Object} res - The HTTP response object provided by Express.js.
+ * @param {boolean} [noHandlersDefined=false] - Indicates whether no handlers have been defined in the gateway.
  */
+export default function defaultHandler(req, res, noHandlersDefined = false) {
+  let message = " ";
+  if (noHandlersDefined) {
+    message += " No handlers have been defined.&lt;br/> To configure your domain handlers, please refer to Docs: &lt;br/>  https://netget.me ";
+  } else {
+    message += ` No specific handler found for ${req.hostname}.&lt;br/> If you are the administrator, please define a handler for this domain.`;
+  }
 
-// Log the successful loading of NetGet
-import NetGet from './src/netget.js';
-console.log("NetGet Loaded.");
-export default NetGet;</code></pre>
+  const showDomainListLink = !noHandlersDefined;
+
+  res.render('index', {
+      title: "Gateway Initiated!",
+      message: message,
+      showDomainListLink: showDomainListLink
+  });
+}
+</code></pre>
         </article>
     </section>
 
