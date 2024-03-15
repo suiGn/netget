@@ -54,9 +54,9 @@ class Gateway {
 */
     this.app.use((req, res) => {
       // Check if handlers object is empty (no handlers defined at all)
-      const noRoutesDefined = Object.keys(this.handlers).length === 0;
-      const routes = this.routes[req.hostname] || ((req, res) => defaultRoutes(req, res, noHRoutesDefined));
-      handler(req, res);
+      const noRoutesDefined = Object.keys(this.routes).length === 0;
+      const routes = this.routes[req.hostname] || ((req, res) => defaultRoutes(req, res, noRoutesDefined));
+      routes(req, res);
     });
   }
   /**
