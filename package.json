@@ -9,6 +9,9 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "doc": "jsdoc -c jsdoc.json"
     },
+    "bin": {
+        "netget-cli": "./src/netget.cli.js"
+    },
     "keywords": [
         "netget",
         "gateway",
@@ -25,6 +28,7 @@
         "url": "https://github.com/suiGn/netget/issues"
     },
     "dependencies": {
+        "commander": "^12.0.0",
         "morgan": "^1.10.0"
     },
     "repository": {
