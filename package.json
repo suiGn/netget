@@ -1,6 +1,6 @@
 {
     "name": "netget",
-    "version": "2.3.37",
+    "version": "2.3.38",
     "description": "Rette Adepto/ Recibido Directamente.",
     "type": "module",
     "main": "index.js",
@@ -10,7 +10,7 @@
         "doc": "jsdoc -c jsdoc.json"
     },
     "bin": {
-        "netget-cli": "./src/netget.cli.js"
+        "netget": "./src/netget.cli.js"
     },
     "keywords": [
         "netget",
