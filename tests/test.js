@@ -21,7 +21,14 @@ import Gateway from '../src/gateway.js';
  */
 const testGateway = new Gateway({
     port: 3000,
-    domainsConfigPath: './config/domains.json'
+    routes: {
+        'example.com': (req, res) => {
+            res.send('Hello from example.com!');
+        },
+        'another.com': (req, res) => {
+            res.send('Hello from another.com!');
+        }
+    }
 });
 
 testGateway.listen();

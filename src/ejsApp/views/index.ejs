@@ -98,6 +98,19 @@
         <% if (showDomainListLink) { %>
           <a href="/domainList" class="action-button">View Domain List</a>
         <% } %>
+
+        <div id="pixelGrid"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              const width = window.innerWidth;
+              const height = window.innerHeight;
+          
+              // Display the browser window size
+              const pixelGrid = document.getElementById('pixelGrid');
+              pixelGrid.textContent = `Size of the PixelGrid: ${width} x ${height}`;
+            });
+          </script>
+          
     </div>
 </body>
 </html>

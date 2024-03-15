@@ -6,17 +6,17 @@
  * 
  * @param {Object} req - The HTTP request object provided by Express.js.
  * @param {Object} res - The HTTP response object provided by Express.js.
- * @param {boolean} [noHandlersDefined=false] - Indicates whether no handlers have been defined in the gateway.
+ * @param {boolean} [noRoutessDefined=false] - Indicates whether no handlers have been defined in the gateway.
  */
-export default function defaultHandler(req, res, noHandlersDefined = false) {
+export default function defaultRoutes(req, res, noRoutesDefined = false) {
   let message = " ";
-  if (noHandlersDefined) {
-    message += " No handlers have been defined.<br/> To configure your domain handlers, please refer to Docs: <br/>  https://netget.me ";
+  if (noRoutesDefined) {
+    message += " No Routes have been defined.<br/> To configure your Domain Routes, please refer to Docs: <br/>  https://netget.me ";
   } else {
-    message += ` No specific handler found for ${req.hostname}.<br/> If you are the administrator, please define a handler for this domain.`;
+    message += ` No Route found for ${req.hostname}.<br/> If you are the administrator, please define a route for this domain. <br/>  https://netget.me `;
   }
 
-  const showDomainListLink = !noHandlersDefined;
+  const showDomainListLink = !noRoutesDefined;
 
   res.render('index', {
       title: "Gateway Initiated!",

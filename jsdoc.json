@@ -1,6 +1,6 @@
 {
   "source": {
-    "include": ["./src/","./src/gateway.js", "./src/netget.js", "./src/handlers/defaultHandler.js", "./src/routes/routes.js", "./index.js", "./tests/"]
+    "include": ["./src/","./src/gateway.js", "./src/netget.js", "./src/routes/defaultRoutes.js", "./src/routes/routes.js", "./index.js", "./tests/"]
   },
   "opts": {
     "destination": "./docs",

@@ -7,7 +7,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet tests/test.js</title>
+  <title>NetGet src/routes/defaultRoutes.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -121,7 +121,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>tests/test.js</h1>
+                    <h1>src/routes/defaultRoutes.js</h1>
                 </header>
                 
 
@@ -130,40 +130,33 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Gateway from '../src/gateway.js';
-
+            <pre class="prettyprint source linenums"><code>// ./src/handlers/defaultHandler.js
 /**
- * Creates and tests the NetGet Gateway with the specified configuration.
+ * Renders a default response when no specific handler is found for a request.
+ * This function serves as a fallback handler to provide informative feedback to the user or administrator.
+ * It indicates whether no handlers are defined at all or if a specific handler for the requested domain is missing.
  * 
- * @remarks
- * This script is used to create and test the Netget Gateway with the specified configuration options. 
- * To run the tests, execute `node tests/test.js` in your terminal.
- * 
- * @example
- * // To run the tests:
- * // node tests/test.js
- * 
- * @see Gateway
- * 
- * @param {object} options - The configuration options for creating the Gateway.
- * @param {number} options.port - The port on which the Gateway will listen for incoming requests.
- * @param {string} options.domainsConfigPath - The path to the JSON file containing domain configuration.
- * 
- * @returns {void}
+ * @param {Object} req - The HTTP request object provided by Express.js.
+ * @param {Object} res - The HTTP response object provided by Express.js.
+ * @param {boolean} [noRoutessDefined=false] - Indicates whether no handlers have been defined in the gateway.
  */
-const testGateway = new Gateway({
-    port: 3000,
-    routes: {
-        'example.com': (req, res) => {
-            res.send('Hello from example.com!');
-        },
-        'another.com': (req, res) => {
-            res.send('Hello from another.com!');
-        }
-    }
-});
+export default function defaultRoutes(req, res, noRoutesDefined = false) {
+  let message = " ";
+  if (noRoutesDefined) {
+    message += " No Routes have been defined.&lt;br/> To configure your Domain Routes, please refer to Docs: &lt;br/>  https://netget.me ";
+  } else {
+    message += ` No Route found for ${req.hostname}.&lt;br/> If you are the administrator, please define a route for this domain. &lt;br/>  https://netget.me `;
+  }
 
-testGateway.listen();</code></pre>
+  const showDomainListLink = !noRoutesDefined;
+
+  res.render('index', {
+      title: "Gateway Initiated!",
+      message: message,
+      showDomainListLink: showDomainListLink
+  });
+}
+</code></pre>
         </article>
     </section>
 
