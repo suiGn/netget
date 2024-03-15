@@ -22,10 +22,10 @@ import Gateway from '../src/gateway.js';
 const testGateway = new Gateway({
     port: 3000,
     routes: {
-        'example.com': (req, res) => {
+        'localhost:3000': (req, res) => {
             res.send('Hello from example.com!');
         },
-        'another.com': (req, res) => {
+        'localhost:': (req, res) => {
             res.send('Hello from another.com!');
         }
     }

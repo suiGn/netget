@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
-import defaultRoutes from './handlers/defaultRoutes.js';
+import defaultRoutes from './routes/defaultRoutes.js';
 import { fileURLToPath } from 'url';
 
 // Determine the base directory for static file serving and view engine setup
@@ -17,7 +17,7 @@ class Gateway {
    * @param {number} [config.port=3432] - The port number on which the gateway will listen.
    * @param {Object} [config.handlers={}] - An object mapping domains to their respective request handlers.
    */
-  constructor({ port = 3432, handlers = {} } = {}) {
+  constructor({ port = 3432, routes = {} } = {}) {
     this.port = port;
     this.routes = routes;
     this.app = express();
