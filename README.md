@@ -15,14 +15,12 @@ Visit [netget.me](https://netget.me)
 
 ## Installation
 Install NetGet via npm:
-
 ```bash
 npm install netget
 ```
 
 ## Usage
 Import NetGet in your Node.js application:
-
 ```js
 import { Gateway } from 'netget';
 // Initialize and configure your Gateway
@@ -31,7 +29,6 @@ gateway.listen();
 ```
 
 Now you can:
-
 ```bash
 npm start
 ```
