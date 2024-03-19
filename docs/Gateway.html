@@ -132,8 +132,6 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>Gateway<span class="signature">(config)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Represents a customizable gateway server.</div>
-        
     
 </header>
 
@@ -243,6 +241,45 @@
     
 <tr class="deep-level-1">
   
+      <td class="name"><code>host</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          'localhost'
+      
+      </td>
+  
+
+  <td class="description last">The host name on which the gateway will listen.</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
       <td class="name"><code>port</code></td>
   
 
@@ -282,7 +319,7 @@
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>handlers</code></td>
+      <td class="name"><code>routes</code></td>
   
 
   <td class="type">
@@ -315,6 +352,45 @@
   
 
   <td class="description last">An object mapping domains to their respective request handlers.</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>domainsConfigPath</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          './config/domains.json'
+      
+      </td>
+  
+
+  <td class="description last">The path to the domains configuration file.</td>
 </tr>
 
   
@@ -364,7 +440,7 @@
         <p class="tag-source">
             <a href="src_gateway.js.html" class="button">View Source</a>
             <span>
-                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line13">line 13</a>
+                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line22">line 22</a>
             </span>
         </p>
     
@@ -490,7 +566,7 @@
         <p class="tag-source">
             <a href="src_gateway.js.html" class="button">View Source</a>
             <span>
-                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line30">line 30</a>
+                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line38">line 38</a>
             </span>
         </p>
     
@@ -587,7 +663,7 @@
         <p class="tag-source">
             <a href="src_gateway.js.html" class="button">View Source</a>
             <span>
-                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line65">line 65</a>
+                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line75">line 75</a>
             </span>
         </p>
     
@@ -638,8 +714,6 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>Gateway<span class="signature">(config)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Represents a customizable gateway server.</div>
-        
     
 </header>
 
@@ -749,6 +823,45 @@
     
 <tr class="deep-level-1">
   
+      <td class="name"><code>host</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          'localhost'
+      
+      </td>
+  
+
+  <td class="description last">The host name on which the gateway will listen.</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
       <td class="name"><code>port</code></td>
   
 
@@ -788,7 +901,7 @@
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>handlers</code></td>
+      <td class="name"><code>routes</code></td>
   
 
   <td class="type">
@@ -821,6 +934,45 @@
   
 
   <td class="description last">An object mapping domains to their respective request handlers.</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>domainsConfigPath</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          './config/domains.json'
+      
+      </td>
+  
+
+  <td class="description last">The path to the domains configuration file.</td>
 </tr>
 
   
@@ -870,7 +1022,7 @@
         <p class="tag-source">
             <a href="src_gateway.js.html" class="button">View Source</a>
             <span>
-                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line13">line 13</a>
+                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line22">line 22</a>
             </span>
         </p>
     
@@ -996,7 +1148,7 @@
         <p class="tag-source">
             <a href="src_gateway.js.html" class="button">View Source</a>
             <span>
-                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line30">line 30</a>
+                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line38">line 38</a>
             </span>
         </p>
     
@@ -1093,7 +1245,7 @@
         <p class="tag-source">
             <a href="src_gateway.js.html" class="button">View Source</a>
             <span>
-                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line65">line 65</a>
+                <a href="src_gateway.js.html">src/gateway.js</a>, <a href="src_gateway.js.html#line75">line 75</a>
             </span>
         </p>
     

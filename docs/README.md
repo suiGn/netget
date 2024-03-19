@@ -3,15 +3,13 @@
 # NetGet
 
 -----------
-
 ### [Project Status : Experimental and Under Development, Subject to Major Changes]
 The module is in active development, and as such, it is subject to significant changes as we refine our approach and methodologies to best support our goals.
 visit: https://neurons.me to learn more.
-
 ----------
 
 # Unleash the Cyberspace Within
-**NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. This **modular gateway framework,** designed for Node.js applications, acts as a dynamic conduit, **directing internet traffic to local services** with unparalleled ease. Inspired by the vast digital landscapes of cyberpunk lore, NetGet empowers developers to manage and expand their digital footprints without the complexities traditionally associated with network configurations.
+**NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. Acts as a dynamic conduit, **directing internet traffic to local services**. Inspired by the vast digital landscapes of cyberpunk lore.
 
 Visit [netget.me](https://netget.me)
 
