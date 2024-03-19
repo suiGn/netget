@@ -4,6 +4,12 @@ class NetGet {
     constructor() {
       // Initialization code, if necessary
     }
+
+    Gateway(config) {
+      // Gateway is now an instance method that returns a new Gateway instance.
+      const gateway = new Gateway(config);
+      return gateway;
+    }
   
     static loadDomainConfig(domainConfigPath) {
       try {
@@ -20,5 +26,4 @@ class NetGet {
   
     // NetGet related functionalities
   }
-NetGet.Gateway = Gateway;
-export default NetGet;
+  export default NetGet;
