@@ -1,3 +1,4 @@
+//src/gateway.js
 import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
@@ -21,7 +22,7 @@ class Gateway {
    */
   constructor({   
     host = process.env.HOST || 'localhost', 
-    port = process.env.NETGET_PORT || 3000, 
+    port = process.env.NETGET_PORT || 3432, 
     routes = {},
     domainsConfigPath = process.env.DOMAINS_CONFIG_PATH || './config/domains.json' 
   } = {}) {
@@ -78,5 +79,4 @@ class Gateway {
     });
   }
 }
-
 export default Gateway;

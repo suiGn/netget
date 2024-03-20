@@ -1,4 +1,4 @@
-// ./src/handlers/defaultHandler.js
+// ./src/handlers/defaultRoutes.js
 /**
  * Renders a default response when no specific handler is found for a request.
  * This function serves as a fallback handler to provide informative feedback to the user or administrator.
