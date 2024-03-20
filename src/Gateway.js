@@ -5,7 +5,7 @@ import defaultRoutes from './routes/defaultRoutes.js';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import chalk from 'chalk';
-// Determine the base directory for static file serving and view engine setup
+// Determine the base directory for static file serving and view engine setup8
 const baseDir = path.dirname(fileURLToPath(import.meta.url));
 /***********************
  * Customizable Gateway.*
