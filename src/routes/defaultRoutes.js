@@ -14,7 +14,7 @@ export default function defaultRoutes(req, res, noRoutesDefined = false) {
     message += " No Routes have been defined.<br/> To configure your Domain Routes, please refer to Docs: <br/>  https://netget.me ";
   } else {
     message += ` No Route found for ${req.hostname}.<br/> If you are the administrator, please define a route for this domain. <br/>  https://netget.me `;
-  }
+  } 
 
   const showDomainListLink = !noRoutesDefined;
 

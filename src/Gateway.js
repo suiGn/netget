@@ -50,25 +50,30 @@ class Gateway {
 
     morgan.token('host', (req) => req.hostname || req.headers['host'] || '-');
     this.app.use(morgan(':method :url :status :res[content-length] - :response-time ms - Host: :host'));
-    /* This middleware checks the request's ::::::::hostname::::::and uses the corresponding handler or the default one.
-    Hard-coded and Dynamic Domain Handling in the Gateway  , 
-        Define two methods. 
-        1. Static object this.handlers for domains with predefined handlers. 
-        2. Fetch Handler configurations dynamically from a PostgreSQL database v.path.mlisa.me,
-         for domains that require dynamic content serving, such as browser.pixelgrid.me/html.js.
+
+
     this.app.use((req, res) => {
-        // Check if handlers object is empty (no handlers defined at all)
-        const noHandlersDefined = Object.keys(this.handlers).length === 0;
-        const handler = this.handlers[req.hostname] || ((req, res) => defaultHandler(req, res, noHandlersDefined));
-        handler(req, res);
+      const hostname = req.hostname || req.headers['host'];
+      let handler = null;
+      // Iterate over the routes to find a match
+      Object.keys(this.routes).forEach(pattern => {
+        if (pattern === hostname) {
+          // Direct hostname match
+          handler = this.routes[pattern];
+        } else if (pattern.startsWith('*.')) {
+          // Wildcard domain match
+          const baseDomain = pattern.slice(2);
+          if (hostname.endsWith(baseDomain) && (hostname.split('.').length === baseDomain.split('.').length + 1)) {
+            handler = this.routes[pattern];
+          }
+        }
       });
-  }*/
-    this.app.use((req, res) => {
-      // Check if handlers object is empty (no handlers defined at all)
-      const noRoutesDefined = Object.keys(this.routes).length === 0;
-      const routes = this.routes[req.hostname] || ((req, res) => defaultRoutes(req, res, noRoutesDefined));
-      routes(req, res);
+      // Use the found handler or fallback to default
+      handler = handler || defaultRoutes;
+      handler(req, res);
     });
+
+    
   }
   /**
    * Starts the gateway, making it listen on the configured port.

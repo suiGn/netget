@@ -5,7 +5,7 @@
  * @module index
  */
 
-// Log the successful loading of NetGet
 import NetGet from './src/netget.js';
-console.log("NetGet Loaded.");
+export { defaultHandler } from './src/routes/defaultHandlers.js';
 export default NetGet;
+console.log("NetGet Loaded.");
