@@ -1,5 +1,5 @@
 // src/netget.js
-import Gateway from './gateway.js';
+import Gateway from './Gateway.js';
 class NetGet {
     constructor() {
       // Initialization code, if necessary
