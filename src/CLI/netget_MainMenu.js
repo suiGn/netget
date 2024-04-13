@@ -1,6 +1,9 @@
 // netget_MainMenu.js
 import inquirer from 'inquirer';
 import chalk from 'chalk';
+import { handleNetGetX } from './NetGetX.js';
+import { handleGateways } from './Gateways.js';
+import { handleGets } from './Gets.js';
 
 export async function NetGetMainMenu() {
     const answers = await inquirer.prompt([
@@ -14,8 +17,7 @@ export async function NetGetMainMenu() {
 
     switch (answers.action) {
         case 'NetGetX':
-            console.log(chalk.yellow('Selected NetGetX'));
-            // Call NetGetX functionality here
+            await handleNetGetX();
             break;
         case 'Gateways':
             console.log(chalk.yellow('Selected Gateways'));
@@ -30,3 +32,4 @@ export async function NetGetMainMenu() {
             process.exit();
     }
 }
+

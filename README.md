@@ -27,7 +27,6 @@ import { Gateway } from 'netget';
 const gateway = new Gateway();
 gateway.listen();
 ```
-
 Now you can:
 ```bash
 npm start

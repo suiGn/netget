@@ -1,29 +1,40 @@
 // src/netget.js
 import Gateway from './Gateway.js';
+/**
+ * Represents the main entry point for NetGet functionalities.
+ * Handles the instantiation of gateways and configuration loading.
+ */
 class NetGet {
-    constructor() {
-      // Initialization code, if necessary
-    }
-
-    Gateway(config) {
-      // Gateway is now an instance method that returns a new Gateway instance.
-      const gateway = new Gateway(config);
-      return gateway;
-    }
-  
-    static loadDomainConfig(domainConfigPath) {
-      try {
-        const data = fs.readFileSync(domainConfigPath, 'utf8');
-        const domainConfig = JSON.parse(data);
-        console.log('Loaded Domain Configuration:', domainConfig);
-        // Additional processing or setup based on the domainConfig
-        return domainConfig;
-      } catch (err) {
-        console.error('Error loading domain configuration:', err);
-        return null;  // Or throw an error, depending on your preference
-      }
-    }
-  
-    // NetGet related functionalities
+  /**
+   * Constructs the NetGet service, initializing any necessary base configurations.
+   */
+  constructor() {
+    // Initialization code, if necessary
   }
-  export default NetGet;
+  /**
+   * Creates a Gateway instance with specified configuration.
+   * @param {Object} config - Configuration options for the Gateway.
+   * @returns {Gateway} An instance of the Gateway configured with the provided options.
+   */
+  Gateway(config) {
+    const gateway = new Gateway(config);
+    return gateway;
+  }
+  /**
+   * Loads and parses the domain configuration from a specified file.
+   * @param {string} domainConfigPath - The path to the domain configuration file.
+   * @returns {Object|null} The parsed domain configuration object or null if an error occurs.
+   */
+  static loadDomainConfig(domainConfigPath) {
+    try {
+      const data = fs.readFileSync(domainConfigPath, 'utf8');
+      const domainConfig = JSON.parse(data);
+      console.log('Loaded Domain Configuration:', domainConfig);
+      return domainConfig;
+    } catch (err) {
+      console.error('Error loading domain configuration:', err);
+      return null;
+    }
+  }
+}
+export default NetGet;

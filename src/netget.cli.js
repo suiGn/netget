@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import { program } from 'commander';
 import { handleNetGetX } from './CLI/NetGetX.js';
 import { handleGateways } from './CLI/Gateways.js';
