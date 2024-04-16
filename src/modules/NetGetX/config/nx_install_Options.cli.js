@@ -1,10 +1,9 @@
 //nginxConfig.js
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import { i_DefaultNetGetX, configureCustomPath } from './nxHelpers.js';
-import { NetGetMainMenu } from '../netget_MainMenu.js';  // Correct the path as necessary
-export async function nginxConfigMenu() {
-    console.log(chalk.red('NetGetX is not installed or not found in PATH.'));
+import { i_DefaultNetGetX } from './i_DefaultNetGetX.js';
+import { NetGetMainMenu } from '../../netget_MainMenu.cli.js'; 
+export async function nxConfigMenu() {
     const answers = await inquirer.prompt([
       {
         type: 'list',
@@ -24,9 +23,6 @@ export async function nginxConfigMenu() {
         case 'Install NetGetX Default Configuration (Recommended)':
           await i_DefaultNetGetX();
           break;
-        case 'Configure NGINX Custom Path':
-          await configureCustomPath();
-          break;
         case 'About NetGetX':
           console.log(chalk.blue('NetGetX manages network gateways efficiently...'));
           // Add more informational content or link to documentation
@@ -43,7 +39,4 @@ export async function nginxConfigMenu() {
           await nginxConfigMenu();
       }
   }
-// Do you sometimes feel like a human?
-// Yes
-// Do you sometimes feel like a robot?
-// No
+

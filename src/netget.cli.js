@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import { program } from 'commander';
-import { handleNetGetX } from './CLI/NetGetX.js';
-import { handleGateways } from './CLI/Gateways.js';
-import { handleGets } from './CLI/Gets.js';
-import { NetGetMainMenu } from './CLI/netget_MainMenu.js';
+import { NetGetX } from './modules/NetGetX/NetGetX.cli.js';
+import { handleGateways } from './modules/Gateways/Gateways.js';
+import { handleGets } from './modules/Gets/Gets.js';
+import { NetGetMainMenu } from './modules/netget_MainMenu.cli.js';
 
 program
   .description('NetGet Command Line Interface')
@@ -12,7 +12,7 @@ program
 
 program.command('netget-x')
   .description('Directly interact with NetGetX')
-  .action(handleNetGetX);
+  .action(NetGetX);
 
 program.command('gateways')
   .description('Directly manage your Gateways')
