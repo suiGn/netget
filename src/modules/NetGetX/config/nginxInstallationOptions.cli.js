@@ -1,7 +1,6 @@
 //nginxInstallationOptions.cli.js
 import inquirer from 'inquirer';
 import { installNginx } from './installNginx.js';  
-import { nxConfigMenu } from './nx_install_Options.cli.js';
 export async function nginxInstallationOptions() {
     console.log("NGINX installation options are available. We recommend installing NGINX solely for NetGet and doing the configurations through the NetGet tools to avoid conflicts. If you want to use NGINX for other configurations and services please do so at your own risk and refer to both NGINX and NetGet manuals for help.");
     const installConfirmation = await inquirer.prompt([

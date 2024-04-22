@@ -31,7 +31,7 @@ export async function NetGetMainMenu() {
 
     switch (answers.action) {
         case 'NetGetX':
-            console.log(chalk.blue('Initializing NetGetX...'));
+            console.log(chalk.blue('Initializing NetGetX v0.0.0...'));
             try {
                 const setupVerified = await i_DefaultNetGetX();
                 if (setupVerified) {

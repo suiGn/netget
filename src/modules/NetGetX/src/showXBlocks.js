@@ -8,7 +8,7 @@ import { NetGetX} from '../NetGetX.cli.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const blocksPath = path.join(__dirname, 'NGXBlocks.json');
+const blocksPath = path.join(__dirname, 'XBlocks.json');
 
 async function loadNGXBlocks() {
     try {
@@ -20,7 +20,7 @@ async function loadNGXBlocks() {
     }
 }
 
-export async function showNGXBlocks() {
+export async function showXBlocks() {
     console.log(chalk.blue('Loading NGXBlocks...'));
     const blocks = await loadNGXBlocks();
     

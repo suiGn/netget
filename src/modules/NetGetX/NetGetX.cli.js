@@ -1,6 +1,6 @@
 // NetGetX.cli.js
 import inquirer from 'inquirer';
-import { showNGXBlocks } from './src/showXBlocks.js'; 
+import { showXBlocks } from './src/showXBlocks.js'; 
 import chalk from 'chalk';
 //import { addNewNGXBlock } from './src/addNewNGXBlock.js'; 
 //import { showNGXBlocks, addNewNGXBlock, showNGXDiscoveryNode, addNewNGXDiscoveryNode, netGetXSettings, aboutNetGetX } from './netGetXOptions.js'; 
@@ -22,12 +22,12 @@ export async function NetGetX() {
 
     switch (answers.option) {
         case 'Show NGXBlocks':
-            await showNGXBlocks();
+            await showXBlocks();
             console.log('Show NGXBlocks');
             break;
-        case 'Add New NGXBlock':
+        case 'Add New XBlock':
            // await addNewNGXBlock();
-           console.log('Add New NGXBlock');
+           console.log('Add New XBlock');
             break;
         // Continue handling other cases similarly
         case 'Exit':

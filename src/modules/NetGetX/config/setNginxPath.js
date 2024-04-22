@@ -1,3 +1,4 @@
+// setNginxPath.js
 import fs from 'fs';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
@@ -5,6 +6,7 @@ import path from 'path';
 import os from 'os';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { nginxInstallationOptions } from './nginxInstallationOptions.cli.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,21 +27,20 @@ async function saveUserConfig(userConfig) {
 }
 
 async function detectNginxPath() {
-    // Determine the operating system to suggest more accurate default paths
     const osType = os.type();
     let potentialPaths = [];
 
     if (osType === 'Linux') {
         potentialPaths.push('/etc/nginx/nginx.conf');
-    } else if (osType === 'Darwin') { // macOS
-        potentialPaths.push('/usr/local/etc/nginx/nginx.conf', '/opt/homebrew/etc/nginx/nginx.conf'); // Paths for Homebrew installs
+    } else if (osType === 'Darwin') {
+        potentialPaths.push('/usr/local/etc/nginx/nginx.conf', '/opt/homebrew/etc/nginx/nginx.conf');
     } else if (osType === 'Windows_NT') {
         potentialPaths.push('C:\\nginx\\nginx.conf');
     }
 
-    for (const potentialPath of potentialPaths) {
-        if (fs.existsSync(potentialPath)) {
-            return potentialPath;
+    for (const path of potentialPaths) {
+        if (fs.existsSync(path)) {
+            return path;
         }
     }
     return '';
@@ -47,15 +48,8 @@ async function detectNginxPath() {
 
 async function setNginxPath() {
     const detectedPath = await detectNginxPath();
-    let finalPath = detectedPath;
-
     if (!detectedPath) {
         console.log(chalk.yellow('Unable to automatically detect the NGINX configuration path.'));
-        // Provide guidance based on OS if automatic detection fails
-        console.log(chalk.blue(`Please specify the path manually. Typical locations include:`));
-        console.log(chalk.blue(`- Linux: /etc/nginx/nginx.conf`));
-        console.log(chalk.blue(`- macOS: /usr/local/etc/nginx/nginx.conf or /opt/homebrew/etc/nginx/nginx.conf`));
-        console.log(chalk.blue(`- Windows: C:\\nginx\\nginx.conf`));
     }
 
     const responses = await inquirer.prompt([
@@ -68,29 +62,45 @@ async function setNginxPath() {
         },
         {
             type: 'input',
-            name: 'customPath',
-            message: 'Please enter the custom path for your NGINX configuration:',
+            name: 'manualPath',
+            message: 'Enter the custom path for your NGINX configuration:',
             when: ({ confirm }) => !confirm
+        },
+        {
+            type: 'list',
+            name: 'action',
+            message: 'No valid NGINX path found. What would you like to do?',
+            choices: [
+                'Enter Path Manually',
+                'Install NGINX',
+                'Cancel'
+            ],
+            when: () => !detectedPath
         }
     ]);
 
-    if (responses.customPath) {
-        finalPath = responses.customPath;
+    let finalPath = responses.manualPath || detectedPath;
+    if (responses.action === 'Install NGINX') {
+        await nginxInstallationOptions();
+        return;
+    } else if (responses.action === 'Enter Path Manually') {
+        finalPath = await inquirer.prompt({
+            type: 'input',
+            name: 'manualPath',
+            message: 'Please enter the custom path for your NGINX configuration:'
+        }).then(response => response.manualPath);
     }
 
-    // Verify the final path
-    if (!fs.existsSync(finalPath)) {
-        console.log(chalk.red('The specified NGINX configuration path does not exist.'));
+    if (finalPath && fs.existsSync(finalPath)) {
+        console.log(chalk.green(`NGINX configuration path set to: ${finalPath}`));
+        const userConfig = await loadUserConfig();
+        userConfig.nginxPath = finalPath;
+        await saveUserConfig(userConfig);
+        return finalPath;
+    } else {
+        console.log(chalk.red('No valid NGINX path provided or found.'));
         return '';
     }
-
-    // Save the verified path to user config
-    const userConfig = await loadUserConfig();
-    userConfig.nginxPath = finalPath;
-    await saveUserConfig(userConfig);
-
-    console.log(chalk.green(`NGINX configuration path set to: ${finalPath}`));
-    return finalPath;
 }
 
 export { setNginxPath };

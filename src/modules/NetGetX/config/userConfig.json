@@ -1,5 +1,5 @@
 {
   "nginxConfigurationProceed": false,
-  "netgetXConfigurationProceed": false,
-  "nginxPath": "/opt/homebrew/etc/nginx/nginx.conf"
+  "nginxPath": "/opt/homebrew/etc/nginx/nginx.conf",
+  "useSudo": false
 }
