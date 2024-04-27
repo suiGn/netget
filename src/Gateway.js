@@ -53,25 +53,42 @@ class Gateway {
 
 
     this.app.use((req, res) => {
-      const hostname = req.hostname || req.headers['host'];
+      const fullUrl = `${req.hostname || req.headers['host']}${req.url}`;
       let handler = null;
-      // Iterate over the routes to find a match
-      Object.keys(this.routes).forEach(pattern => {
-        if (pattern === hostname) {
-          // Direct hostname match
-          handler = this.routes[pattern];
-        } else if (pattern.startsWith('*.')) {
-          // Wildcard domain match
-          const baseDomain = pattern.slice(2);
-          if (hostname.endsWith(baseDomain) && (hostname.split('.').length === baseDomain.split('.').length + 1)) {
-            handler = this.routes[pattern];
+  
+      // Check for exact match first (full URL)
+      Object.keys(this.routes).some(pattern => {
+          const regexPattern = new RegExp(`^${pattern.replace(/\*/g, '.*')}$`); // Convert pattern to regex, replacing * with .*
+          if (regexPattern.test(fullUrl)) {
+              handler = this.routes[pattern];
+              return true; // Stop iteration once match is found
           }
-        }
+          return false;
       });
-      // Use the found handler or fallback to default
+  
+      // If no handler found, check if there's a more general match or use default
+      if (!handler) {
+          // Extract hostname for broader match
+          const hostname = req.hostname || req.headers['host'];
+          Object.keys(this.routes).some(pattern => {
+              if (pattern === hostname) {
+                  handler = this.routes[pattern];
+                  return true;
+              } else if (pattern.startsWith('*.')) {
+                  const baseDomain = pattern.slice(2);
+                  if (hostname.endsWith(baseDomain) && (hostname.split('.').length === baseDomain.split('.').length + 1)) {
+                      handler = this.routes[pattern];
+                      return true;
+                  }
+              }
+              return false;
+          });
+      }
+  
+      // Fallback to default if no specific handler is found
       handler = handler || defaultRoutes;
       handler(req, res);
-    });
+  });
 
     
   }
