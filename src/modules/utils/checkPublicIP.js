@@ -6,7 +6,6 @@ async function checkPublicIP() {
         if (response.ok) {
             const data = await response.json();
             const publicIP = data.ip;
-            console.log(`Current public IP: ${publicIP}`);
             return publicIP;
         } else {
             throw new Error('Failed to retrieve IP address');

@@ -1,56 +1,52 @@
 // verifyNginxInstallation.js
-import chalk from 'chalk';
-import { execShellCommand } from '../../utils/execShellCommand.js';  
 import fs from 'fs';
-import path from 'path';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import chalk from 'chalk';
+import { execSync } from 'child_process';
 
-// Function to load the current user configuration
-async function loadUserConfig() {
-    const userConfigPath = path.join(__dirname, 'userConfig.json');
-    try {
-        const data = await fs.promises.readFile(userConfigPath, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        console.error(chalk.red(`Failed to load user configuration: ${error.message}`));
-        return {};
+export async function verifyNginxInstallation(userConfig) {
+    console.log(chalk.blue('Verifying NGINX installation...'));
+
+    // Verify if all required paths are set and exist
+    if (!userConfig.nginxPath || !fs.existsSync(userConfig.nginxPath)) {
+        console.log(chalk.red('NGINX configuration path is not set or does not exist.'));
+        return false;
+    }else{
+        console.log(chalk.green('NGINX configuration path is set and exists.'));
     }
-}
 
-export const verifyNginxInstallation = async () => {
-    const userConfig = await loadUserConfig();
-    const nginxCommand = userConfig.useSudo ? 'sudo nginx -v' : 'nginx -v';
-    
+    if (!userConfig.nginxSitesAvailable || !fs.existsSync(userConfig.nginxSitesAvailable)) {
+        console.log(chalk.red('NGINX sites-available path is not set or does not exist.'));
+        return false;
+    }else{
+        console.log(chalk.green('NGINX sites-available path is set and exists.'));
+    }
+
+    if (!userConfig.nginxSitesEnabled || !fs.existsSync(userConfig.nginxSitesEnabled)) {
+        console.log(chalk.red('NGINX sites-enabled path is not set or does not exist.'));
+        return false;
+        }else{
+        console.log(chalk.green('NGINX sites-enabled path is set and exists.'));
+    }
+
+    // Verify if NGINX executable can be run to check its version
+    if (!userConfig.nginxExecutable || !fs.existsSync(userConfig.nginxExecutable)) {
+        console.log(chalk.red('NGINX executable path is not set or does not exist.'));
+        return false;
+    }else{
+        console.log(chalk.green('NGINX executable path is set and exists.'));
+    }
+
     try {
-        const result = await execShellCommand(nginxCommand);
-        console.log(chalk.green(`NGINX successfully verified with output: ${result}`));
-        return true;
+        const nginxVersionCommand = `${userConfig.nginxExecutable} -v 2>&1`; // Redirect stderr to stdout
+        const output = execSync(nginxVersionCommand).toString();
+        console.log(chalk.green('NGINX executable is operational.'));
+        console.log(chalk.blue(`NGINX version: ${output}`));  // Now this should correctly log the output
     } catch (error) {
-        console.error(chalk.red(`Verification of NGINX installation failed: ${error.message}`));
-        if (error.message.toLowerCase().includes('permission denied')) {
-            console.log(chalk.yellow('Permission denied. Trying with sudo...'));
-            return handlePermissionDenied(userConfig);
-        }
+        console.log(chalk.red(`Failed to execute NGINX: ${error.message}`));
         return false;
     }
-};
 
-async function handlePermissionDenied(userConfig) {
-    // Update userConfig to use sudo for future commands
-    userConfig.useSudo = true;
-    const userConfigPath = path.join(__dirname, 'userConfig.json');
-    await fs.promises.writeFile(userConfigPath, JSON.stringify(userConfig, null, 2));
-
-    // Retry command with sudo
-    try {
-        const result = await execShellCommand('sudo nginx -v');
-        console.log(chalk.green(`NGINX successfully verified with sudo: ${result}`));
-        return true;
-    } catch (error) {
-        console.error(chalk.red(`Failed to verify NGINX installation with sudo: ${error.message}`));
-        return false;
-    }
+    console.log(chalk.green('All NGINX configurations and executable are correct and operational.'));
+    return true;
 }
+

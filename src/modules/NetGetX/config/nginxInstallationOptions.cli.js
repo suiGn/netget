@@ -1,4 +1,5 @@
 //nginxInstallationOptions.cli.js
+import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { installNginx } from './installNginx.js';  
 export async function nginxInstallationOptions() {
@@ -29,8 +30,8 @@ export async function nginxInstallationOptions() {
         case 'Stable':
         case 'Mainline':
         case 'Custom version':
-            await installNginx(installConfirmation.version, installConfirmation.customVersion);
-            break;
+            const installationResult = await installNginx(installConfirmation.version, installConfirmation.customVersion);
+            return installationResult; // Return the result of the installation
         case 'Back to previous menu':
             await nxConfigMenu(); // Call the main configuration menu again
             break;

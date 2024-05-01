@@ -1,41 +1,71 @@
-//configureDefaultServerBlock.js
+// configureDefaultServerBlock.js
 import fs from 'fs';
 import chalk from 'chalk';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import defaultServerBlock from './defaultServerBlock.js';  
+import inquirer from 'inquirer';
+import { execShellCommand } from '../../utils/execShellCommand.js';  // Make sure this is correctly imported
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const userConfigPath = path.join(__dirname, 'userConfig.json');
-
-async function loadUserConfig() {
+export const configureDefaultServerBlock = async (userConfig) => {
     try {
-        const data = await fs.promises.readFile(userConfigPath, 'utf8');
-        return JSON.parse(data);
+        fs.writeFileSync(userConfig.nginxPath, defaultServerBlock);
+        console.log(chalk.green(`NGINX default server block has been configured at ${userConfig.nginxPath}.`));
     } catch (error) {
-        console.error(chalk.red(`Failed to load user configuration: ${error.message}`));
-        return {};
+        if (error.code === 'EACCES') {
+            console.error(chalk.red(`Permission denied writing to ${userConfig.nginxPath}.`));
+            await handlePermissionError(userConfig.nginxPath, defaultServerBlock);
+        } else {
+            console.error(chalk.red(`Error writing to ${userConfig.nginxPath}: ${error.message}`));
+        }
     }
-}
+};
 
-const defaultConfigContent = `server {
-    listen 80 default_server;
-    server_name _;
-    root /var/www/html;
-    location / {
-        return 200 'NGINX Default Response. Server is running.';
+const handlePermissionError = async (path, data) => {
+    const choices = [
+        { name: 'Retry with elevated privileges (sudo)', value: 'sudo' },
+        { name: 'Display manual configuration instructions', value: 'manual' },
+        { name: 'Cancel operation', value: 'cancel' }
+    ];
+
+    const { action } = await inquirer.prompt({
+        type: 'list',
+        name: 'action',
+        message: 'Permission denied. How would you like to proceed?',
+        choices: choices
+    });
+
+    switch (action) {
+        case 'sudo':
+            await tryElevatedPrivileges(path, data);
+            break;
+        case 'manual':
+            displayManualInstructions(path, data);
+            break;
+        case 'cancel':
+            console.log(chalk.blue('Operation canceled by the user.'));
+            break;
     }
-}`;
+};
 
-export const configureDefaultServerBlock = async () => {
-    const userConfig = await loadUserConfig();
-    const nginxPath = userConfig.nginxPath || '/etc/nginx/sites-available/default'; // Fallback to default if not set
-
+const tryElevatedPrivileges = async (path, data) => {
+    const escapedData = escapeDataForShell(data);
+    const command = `echo '${escapedData}' | sudo tee ${path}`;
     try {
-        fs.writeFileSync(nginxPath, defaultConfigContent);
-        console.log(chalk.green('NGINX default server block has been configured to match NetGetX requirements.'));
+        await execShellCommand(command);
+        console.log(chalk.green('Successfully configured NGINX with elevated privileges.'));
     } catch (error) {
-        console.error(chalk.red(`Failed to write NGINX default server block config at ${nginxPath}: ${error.message}`));
+        console.error(chalk.red(`Failed with elevated privileges: ${error.message}`));
+        displayManualInstructions(path, data);
     }
+};
+
+const escapeDataForShell = (data) => {
+    return data.replace(/'/g, "'\\''");
+};
+
+const displayManualInstructions = (path, data) => {
+    console.log(chalk.yellow('Please follow these instructions to manually configure the NGINX server block:'));
+    console.info(chalk.blue(`1. Open a terminal as a superuser or with root privileges.`));
+    console.info(chalk.blue(`2. Use a text editor to open the NGINX configuration file: sudo nano ${path}`));
+    console.info(chalk.blue(`3. Add or replace the following content:`));
+    console.info(chalk.green(data));
 };

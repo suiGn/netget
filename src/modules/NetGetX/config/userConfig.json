@@ -1,5 +1,8 @@
 {
   "nginxConfigurationProceed": false,
-  "nginxPath": "/opt/homebrew/etc/nginx/nginx.conf",
-  "useSudo": false
+  "nginxPath": "",
+  "nginxSitesAvailable": "",
+  "nginxSitesEnabled": "",
+  "useSudo": false,
+  "nginxExecutable": ""
 }

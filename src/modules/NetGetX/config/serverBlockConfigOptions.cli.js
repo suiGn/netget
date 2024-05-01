@@ -1,15 +1,16 @@
+// serverBlockConfigOptions.cli.js
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { configureDefaultServerBlock } from './configureDefaultServerBlock.js';
 
-export const serverBlockConfigOptions = async () => {
+export const serverBlockConfigOptions = async (userConfig) => {
     const answers = await inquirer.prompt([
         {
             type: 'list',
             name: 'action',
             message: 'How would you like to proceed with the server block configuration?',
             choices: [
-                'Restore NGINX Default to Recommended Settings',
+                'Set/Restore NGINX to Default NetGetX Recommended Settings.',
                 'Proceed with Current Configuration',
                 'Exit and Adjust Manually'
             ]
@@ -17,15 +18,15 @@ export const serverBlockConfigOptions = async () => {
     ]);
 
     switch (answers.action) {
-        case 'Restore NGINX Default to Recommended Settings':
-            await configureDefaultServerBlock();
-            break;
+        case 'Set/Restore NGINX to Default NetGetX Recommended Settings.':
+            await configureDefaultServerBlock(userConfig);
+            return true;  // Configuration was successfully restored
         case 'Proceed with Current Configuration':
             console.log(chalk.yellow('Proceeding with existing NGINX configuration.'));
-            break;
+            return true;  // Proceeding with existing configuration is considered successful
         case 'Exit and Adjust Manually':
             console.log(chalk.green('Please adjust your NGINX configuration manually as needed.'));
             process.exit(0);
-            break;
+            return false;  // Exiting for manual adjustment is considered unsuccessful
     }
 };

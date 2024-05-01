@@ -5,13 +5,15 @@ import { NetGetX } from './NetGetX/NetGetX.cli.js';
 import { i_DefaultNetGetX } from './NetGetX/config/i_DefaultNetGetX.js';
 import { handleGateways } from './Gateways/Gateways.js';
 import { handleGets } from './Gets/Gets.js';
+import pkg from '../../package.json' assert { type: 'json' };
+
 console.log(`
 Welcome to:
 ╔╗╔┌─┐┌┬┐╔═╗┌─┐┌┬┐
 ║║║├┤  │ ║ ╦├┤  │ 
 ╝╚╝└─┘ ┴ ╚═╝└─┘ ┴ 
 `);
-
+console.log(`v${pkg.version}...`);  // Logs the current version of the application
 export async function NetGetMainMenu() {
     /*
 
@@ -24,18 +26,17 @@ export async function NetGetMainMenu() {
         {
             type: 'list',
             name: 'action',
-            message: 'Choose an action:',
+            message: 'Main Menu:',
             choices: ['NetGetX', 'Gateways', 'Gets', new inquirer.Separator(), 'Exit'],
         },
     ]);
 
     switch (answers.action) {
         case 'NetGetX':
-            console.log(chalk.blue('Initializing NetGetX v0.0.0...'));
+            console.log(chalk.cyan.bold('Initializing NetGetX v0.1.0...'));
             try {
                 const setupVerified = await i_DefaultNetGetX();
                 if (setupVerified) {
-                    console.log(chalk.green('Setup verification successful.'));
                     console.log(`
                     ██╗  ██╗
                     ╚██╗██╔╝

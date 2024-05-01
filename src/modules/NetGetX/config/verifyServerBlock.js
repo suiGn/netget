@@ -1,79 +1,34 @@
-//verifyServerBlock.js
+// verifyServerBlock.js
 import fs from 'fs';
 import chalk from 'chalk';
-import inquirer from 'inquirer';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import { configureDefaultServerBlock } from './configureDefaultServerBlock.js';
-import { setNginxPath } from './setNginxPath.js';
+import defaultServerBlock from './defaultServerBlock.js';  // This contains the expected default server block configuration
+import { serverBlockConfigOptions } from './serverBlockConfigOptions.cli.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const userConfigPath = path.join(__dirname, 'userConfig.json');
+export const verifyServerBlock = async (userConfig) => {
+    console.log(chalk.blue('Verifying NGINX server block...'));
 
-async function loadUserConfig() {
+    const nginxConfigPath = userConfig.nginxPath;  // Path to nginx.conf
+
     try {
-        const data = await fs.promises.readFile(userConfigPath, { encoding: 'utf8' });
-        return JSON.parse(data);
-    } catch (error) {
-        console.error(chalk.red(`Failed to load user configuration: ${error.message}`));
-        return { nginxConfigurationProceed: false, nginxPath: '' };
-    }
-}
-
-async function saveUserConfig(userConfig) {
-    await fs.promises.writeFile(userConfigPath, JSON.stringify(userConfig, null, 2), { encoding: 'utf8' });
-}
-
-async function verifyServerBlock() {
-    console.log(chalk.blue('Running verifyServerBlock...'));
-    let userConfig = await loadUserConfig();
-
-    if (!userConfig.nginxPath) {
-        await setNginxPath();
-        userConfig = await loadUserConfig();  // Reload config after setting path
-    }
-
-    if (userConfig.nginxPath) {
-        try {
-            const defaultConfigData = await fs.promises.readFile(userConfig.nginxPath, 'utf8');
-            if (!defaultConfigData.includes("return 200 'NGINX Default Response. Server is running.';")) {
-                console.log(chalk.yellow('Default server block configuration does not match the expected setup. Visit Default Server Block Configuration.'));
-                if (!userConfig.nginxConfigurationProceed) {
-                    const action = await askUserForAction('NGINX');
-                    if (action === 'restore') {
-                        await configureDefaultServerBlock();
-                        //userConfig.nginxConfigurationProceed = true;
-                        //await saveUserConfig(userConfig);
-                    } else if (action === 'proceed') {
-                        userConfig.nginxConfigurationProceed = true;
-                        await saveUserConfig(userConfig);
-                    }
-                }
-                return false;
-            }
-            console.log(chalk.green('NGINX server block is configured correctly.'));
+        const configData = fs.readFileSync(nginxConfigPath, 'utf8');
+        if (configData.includes(defaultServerBlock.trim())) {
+            console.log(chalk.green('Default NGINX server block is correctly configured.'));
             return true;
-        } catch (error) {
-            console.error(chalk.red(`Error reading NGINX config: ${error.message}`));
-            return false;
+        } else {
+            console.log(chalk.yellow('Default NGINX server block does not match the expected setup.'));
+            if (userConfig.nginxConfigurationProceed) {
+                console.log(chalk.green('Proceeding with existing configuration as per user preference.'));
+                return true;
+            } else {
+                // Prompt the user for action and determine outcome based on their choice
+                const configurationSuccess = await serverBlockConfigOptions(userConfig);
+                return configurationSuccess;
+            }
         }
+    } catch (error) {
+        console.error(chalk.red(`Failed to read NGINX configuration from ${nginxConfigPath}: ${error.message}`));
+        console.log(chalk.yellow('Please clean your userConfig.json values and try again...'));
+
+        return false;
     }
-    return false;
-}
-
-async function askUserForAction(type) {
-    const response = await inquirer.prompt([{
-        type: 'list',
-        name: 'action',
-        message: `How would you like to proceed with the ${type} server block configuration?`,
-        choices: [
-            { name: 'Set/Restore to Recommended Default Settings', value: 'restore' },
-            { name: 'Proceed with current configuration', value: 'proceed' }
-        ]
-    }]);
-    return response.action;
-}
-
-export { verifyServerBlock };
+};
