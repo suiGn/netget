@@ -4,6 +4,9 @@
 
 -----------
 # Unleash the Cyberspace Within
+
+In development stage and subject to changes.
+
 **NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. Acts as a dynamic conduit, **directing internet traffic to local services**. Inspired by the vast digital landscapes of cyberpunk lore.
 
 Visit [netget.me](https://netget.me)
