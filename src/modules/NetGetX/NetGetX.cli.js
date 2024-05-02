@@ -4,6 +4,7 @@ import { showXBlocks } from './src/showXBlocks.js';
 import chalk from 'chalk';
 import { handleAddNewXBlock } from './src/handleAddNewXBlock.js';
 import { NetGetMainMenu } from '../netget_MainMenu.cli.js';
+import {nginxMenu } from './NGINX/nginx_menu.cli.js';
 //import { showNGXBlocks, addNewNGXBlock, showNGXDiscoveryNode, addNewNGXDiscoveryNode, netGetXSettings, aboutNetGetX } from './netGetXOptions.js'; 
 export async function NetGetX() {
     const answers = await inquirer.prompt({
@@ -13,10 +14,11 @@ export async function NetGetX() {
         choices: [
             'Show XBlocks',
             'Add New XBlock',
-            'Show X Discovery Nodes',
-            'Add New X Discovery Node',
-            'NetGetX Settings',
-            'About NetGetX',
+            'NGINX Menu',
+            //'Show X Discovery Nodes',
+            //'Add New X Discovery Node',
+            //'NetGetX Settings',
+            //'About NetGetX',
             'Main Menu',
             'Exit'
         ]
@@ -30,6 +32,9 @@ export async function NetGetX() {
         case 'Add New XBlock':
             await handleAddNewXBlock();
             console.log('Add New XBlock');
+            break;
+        case 'NGINX Menu':
+            await nginxMenu();
             break;
         case 'Main Menu':
             console.log(chalk.blue('Returning to the main menu...'));

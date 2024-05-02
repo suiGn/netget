@@ -1,12 +1,12 @@
 // defaultServerBlock.js
-const defaultServerBlock = `
+const getDefaultServerBlock = (userConfig) => `
 events {
     worker_connections 1024;
 }
 
 http {
-    include /etc/nginx/conf.d/*.conf;
-    include /etc/nginx/sites-enabled/*;
+    include ${userConfig.nginxSitesAvailable}/*.conf;
+    include ${userConfig.nginxSitesEnabled}/*;
 
     server {
         listen 80 default_server;
@@ -18,4 +18,5 @@ http {
     }
 }
 `;
-export default defaultServerBlock;
+
+export default getDefaultServerBlock;

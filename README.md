@@ -5,11 +5,13 @@
 -----------
 # Unleash the Cyberspace Within
 
-In development stage and subject to changes.
+> In development stage and subject to changes.
+>
+> Learn more at: [netget.me](https://netget.me)
 
-**NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. Acts as a dynamic conduit, **directing internet traffic to local services**. Inspired by the vast digital landscapes of cyberpunk lore.
+**NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. Acts as a dynamic conduit, **directing internet traffic to local services**. Inspired by the vast digital landscapes of cyberpunk lore and the simplicity of guitar pedals.
 
-Visit [netget.me](https://netget.me)
+
 
 ## Installation
 
@@ -29,7 +31,7 @@ netget
 
 ## What Does NetGetX Do?
 
-NetGetX serves as the backbone for configuring NGINX under the NetGet ecosystem. Here’s what it primarily focuses on:
+**NetGetX** serves as the backbone for configuring NGINX under the NetGet ecosystem. Here’s what it primarily focuses on:
 
 - **Verifying NGINX Server Block:** Ensures the default NGINX server block matches the expected setup for optimal traffic handling.
 - **Handling Permissions:** Manages permission issues that might occur during the configuration process, offering solutions like elevated privileges or manual instructions to proceed.

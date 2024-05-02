@@ -1,17 +1,18 @@
-// verifyServerBlock.js
+// netget/src/modules/NetGetX/config/verifyServerBlock.js
 import fs from 'fs';
 import chalk from 'chalk';
-import defaultServerBlock from './defaultServerBlock.js';  // This contains the expected default server block configuration
+import getDefaultServerBlock from './defaultServerBlock.js';  // Adjusted import to get the function
 import { serverBlockConfigOptions } from './serverBlockConfigOptions.cli.js';
 
 export const verifyServerBlock = async (userConfig) => {
     console.log(chalk.blue('Verifying NGINX server block...'));
 
     const nginxConfigPath = userConfig.nginxPath;  // Path to nginx.conf
+    const expectedServerBlock = getDefaultServerBlock(userConfig);  // Get the dynamic server block
 
     try {
         const configData = fs.readFileSync(nginxConfigPath, 'utf8');
-        if (configData.includes(defaultServerBlock.trim())) {
+        if (configData.includes(expectedServerBlock.trim())) {
             console.log(chalk.green('Default NGINX server block is correctly configured.'));
             return true;
         } else {

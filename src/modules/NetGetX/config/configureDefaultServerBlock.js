@@ -1,18 +1,19 @@
 // configureDefaultServerBlock.js
 import fs from 'fs';
 import chalk from 'chalk';
-import defaultServerBlock from './defaultServerBlock.js';  
+import getDefaultServerBlock from './defaultServerBlock.js';  
 import inquirer from 'inquirer';
 import { execShellCommand } from '../../utils/execShellCommand.js';  // Make sure this is correctly imported
 
 export const configureDefaultServerBlock = async (userConfig) => {
+    const serverBlock = getDefaultServerBlock(userConfig);
     try {
-        fs.writeFileSync(userConfig.nginxPath, defaultServerBlock);
+        fs.writeFileSync(userConfig.nginxPath, serverBlock);
         console.log(chalk.green(`NGINX default server block has been configured at ${userConfig.nginxPath}.`));
     } catch (error) {
         if (error.code === 'EACCES') {
             console.error(chalk.red(`Permission denied writing to ${userConfig.nginxPath}.`));
-            await handlePermissionError(userConfig.nginxPath, defaultServerBlock);
+            await handlePermissionError(userConfig.nginxPath, serverBlock);
         } else {
             console.error(chalk.red(`Error writing to ${userConfig.nginxPath}: ${error.message}`));
         }
