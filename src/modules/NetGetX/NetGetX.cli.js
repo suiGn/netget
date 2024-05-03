@@ -3,10 +3,12 @@ import inquirer from 'inquirer';
 import { showXBlocks } from './src/showXBlocks.js'; 
 import chalk from 'chalk';
 import { handleAddNewXBlock } from './src/handleAddNewXBlock.js';
-import { NetGetMainMenu } from '../netget_MainMenu.cli.js';
-import {nginxMenu } from './NGINX/nginx_menu.cli.js';
+import NetGetMainMenu  from '../netget_MainMenu.cli.js';
+import nginxMenu from './NGINX/nginx_menu.cli.js';
+import { getState, updateState } from './xState.js';
 //import { showNGXBlocks, addNewNGXBlock, showNGXDiscoveryNode, addNewNGXDiscoveryNode, netGetXSettings, aboutNetGetX } from './netGetXOptions.js'; 
-export async function NetGetX() {
+export default async function NetGetX_CLI() {
+    const x = getState();
     const answers = await inquirer.prompt({
         type: 'list',
         name: 'option',

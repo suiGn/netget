@@ -3,10 +3,9 @@ import chalk from 'chalk';
 import { exec } from 'child_process';
 import { loadUserConfig } from '../utils/loadUserConfig.js';  
 
-export async function checkNginxStatus() {
+export async function checkNginxStatus(x) {
     try {
-        const userConfig = await loadUserConfig();  // Load the configuration
-        const nginxCommand = userConfig.nginxExecutable;
+        const nginxCommand = x.nginxExecutable;
         // Form the command to check the status of NGINX with userConfig
         const statusCommand = `${nginxCommand} -t`;
 

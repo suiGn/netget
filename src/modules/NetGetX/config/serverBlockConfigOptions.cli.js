@@ -1,7 +1,7 @@
-// serverBlockConfigOptions.cli.js
+//netget/src/modules/NetGetX/config/serverBlockConfigOptions.cli.js
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import { configureDefaultServerBlock } from './configureDefaultServerBlock.js';
+import setDefaultServerBlock from './setDefaultServerBlock.js';
 
 export const serverBlockConfigOptions = async (userConfig) => {
     const answers = await inquirer.prompt([
@@ -19,7 +19,7 @@ export const serverBlockConfigOptions = async (userConfig) => {
 
     switch (answers.action) {
         case 'Set/Restore NGINX to Default NetGetX Recommended Settings.':
-            await configureDefaultServerBlock(userConfig);
+            await setDefaultServerBlock(userConfig);
             return true;  // Configuration was successfully restored
         case 'Proceed with Current Configuration':
             console.log(chalk.yellow('Proceeding with existing NGINX configuration.'));

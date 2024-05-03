@@ -1,12 +1,13 @@
 {
     "name": "netget",
-    "version": "2.4.31",
+    "version": "2.4.35",
     "description": "Rette Adepto/ Recibido Directamente.",
     "type": "module",
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
+        "postinstall": "node ./src/scripts/postInstall.js",
         "doc": "jsdoc -c jsdoc.json"
     },
     "bin": {

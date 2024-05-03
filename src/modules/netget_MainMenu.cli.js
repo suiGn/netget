@@ -1,11 +1,10 @@
 // netget_MainMenu.js
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import { NetGetX } from './NetGetX/NetGetX.cli.js';
+import  NetGetX_CLI  from './NetGetX/NetGetX.cli.js';
 import { i_DefaultNetGetX } from './NetGetX/config/i_DefaultNetGetX.js';
 import { handleGateways } from './Gateways/Gateways.js';
 import { handleGets } from './Gets/Gets.js';
-import pkg from '../../package.json' assert { type: 'json' };
 
 console.log(`
 Welcome to:
@@ -13,8 +12,8 @@ Welcome to:
 ║║║├┤  │ ║ ╦├┤  │ 
 ╝╚╝└─┘ ┴ ╚═╝└─┘ ┴ 
 `);
-console.log(`v${pkg.version}...`);  // Logs the current version of the application
-export async function NetGetMainMenu() {
+console.log(`v2.4.31`);  // Logs the current version of the application
+export default async function NetGetMainMenu() {
     /*
 
 ╔╗╔┌─┐┌┬┐╔═╗┌─┐┌┬┐
@@ -33,22 +32,23 @@ export async function NetGetMainMenu() {
 
     switch (answers.action) {
         case 'NetGetX':
-            console.log(chalk.cyan.bold('Initializing NetGetX v0.1.0...'));
             try {
-                const setupVerified = await i_DefaultNetGetX();
-                if (setupVerified) {
+                const x = await i_DefaultNetGetX();
+                if (x) {
                     console.log(`
-                    ██╗  ██╗
-                    ╚██╗██╔╝
-                     ╚███╔╝ 
-                     ██╔██╗ 
-                    ██╔╝ ██╗
-                    ╚═╝  ╚═╝
-                    `);
-                    await NetGetX();  // Proceed to the interactive menu if setup is verified
+                    ██╗  ██╗ .nginxPath at: ${chalk.green(x.nginxPath)}
+                    ╚██╗██╔╝ .nginxSitesAvailable at: ${chalk.green(x.nginxsitesAvailable)}
+                     ╚███╔╝  .nginxSitesEnabled at: ${chalk.green(x.nginxSitesEnabled)}
+                     ██╔██╗  .nginxExecutable at: ${chalk.green(x.nginxExecutable)}
+                    ██╔╝ ██╗ .publicIP: ${chalk.green(x.publicIP)}
+                    ╚═╝  ╚═╝ .localIP: ${chalk.green(x.localIP)}
+                                                ...                  
+                                                ...`);
+         await NetGetX_CLI();  // Proceed to the interactive menu if setup is verified
                 } else {
                     console.log(chalk.red('Setup verification failed. Please resolve any issues before proceeding.'));
                     // Optionally, return to the main menu or provide options to retry
+                    return false;
                 }
             } catch (error) {
                 console.log(chalk.red(`An error occurred during setup verification: ${error.message}`));

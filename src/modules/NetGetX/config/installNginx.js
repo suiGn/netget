@@ -1,12 +1,12 @@
 import os from 'os';
 import chalk from 'chalk';
-import inquirer from 'inquirer';
+import { exec } from 'child_process';
 import { execShellCommand } from '../../utils/execShellCommand.js';  
 
-const checkForChoco = async () => {
+const checkForChoco = () => {
     return new Promise((resolve, reject) => {
         exec('choco', (error, stdout, stderr) => {
-            if (error && stderr.includes('is not recognized as an internal or external command, operable program or batch file.')) {
+            if (stderr && stderr.includes('is not recognized')) {
                 resolve(false);  // Chocolatey is not installed.
             } else {
                 resolve(true);  // Chocolatey is installed or another error not related to existence.
@@ -17,24 +17,20 @@ const checkForChoco = async () => {
 
 const determineInstallCommand = (version) => {
     switch (os.platform()) {
-        case 'darwin':
-            return 'brew install nginx';
-        case 'linux':
-            return 'sudo apt-get install nginx -y';
-        case 'win32':
-            return 'choco install nginx';
-        default:
-            return null;  // Unsupported OS
+        case 'darwin': return 'brew install nginx';
+        case 'linux': return 'sudo apt-get install nginx -y';
+        case 'win32': return 'choco install nginx';
+        default: return null;  // Unsupported OS
     }
 };
 
-export const installNginx = async (version) => {
+const installNginx = async () => {
     if (os.platform() === 'win32' && !await checkForChoco()) {
         console.error(chalk.yellow('Chocolatey is not installed. Please install Chocolatey or install NGINX manually.'));
         return false;
     }
 
-    const installCmd = determineInstallCommand(version);
+    const installCmd = determineInstallCommand();
     if (!installCmd) {
         console.error(chalk.red('Unsupported operating system for automatic installation.'));
         return false;
@@ -108,3 +104,5 @@ const suggestLinuxFix = (installCmd) => {
 const suggestWindowsFix = (installCmd) => {
     console.log(chalk.cyan(`Ensure you have the necessary admin rights to run '${installCmd}' or check the installation steps for NGINX on Windows.`));
 };
+
+export default installNginx; 

@@ -4,16 +4,19 @@ import inquirer from 'inquirer';
 import { exec } from 'child_process';
 import chalk from 'chalk';
 import { checkNginxStatus } from './checkNginxStatus.js';
-import { NetGetX } from '../NetGetX.cli.js';
+import nginxRestart from './nginxRestart.js';
+import NetGetX_CLI from '../NetGetX.cli.js';
+import { getState, updateState } from '../xState.js';
 
-export async function nginxMenu() {
+export default async function nginxMenu() {
+    const x = getState();
     console.log(chalk.green('NGINX Management Menu'));
     const answers = await inquirer.prompt({
         type: 'list',
         name: 'nginxAction',
         message: 'Select NGINX operation:',
         choices: [
-            'Check NGINX Status',
+            'NGINX Status',
             'Start NGINX',
             'Stop NGINX',
             'Restart NGINX',
@@ -24,18 +27,20 @@ export async function nginxMenu() {
     });
 
     switch (answers.nginxAction) {
-        case 'Check NGINX Status':
-            await checkNginxStatus();
+        case 'NGINX Status':
+            await checkNginxStatus(x);
             break;
         case 'Start NGINX':
         case 'Stop NGINX':
         case 'Restart NGINX':
+            await nginxRestart(x);
+            break;
         case 'Reload NGINX':
         case 'View NGINX Logs':
             await execCommand(resolveCommand(answers.nginxAction));
             break;
         case 'Back to NetGetX Menu':
-            await NetGetX();
+            await NetGetX_CLI();
             return; // Exit to prevent loop
     }
 

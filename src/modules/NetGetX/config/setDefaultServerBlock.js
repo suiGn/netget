@@ -1,11 +1,11 @@
-// configureDefaultServerBlock.js
+// netget/src/modules/NetGetX/config/configureDefaultServerBlock.js
 import fs from 'fs';
 import chalk from 'chalk';
 import getDefaultServerBlock from './defaultServerBlock.js';  
 import inquirer from 'inquirer';
 import { execShellCommand } from '../../utils/execShellCommand.js';  // Make sure this is correctly imported
 
-export const configureDefaultServerBlock = async (userConfig) => {
+const setDefaultServerBlock = async (userConfig) => {
     const serverBlock = getDefaultServerBlock(userConfig);
     try {
         fs.writeFileSync(userConfig.nginxPath, serverBlock);
@@ -70,3 +70,5 @@ const displayManualInstructions = (path, data) => {
     console.info(chalk.blue(`3. Add or replace the following content:`));
     console.info(chalk.green(data));
 };
+
+export default setDefaultServerBlock;

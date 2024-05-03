@@ -34,17 +34,14 @@ const findNginxConfig = () => {
 
 const detectNginxPaths = () => {
     let nginxConfigPath = findNginxConfig();
-
     if (!nginxConfigPath) {
         console.error(chalk.red('NGINX configuration file not found.'));
         return null;
     }
-
     // Assuming standard directory structure relative to the main config path
     let baseDir = path.dirname(nginxConfigPath);
     let sitesAvailable = path.join(baseDir, 'sites-available');
     let sitesEnabled = path.join(baseDir, 'sites-enabled');
-
     return {
         nginxPath: nginxConfigPath,
         nginxSitesAvailable: fs.existsSync(sitesAvailable) ? sitesAvailable : '',

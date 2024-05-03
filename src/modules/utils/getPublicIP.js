@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-async function checkPublicIP() {
+async function getPublicIP() {
     try {
         const response = await fetch('https://api.ipify.org?format=json');
         if (response.ok) {
@@ -16,4 +16,4 @@ async function checkPublicIP() {
     }
 }
 
-export default checkPublicIP;
+export default getPublicIP;
