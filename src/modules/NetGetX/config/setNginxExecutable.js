@@ -26,7 +26,6 @@ export default async function setNginxExecutable(userConfig) {
                 return false;
             }
         }
-
         await saveUserConfig({
             nginxExecutable: userConfig.nginxExecutable
         });

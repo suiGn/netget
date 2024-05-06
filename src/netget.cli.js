@@ -12,7 +12,11 @@ getDir();
 program
   .description('NetGet Command Line Interface')
   .version('1.0.3')
-  .action(NetGetMainMenu);
+  .option('-dev, --development', 'Run NetGet in development mode')
+  .action((options) => {
+    // Pass the development flag down to the main menu
+    NetGetMainMenu(options.development);
+  });
 
 program.command('netget-x')
   .description('Directly interact with NetGetX')

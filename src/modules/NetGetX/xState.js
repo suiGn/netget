@@ -1,6 +1,5 @@
 // xState.js
 import chalk from 'chalk';
-
 let xState = {};
 
 export const initializeState = (data) => {

@@ -3,6 +3,7 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import  NetGetX_CLI  from './NetGetX/NetGetX.cli.js';
 import { i_DefaultNetGetX } from './NetGetX/config/i_DefaultNetGetX.js';
+import { i_dev_DefaultNetGetX } from './NetGetX/config/dev/i_dev_DefaultNetGetX.js';  
 import { handleGateways } from './Gateways/Gateways.js';
 import { handleGets } from './Gets/Gets.js';
 
@@ -13,46 +14,42 @@ Welcome to:
 ╝╚╝└─┘ ┴ ╚═╝└─┘ ┴ 
 `);
 console.log(`v2.4.31`);  // Logs the current version of the application
-export default async function NetGetMainMenu() {
-    /*
-
-╔╗╔┌─┐┌┬┐╔═╗┌─┐┌┬┐
-║║║├┤  │ ║ ╦├┤  │ 
-╝╚╝└─┘ ┴ ╚═╝└─┘ ┴ 
-
-*/
+export default async function NetGetMainMenu(isDevelopment) {
+console.log(`NetGet CLI running in ${isDevelopment ? 'Development' : 'Production'} mode`);    
     const answers = await inquirer.prompt([
-        {
-            type: 'list',
-            name: 'action',
-            message: 'Main Menu:',
-            choices: ['NetGetX', 'Gateways', 'Gets', new inquirer.Separator(), 'Exit'],
+    {
+        type: 'list',
+        name: 'action',
+        message: 'Main Menu:',
+        choices: ['NetGetX', 'Gateways', 'Gets', new inquirer.Separator(), 'Exit'],
         },
     ]);
 
     switch (answers.action) {
         case 'NetGetX':
             try {
-                const x = await i_DefaultNetGetX();
+                let x;  // Declare x without assigning
+                if (isDevelopment) {
+                    x = await i_dev_DefaultNetGetX();  // Load development configuration
+                } else {
+                    x = await i_DefaultNetGetX();  // Load production configuration
+                }
                 if (x) {
                     console.log(`
-                    ██╗  ██╗ .nginxPath at: ${chalk.green(x.nginxPath)}
-                    ╚██╗██╔╝ .nginxSitesAvailable at: ${chalk.green(x.nginxsitesAvailable)}
-                     ╚███╔╝  .nginxSitesEnabled at: ${chalk.green(x.nginxSitesEnabled)}
-                     ██╔██╗  .nginxExecutable at: ${chalk.green(x.nginxExecutable)}
-                    ██╔╝ ██╗ .publicIP: ${chalk.green(x.publicIP)}
-                    ╚═╝  ╚═╝ .localIP: ${chalk.green(x.localIP)}
-                                                ...                  
-                                                ...`);
-         await NetGetX_CLI();  // Proceed to the interactive menu if setup is verified
+                        ██╗  ██╗ .nginxPath at: ${chalk.green(x.nginxPath)}
+                        ╚██╗██╔╝ .XBlocksAvailable at: ${chalk.green(x.XBlocksAvailable)}
+                         ╚███╔╝  .XBlocksEnabled at: ${chalk.green(x.XBlocksEnabled)}
+                         ██╔██╗  .netgetXExecutable at: ${chalk.green(x.nginxExecutable)}
+                        ██╔╝ ██╗ .publicIP: ${chalk.green(x.publicIP)}
+                        ╚═╝  ╚═╝ .localIP: ${chalk.green(x.localIP)}
+                    `);
+                    await NetGetX_CLI(isDevelopment);  // Pass the development flag to the CLI
                 } else {
                     console.log(chalk.red('Setup verification failed. Please resolve any issues before proceeding.'));
-                    // Optionally, return to the main menu or provide options to retry
                     return false;
                 }
             } catch (error) {
                 console.log(chalk.red(`An error occurred during setup verification: ${error.message}`));
-                // Error handling or further actions can be defined here
             }
             break;
         case 'Gateways':
@@ -68,4 +65,3 @@ export default async function NetGetMainMenu() {
             process.exit();
     }
 }
-

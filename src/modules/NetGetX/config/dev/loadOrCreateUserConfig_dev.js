@@ -1,32 +1,35 @@
-//netget/src/modules/NetGetX/config/loadOrCreateUserConfig.js
+//netget/src/modules/NetGetX/config/dev/loadOrCreateUserConfig_dev.js
 import fs, { stat } from 'fs';
 import chalk from 'chalk';
 import path from 'path';
 import os from 'os';
 
-const CONFIG_DIR = path.join(os.homedir(), '.get');
-const USER_CONFIG_FILE = path.join(CONFIG_DIR, 'userConfigX.json');
+const CONFIG_DIR_DEV = path.join(os.homedir(), '.get/dev');
+const USER_CONFIG_FILE = path.join(CONFIG_DIR_DEV, 'userConfigX_dev.json');
 
-export default async function loadOrCreateUserConfig() {
+export default async function loadOrCreateUserConfig_dev() {
     try {
         if (!fs.existsSync(USER_CONFIG_FILE)) {
-            console.log(chalk.yellow('User configuration file does not exist. Creating default configuration...'));
-            const defaultConfig = {
+            console.log(chalk.yellow('Dev User configuration file does not exist. Creating default configuration...'));
+            const defaultConfig_dev = {
                 nginxConfigurationProceed: false,
                 nginxPath: "",
                 nginxDir: "",
+                getPath: "",
+                devPath: "",
+                staticPath: "",
+                XBlockDev_DefaultServer: "",
+                dev_nginxDir: "",
                 XBlocksAvailable: "",
                 XBlocksEnabled: "",
-                getPath: "",
-                staticPath: "",
-                devPath: "",
                 nginxExecutable: "",
                 sslCertificatePath: "",
                 sslCertificateKeyPath: "",
                 useSudo: false
             };
-            fs.writeFileSync(USER_CONFIG_FILE, JSON.stringify(defaultConfig, null, 4));
-            return defaultConfig;
+            fs.writeFileSync(USER_CONFIG_FILE, JSON.stringify(defaultConfig_dev, null, 4));
+            console.log(chalk.green('Dev User configuration file created.'));
+            return defaultConfig_dev;
         } else {
             const data = await fs.promises.readFile(USER_CONFIG_FILE, 'utf8');
             return JSON.parse(data);

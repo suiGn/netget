@@ -50,4 +50,4 @@ export default async function NetGetX_CLI() {
             await NetGetX(); // Recurse back to the menu unless exiting
             break;
     }
-}
+};
