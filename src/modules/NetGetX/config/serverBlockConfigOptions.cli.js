@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import setDefaultServerBlock from './setDefaultServerBlock.js';
 
-export const serverBlockConfigOptions = async (userConfig) => {
+export const serverBlockConfigOptions = async (xConfig) => {
     const answers = await inquirer.prompt([
         {
             type: 'list',
@@ -19,7 +19,7 @@ export const serverBlockConfigOptions = async (userConfig) => {
 
     switch (answers.action) {
         case 'Set/Restore NGINX to Default NetGetX Recommended Settings.':
-            await setDefaultServerBlock(userConfig);
+            await setDefaultServerBlock(xConfig);
             return true;  // Configuration was successfully restored
         case 'Proceed with Current Configuration':
             console.log(chalk.yellow('Proceeding with existing NGINX configuration.'));

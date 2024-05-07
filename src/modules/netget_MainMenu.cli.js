@@ -3,7 +3,6 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import  NetGetX_CLI  from './NetGetX/NetGetX.cli.js';
 import { i_DefaultNetGetX } from './NetGetX/config/i_DefaultNetGetX.js';
-import { i_dev_DefaultNetGetX } from './NetGetX/config/dev/i_dev_DefaultNetGetX.js';  
 import { handleGateways } from './Gateways/Gateways.js';
 import { handleGets } from './Gets/Gets.js';
 
@@ -14,8 +13,7 @@ Welcome to:
 ╝╚╝└─┘ ┴ ╚═╝└─┘ ┴ 
 `);
 console.log(`v2.4.31`);  // Logs the current version of the application
-export default async function NetGetMainMenu(isDevelopment) {
-console.log(`NetGet CLI running in ${isDevelopment ? 'Development' : 'Production'} mode`);    
+export default async function NetGetMainMenu() {
     const answers = await inquirer.prompt([
     {
         type: 'list',
@@ -27,31 +25,21 @@ console.log(`NetGet CLI running in ${isDevelopment ? 'Development' : 'Production
 
     switch (answers.action) {
         case 'NetGetX':
-            try {
-                let x;  // Declare x without assigning
-                if (isDevelopment) {
-                    x = await i_dev_DefaultNetGetX();  // Load development configuration
-                } else {
-                    x = await i_DefaultNetGetX();  // Load production configuration
-                }
-                if (x) {
-                    console.log(`
+            const x = await i_DefaultNetGetX();  // Load production configuration
+            if (x) {
+                console.log(`
                         ██╗  ██╗ .nginxPath at: ${chalk.green(x.nginxPath)}
                         ╚██╗██╔╝ .XBlocksAvailable at: ${chalk.green(x.XBlocksAvailable)}
                          ╚███╔╝  .XBlocksEnabled at: ${chalk.green(x.XBlocksEnabled)}
                          ██╔██╗  .netgetXExecutable at: ${chalk.green(x.nginxExecutable)}
                         ██╔╝ ██╗ .publicIP: ${chalk.green(x.publicIP)}
                         ╚═╝  ╚═╝ .localIP: ${chalk.green(x.localIP)}
-                    `);
-                    await NetGetX_CLI(isDevelopment);  // Pass the development flag to the CLI
-                } else {
-                    console.log(chalk.red('Setup verification failed. Please resolve any issues before proceeding.'));
-                    return false;
-                }
-            } catch (error) {
-                console.log(chalk.red(`An error occurred during setup verification: ${error.message}`));
-            }
-            break;
+                        `);
+                        await NetGetX_CLI();  // Pass the development flag to the CLI
+                    } else {
+                        console.log(chalk.red('Setup verification failed. Please resolve any issues before proceeding.'));
+                    }
+                    break;
         case 'Gateways':
             console.log(chalk.yellow('Selected Gateways'));
             // Call Gateways functionality here

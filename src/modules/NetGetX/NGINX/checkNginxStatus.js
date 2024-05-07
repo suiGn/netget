@@ -1,7 +1,6 @@
 // netget/src/modules/NetGetX/NGINX/checkNginxStatus.js
 import chalk from 'chalk';
 import { exec } from 'child_process';
-import { loadUserConfig } from '../utils/loadUserConfig.js';  
 
 export async function checkNginxStatus(x) {
     try {
