@@ -1,9 +1,16 @@
 // netget/src/modules/NetGetX/config/verifyServerBlock.js
 import fs from 'fs';
 import chalk from 'chalk';
-import getDefaultServerBlock from './defaultServerBlock.js';  // Adjusted import to get the function
+import getDefaultServerBlock from './xDefaultServerBlock.js';  // Adjusted import to get the function
 import { serverBlockConfigOptions } from './serverBlockConfigOptions.cli.js';
 
+/**
+ * Verifies if the existing NGINX server block matches the expected configuration.
+ * If not, it may prompt the user to update the configuration depending on the user's settings.
+ *
+ * @param {Object} xConfig - The configuration object containing the path to the NGINX config file and user preferences.
+ * @returns {Promise<boolean>} True if the current configuration is correct or successfully updated; false if it fails.
+ */
 const verifyServerBlock = async (xConfig) => {
     const nginxConfigPath = xConfig.nginxPath;  // Path to nginx.conf
     const expectedServerBlock = getDefaultServerBlock(xConfig);  // Get the dynamic server block

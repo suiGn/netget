@@ -1,6 +1,10 @@
 // scripts/postInstall.js
 import { initializeDirectories } from '../modules/utils/GETDirs.js';  // Adjust the path as necessary depending on your project structure
-
+/**
+ * This script is executed after the package is installed.
+ * It initializes the default directories for the project.
+ * You can customize this script to perform other post-install tasks as needed.
+ */
 // Function to run on post-install
 function runPostInstall() {
     try {

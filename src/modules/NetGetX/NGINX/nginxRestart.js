@@ -4,6 +4,7 @@ import chalk from 'chalk';
 /**
  * Restarts the NGINX server using the provided configuration.
  * @param {Object} config - The configuration object which should include the NGINX executable path.
+ * @returns {Promise<boolean>} Promise resolving to true if restart was successful, false otherwise.
  */
 const nginxRestart = async (config) => {
     let restartCommand;
@@ -16,6 +17,9 @@ const nginxRestart = async (config) => {
         case 'linux':
             restartCommand = 'sudo systemctl restart nginx';
             break;
+        case 'win32 nssm': // Windows
+            restartCommand = 'nssm restart nginx'; // This assumes NGINX is installed as a service named 'nginx'
+            break;
         default:
             console.error(chalk.red('Unsupported operating system for automatic restart.'));
             return false;
@@ -24,6 +28,11 @@ const nginxRestart = async (config) => {
     return execCommand(restartCommand);
 };
 
+/**
+ * Executes a shell command and logs the output or errors.
+ * @param {string} command - The command to execute.
+ * @returns {Promise<boolean>} Promise resolving to true if command was successful, false otherwise.
+ */
 const execCommand = (command) => {
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {

@@ -10,6 +10,35 @@ import chalk from 'chalk';
 const baseDir = path.dirname(fileURLToPath(import.meta.url));
 /***********************
  * Customizable Gateway.*
+ * The Gateway class is a customizable gateway that allows you to define routes for different domains.
+ * The routes are defined as an object mapping domain names to request handlers.
+ * The gateway listens on a specified port and host, and routes requests based on the domain name.
+ * If no specific route is found for a domain, a default route is used.
+ * The gateway also serves static files and logs requests using morgan.
+ * The configuration for the gateway can be provided through an object or environment variables.
+ * The default configuration values are:
+ * host: 'localhost'
+ * port: 3432
+ * routes: {}
+ * domainsConfigPath: './config/domains.json'
+ * The gateway uses express as the underlying web server framework.
+ * To use the gateway, create an instance of the Gateway class and call the listen method.
+ * Example:
+ * const gateway = new netget.Gateway({
+ *  host: 'localhost',
+ * port: 3000,
+ * routes: {
+ * 'example.com': (req, res) => {
+ * res.send('Hello from example.com!');
+ * },
+ * 'sub.example.com': (req, res) => {
+ * res.send('Hello from sub.example.com!');
+ * },
+ * },
+ * });
+ * gateway.listen();
+ * The example above creates a gateway listening on port 3000 with routes for example.com and sub.example.com.
+ * The routes respond with different messages based on the domain name.
  ***********************/
 class Gateway {
    /**

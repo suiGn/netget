@@ -7,7 +7,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet src/gateway.js</title>
+  <title>NetGet src/Gateway.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -113,7 +113,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="Gateway.html">Gateway</a></li></ul><h3>Global</h3><ul><li><a href="global.html#testGateway">testGateway</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="Gateway.html">Gateway</a></li><li><a href="NetGet.html">NetGet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Path_Exists">Path_Exists</a></li><li><a href="global.html#checkForChoco">checkForChoco</a></li><li><a href="global.html#checkNginxStatus">checkNginxStatus</a></li><li><a href="global.html#checkPermissions">checkPermissions</a></li><li><a href="global.html#determineInstallCommand">determineInstallCommand</a></li><li><a href="global.html#displayManualInstructions">displayManualInstructions</a></li><li><a href="global.html#ensureDirectoryExists">ensureDirectoryExists</a></li><li><a href="global.html#escapeDataForShell">escapeDataForShell</a></li><li><a href="global.html#execCommand">execCommand</a></li><li><a href="global.html#execShellCommand">execShellCommand</a></li><li><a href="global.html#findNginxConfig">findNginxConfig</a></li><li><a href="global.html#getDirectoryPaths">getDirectoryPaths</a></li><li><a href="global.html#getLocalIP">getLocalIP</a></li><li><a href="global.html#getNginxConfigAndDir">getNginxConfigAndDir</a></li><li><a href="global.html#getPublicIP">getPublicIP</a></li><li><a href="global.html#handleDarwinError">handleDarwinError</a></li><li><a href="global.html#handleInstallationError">handleInstallationError</a></li><li><a href="global.html#handleLinuxError">handleLinuxError</a></li><li><a href="global.html#handlePermissionError">handlePermissionError</a></li><li><a href="global.html#handlePermissionErrorForEnsureDir">handlePermissionErrorForEnsureDir</a></li><li><a href="global.html#handleWindowsError">handleWindowsError</a></li><li><a href="global.html#i_DefaultNetGetX">i_DefaultNetGetX</a></li><li><a href="global.html#initializeDirectories">initializeDirectories</a></li><li><a href="global.html#installNginx">installNginx</a></li><li><a href="global.html#nginxRestart">nginxRestart</a></li><li><a href="global.html#setDefaultServerBlock">setDefaultServerBlock</a></li><li><a href="global.html#setNginxConfigAndDir">setNginxConfigAndDir</a></li><li><a href="global.html#setNginxExecutable">setNginxExecutable</a></li><li><a href="global.html#testGateway">testGateway</a></li><li><a href="global.html#tryElevatedPrivileges">tryElevatedPrivileges</a></li><li><a href="global.html#verifyNginxInstallation">verifyNginxInstallation</a></li><li><a href="global.html#verifyServerBlock">verifyServerBlock</a></li></ul></div>
                 
             </nav>
         </div>
@@ -121,7 +121,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>src/gateway.js</h1>
+                    <h1>src/Gateway.js</h1>
                 </header>
                 
 
@@ -130,17 +130,47 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import express from 'express';
+            <pre class="prettyprint source linenums"><code>//src/gateway.js
+import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
 import defaultRoutes from './routes/defaultRoutes.js';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import chalk from 'chalk';
-// Determine the base directory for static file serving and view engine setup
+// Determine the base directory for static file serving and view engine setup8
 const baseDir = path.dirname(fileURLToPath(import.meta.url));
 /***********************
  * Customizable Gateway.*
+ * The Gateway class is a customizable gateway that allows you to define routes for different domains.
+ * The routes are defined as an object mapping domain names to request handlers.
+ * The gateway listens on a specified port and host, and routes requests based on the domain name.
+ * If no specific route is found for a domain, a default route is used.
+ * The gateway also serves static files and logs requests using morgan.
+ * The configuration for the gateway can be provided through an object or environment variables.
+ * The default configuration values are:
+ * host: 'localhost'
+ * port: 3432
+ * routes: {}
+ * domainsConfigPath: './config/domains.json'
+ * The gateway uses express as the underlying web server framework.
+ * To use the gateway, create an instance of the Gateway class and call the listen method.
+ * Example:
+ * const gateway = new netget.Gateway({
+ *  host: 'localhost',
+ * port: 3000,
+ * routes: {
+ * 'example.com': (req, res) => {
+ * res.send('Hello from example.com!');
+ * },
+ * 'sub.example.com': (req, res) => {
+ * res.send('Hello from sub.example.com!');
+ * },
+ * },
+ * });
+ * gateway.listen();
+ * The example above creates a gateway listening on port 3000 with routes for example.com and sub.example.com.
+ * The routes respond with different messages based on the domain name.
  ***********************/
 class Gateway {
    /**
@@ -153,7 +183,7 @@ class Gateway {
    */
   constructor({   
     host = process.env.HOST || 'localhost', 
-    port = process.env.NETGET_PORT || 3000, 
+    port = process.env.NETGET_PORT || 3432, 
     routes = {},
     domainsConfigPath = process.env.DOMAINS_CONFIG_PATH || './config/domains.json' 
   } = {}) {
@@ -181,25 +211,47 @@ class Gateway {
 
     morgan.token('host', (req) => req.hostname || req.headers['host'] || '-');
     this.app.use(morgan(':method :url :status :res[content-length] - :response-time ms - Host: :host'));
-    /* This middleware checks the request's ::::::::hostname::::::and uses the corresponding handler or the default one.
-    Hard-coded and Dynamic Domain Handling in the Gateway  , 
-        Define two methods. 
-        1. Static object this.handlers for domains with predefined handlers. 
-        2. Fetch Handler configurations dynamically from a PostgreSQL database v.path.mlisa.me,
-         for domains that require dynamic content serving, such as browser.pixelgrid.me/html.js.
+
+
     this.app.use((req, res) => {
-        // Check if handlers object is empty (no handlers defined at all)
-        const noHandlersDefined = Object.keys(this.handlers).length === 0;
-        const handler = this.handlers[req.hostname] || ((req, res) => defaultHandler(req, res, noHandlersDefined));
-        handler(req, res);
+      const fullUrl = `${req.hostname || req.headers['host']}${req.url}`;
+      let handler = null;
+  
+      // Check for exact match first (full URL)
+      Object.keys(this.routes).some(pattern => {
+          const regexPattern = new RegExp(`^${pattern.replace(/\*/g, '.*')}$`); // Convert pattern to regex, replacing * with .*
+          if (regexPattern.test(fullUrl)) {
+              handler = this.routes[pattern];
+              return true; // Stop iteration once match is found
+          }
+          return false;
       });
-  }*/
-    this.app.use((req, res) => {
-      // Check if handlers object is empty (no handlers defined at all)
-      const noRoutesDefined = Object.keys(this.routes).length === 0;
-      const routes = this.routes[req.hostname] || ((req, res) => defaultRoutes(req, res, noRoutesDefined));
-      routes(req, res);
-    });
+  
+      // If no handler found, check if there's a more general match or use default
+      if (!handler) {
+          // Extract hostname for broader match
+          const hostname = req.hostname || req.headers['host'];
+          Object.keys(this.routes).some(pattern => {
+              if (pattern === hostname) {
+                  handler = this.routes[pattern];
+                  return true;
+              } else if (pattern.startsWith('*.')) {
+                  const baseDomain = pattern.slice(2);
+                  if (hostname.endsWith(baseDomain) &amp;&amp; (hostname.split('.').length === baseDomain.split('.').length + 1)) {
+                      handler = this.routes[pattern];
+                      return true;
+                  }
+              }
+              return false;
+          });
+      }
+  
+      // Fallback to default if no specific handler is found
+      handler = handler || defaultRoutes;
+      handler(req, res);
+  });
+
+    
   }
   /**
    * Starts the gateway, making it listen on the configured port.
@@ -210,7 +262,6 @@ class Gateway {
     });
   }
 }
-
 export default Gateway;
 </code></pre>
         </article>

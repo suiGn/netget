@@ -1,6 +1,36 @@
 {
   "source": {
-    "include": ["./src/","./src/gateway.js", "./src/netget.js", "./src/routes/defaultRoutes.js", "./src/routes/routes.js", "./index.js", "./tests/"]
+    "include": [
+      "./README.md",
+     "./src/netget.js", 
+      "./src/Gateway.js",
+      "./src/modules/NetGetX/config/i_DefaultNetGetX.js",
+      "./src/modules/NetGetX/config/NginxPaths.js",
+      "./src/modules/NetGetX/config/setDefaultServerBlock.js",
+      "./src/modules/NetGetX/config/setSSLCertificates.js",
+      "./src/modules/NetGetX/config/verifyNginxConfig.js",
+      "./src/modules/NetGetX/config/verifyServerBlock.js",
+      "./src/modules/NetGetX/config/xDefaultServerBlock.js",      
+      "./src/modules/NetGetX/NGINX/checkNginxStatus.js",
+      "./src/modules/NetGetX/NGINX/findNginxConfig.js",
+      "./src/modules/NetGetX/NGINX/installNginx.js",
+      "./src/modules/NetGetX/NGINX/nginxRestart.js",
+      "./src/modules/NetGetX/NGINX/verifyNginxInstallation.js",
+      "./src/modules/NetGetX/src/addXBlock.js",
+      "./src/modules/NetGetX/src/handleAddNewXBlock.js",
+      "./src/modules/NetGetX/src/showXBlocks.js",
+      "./src/modules/Gateways/Gateways.js",
+      "./src/modules/Gets/Gets.js",
+      "./src/modules/utils/configureSSL.js",
+      "./src/modules/utils/GETDirs.js",
+      "./src/modules/utils/handlePermissionErrorForEnsureDir.js",
+      "./src/modules/utils/ipUtils.js",
+      "./src/modules/utils/pathUtils.js",
+      "./src/routes/defaultHandlers.js",
+      "./src/routes/defaultRoutes.js",
+      "./src/routes/routes.js",
+      "./index.js", 
+       "./tests/"]
   },
   "opts": {
     "destination": "./docs",

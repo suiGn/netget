@@ -113,7 +113,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="Gateway.html">Gateway</a></li></ul><h3>Global</h3><ul><li><a href="global.html#testGateway">testGateway</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="Gateway.html">Gateway</a></li><li><a href="NetGet.html">NetGet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Path_Exists">Path_Exists</a></li><li><a href="global.html#checkForChoco">checkForChoco</a></li><li><a href="global.html#checkNginxStatus">checkNginxStatus</a></li><li><a href="global.html#checkPermissions">checkPermissions</a></li><li><a href="global.html#determineInstallCommand">determineInstallCommand</a></li><li><a href="global.html#displayManualInstructions">displayManualInstructions</a></li><li><a href="global.html#ensureDirectoryExists">ensureDirectoryExists</a></li><li><a href="global.html#escapeDataForShell">escapeDataForShell</a></li><li><a href="global.html#execCommand">execCommand</a></li><li><a href="global.html#execShellCommand">execShellCommand</a></li><li><a href="global.html#findNginxConfig">findNginxConfig</a></li><li><a href="global.html#getDirectoryPaths">getDirectoryPaths</a></li><li><a href="global.html#getLocalIP">getLocalIP</a></li><li><a href="global.html#getNginxConfigAndDir">getNginxConfigAndDir</a></li><li><a href="global.html#getPublicIP">getPublicIP</a></li><li><a href="global.html#handleDarwinError">handleDarwinError</a></li><li><a href="global.html#handleInstallationError">handleInstallationError</a></li><li><a href="global.html#handleLinuxError">handleLinuxError</a></li><li><a href="global.html#handlePermissionError">handlePermissionError</a></li><li><a href="global.html#handlePermissionErrorForEnsureDir">handlePermissionErrorForEnsureDir</a></li><li><a href="global.html#handleWindowsError">handleWindowsError</a></li><li><a href="global.html#i_DefaultNetGetX">i_DefaultNetGetX</a></li><li><a href="global.html#initializeDirectories">initializeDirectories</a></li><li><a href="global.html#installNginx">installNginx</a></li><li><a href="global.html#nginxRestart">nginxRestart</a></li><li><a href="global.html#setDefaultServerBlock">setDefaultServerBlock</a></li><li><a href="global.html#setNginxConfigAndDir">setNginxConfigAndDir</a></li><li><a href="global.html#setNginxExecutable">setNginxExecutable</a></li><li><a href="global.html#testGateway">testGateway</a></li><li><a href="global.html#tryElevatedPrivileges">tryElevatedPrivileges</a></li><li><a href="global.html#verifyNginxInstallation">verifyNginxInstallation</a></li><li><a href="global.html#verifyServerBlock">verifyServerBlock</a></li></ul></div>
                 
             </nav>
         </div>
@@ -130,7 +130,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// ./src/handlers/defaultHandler.js
+            <pre class="prettyprint source linenums"><code>// ./src/handlers/defaultRoutes.js
 /**
  * Renders a default response when no specific handler is found for a request.
  * This function serves as a fallback handler to provide informative feedback to the user or administrator.
@@ -146,7 +146,7 @@ export default function defaultRoutes(req, res, noRoutesDefined = false) {
     message += " No Routes have been defined.&lt;br/> To configure your Domain Routes, please refer to Docs: &lt;br/>  https://netget.me ";
   } else {
     message += ` No Route found for ${req.hostname}.&lt;br/> If you are the administrator, please define a route for this domain. &lt;br/>  https://netget.me `;
-  }
+  } 
 
   const showDomainListLink = !noRoutesDefined;
 

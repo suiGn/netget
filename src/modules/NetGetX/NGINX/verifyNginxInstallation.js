@@ -1,6 +1,18 @@
 import { execSync } from 'child_process';
 import fs from 'fs';
 import chalk from 'chalk';
+/**
+ * Verifies the installation of NGINX on the system.
+ * @returns {string|null} - The path to the NGINX executable or null if not found.
+ * @example
+ * const nginxPath = verifyNginxInstallation();
+ * if (nginxPath) {
+ *  console.log(`NGINX found at: ${nginxPath}`);
+ * } else {
+ * console.log('NGINX not found on system PATH or common locations.');
+ * }
+ * @see {@link https://nginx.org/|NGINX}
+ * */
 
 async function verifyNginxInstallation() {
     const nginxPaths = [
@@ -24,18 +36,17 @@ async function verifyNginxInstallation() {
             return result;
         }
     } catch (error) {
-        console.warn(chalk.yellow(`NGINX not found on system PATH.`));
+        // Delay warning until after all paths have been checked
     }
 
     // If 'which' or 'where' fails, check common paths directly
     for (let nginxPath of nginxPaths) {
         if (fs.existsSync(nginxPath)) {
-            console.log(chalk.green(`NGINX executable found at: ${nginxPath}`));
+            console.log(chalk.green(`NGINX executable at: ${nginxPath}`));
             return nginxPath;
         }
     }
-
-    console.log(chalk.red("NGINX executable not found on this system."));
+    console.warn(chalk.yellow(`NGINX not found on system PATH or any common locations.`));
     return null;
 }
 

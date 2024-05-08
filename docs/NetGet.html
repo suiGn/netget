@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet index.js</title>
+  <title>NetGet NetGet</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -120,38 +118,578 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>index.js</h1>
+                    <p>Class</p>
+                    <h1>NetGet</h1>
                 </header>
                 
 
 
 
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Entry point of netGet node module.
- * default exports NetGet
- * defaultHandler exports defaultHandler
- * @example
- * import NetGet, { defaultHandler } from 'netget';
- * const netget = new NetGet();
- * const gateway = netget.Gateway({ host: 'localhost', port: 3000 });
- * gateway.listen();
- * gateway.addRoute('example.com', defaultHandler);
- * gateway.addRoute('sub.example.com', (req, res) => { 
- * res.send('Hello from sub.example.com!'); }
- * );
- * @module index
- */
 
-import NetGet from './src/netget.js';
-export { defaultHandler } from './src/routes/defaultHandlers.js';
-export default NetGet;
-console.log("NetGet Loaded.");</code></pre>
-        </article>
-    </section>
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>NetGet<span class="signature">(config)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Represents the main entry point for NetGet functionalities.
+Handles the instantiation of gateways and configuration loading.
+Entry point for the NetGet service as a node module.
+Exports the NetGet class.
+Example:
+const netget = new NetGet();
+const gateway = netget.Gateway({ host: 'localhost', port: 3000 });
+gateway.listen();</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
+
+
+    
+    <h4 class="name" id="NetGet">
+        <a class="href-link" href="#NetGet">#</a>
+        
+        <span class="code-name">
+            
+                new NetGet<span class="signature">(config)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Constructs the NetGet service, initializing any necessary base configurations.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>config</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The configuration object for the NetGet service.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="src_netget.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_netget.js.html">src/netget.js</a>, <a href="src_netget.js.html#line13">line 13</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="Gateway">
+        <a class="href-link" href="#Gateway">#</a>
+        
+        <span class="code-name">
+            
+                Gateway<span class="signature">(config)</span><span class="type-signature"> &rarr; {<a href="Gateway.html">Gateway</a>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates a Gateway instance with specified configuration.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>config</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Configuration options for the Gateway.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="src_netget.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_netget.js.html">src/netget.js</a>, <a href="src_netget.js.html#line27">line 27</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>An instance of the Gateway configured with the provided options.</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type"><a href="Gateway.html">Gateway</a></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".loadDomainConfig">
+        <a class="href-link" href="#.loadDomainConfig">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                loadDomainConfig<span class="signature">(domainConfigPath)</span><span class="type-signature"> &rarr; {Object|null}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Loads and parses the domain configuration from a specified file.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>domainConfigPath</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The path to the domain configuration file.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="src_netget.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_netget.js.html">src/netget.js</a>, <a href="src_netget.js.html#line36">line 36</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>The parsed domain configuration object or null if an error occurs.</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Object</code>
+|
+
+<code class="param-type">null</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

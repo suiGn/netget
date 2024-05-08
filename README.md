@@ -9,7 +9,7 @@
 >
 > Learn more at: [netget.me](https://netget.me)
 
-**NetGet** streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. Acts as a dynamic conduit, **directing internet traffic to local services**. Inspired by the vast digital landscapes of cyberpunk lore and the simplicity of guitar pedals.
+**NetGet** streamlines the orchestration of domains and networks with the simplicity of a pedal's press, enabling seamless connections across networked realms. Acts as a dynamic conduit, **directing internet traffic to local services**. Inspired by the vast digital landscapes of cyberpunk lore and the simplicity of guitar pedals.
 
 
 
@@ -31,13 +31,9 @@ netget
 
 ## What Does NetGetX Do?
 
-**NetGetX** serves as the backbone for configuring NGINX under the NetGet ecosystem. Here’s what it primarily focuses on:
+**NetGetX** serves as a front face to the public. Acting as a reverse proxy to redirect all traffic in a specify Port. 
 
-- **Verifying NGINX Server Block:** Ensures the default NGINX server block matches the expected setup for optimal traffic handling.
-- **Handling Permissions:** Manages permission issues that might occur during the configuration process, offering solutions like elevated privileges or manual instructions to proceed.
-- **Routing Traffic:** Configures NGINX to listen on public IPs and route incoming HTTP requests to designated internal servers, making it ideal for environments that require efficient traffic management.
-
-By using NetGetX, you ensure that NGINX is optimally configured to act as a robust, efficient gateway, directing incoming traffic to the right internal endpoints without manual intervention.
+By using NetGetX, you ensure that NGINX is optimally configured to act as a robust, efficient channel, directing incoming traffic to the right internal endpoints without manual intervention.
 
 ---
 

@@ -2,19 +2,20 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
+import os from 'os';
 import { saveXConfig } from './xConfig.js';
 
 /**
  * Finds the NGINX configuration file and its base directory on the system.
+ * Adjusts the approach based on the operating system for better compatibility.
  * @returns {object} An object containing paths to the NGINX configuration file and its base directory or null values if not found.
  */
 async function getNginxConfigAndDir() {
-    const configPaths = [
-        '/etc/nginx/nginx.conf',
-        '/usr/local/etc/nginx/nginx.conf',
-        '/opt/homebrew/etc/nginx/nginx.conf',
-        'C:\\nginx\\nginx.conf'
-    ];
+    const isWindows = os.platform() === 'win32';
+    const configPaths = isWindows
+        ? ['C:\\nginx\\nginx.conf']
+        : ['/etc/nginx/nginx.conf', '/usr/local/etc/nginx/nginx.conf', '/opt/homebrew/etc/nginx/nginx.conf'];
+
     // Check if any standard path exists and return the path and its base directory
     const foundPath = configPaths.find(fs.existsSync);
     if (foundPath) {
@@ -23,9 +24,13 @@ async function getNginxConfigAndDir() {
             basePath: path.dirname(foundPath)
         };
     }
-    // Try to find nginx path in the system PATH and extract the configuration file using 'nginx -t'
+
+    // Use appropriate system command to find the executable and config file
     try {
-        const systemPath = execSync('which nginx').toString().trim();
+        const systemCommand = isWindows ? 'where' : 'which';
+        const systemPath = execSync(`${systemCommand} nginx`).toString().trim();
+        if (!systemPath) throw new Error('NGINX executable not found.');
+        
         const configTestCmd = `${systemPath} -t`;
         const output = execSync(configTestCmd).toString();
         const match = output.match(/nginx: configuration file (\S*) syntax is ok/);
@@ -41,8 +46,6 @@ async function getNginxConfigAndDir() {
     // Return null if no configuration path or base directory could be found
     return { configPath: null, basePath: null };
 }
-
-
 /**
  * Sets the NGINX configuration path in the user configuration.
  * @param {object} xConfig The user configuration object.
@@ -61,6 +64,13 @@ async function setNginxConfigAndDir(nginxConfigPath, nginxBasePath) {
 }
 
 
+/**
+ * Attempts to set the NGINX executable path in the configuration based on the detected system paths or by querying the system environment.
+ * Adjusts the method based on the operating system to enhance compatibility.
+ * 
+ * @param {Object} xConfig - The configuration object that holds NGINX related settings.
+ * @returns {Promise<boolean>} Returns true if the executable path is successfully set, otherwise false.
+ */
 async function setNginxExecutable(xConfig) {
     if (!xConfig.nginxPath) {
         console.log("NGINX configuration path is not set. Please configure it first.");
@@ -92,6 +102,7 @@ async function setNginxExecutable(xConfig) {
         return false;
     }
 }
+
 export {
      getNginxConfigAndDir,
      setNginxConfigAndDir, 

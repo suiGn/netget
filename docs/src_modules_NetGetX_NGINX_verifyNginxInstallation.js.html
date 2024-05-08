@@ -7,7 +7,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet index.js</title>
+  <title>NetGet src/modules/NetGetX/NGINX/verifyNginxInstallation.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -121,7 +121,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>index.js</h1>
+                    <h1>src/modules/NetGetX/NGINX/verifyNginxInstallation.js</h1>
                 </header>
                 
 
@@ -130,26 +130,60 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Entry point of netGet node module.
- * default exports NetGet
- * defaultHandler exports defaultHandler
+            <pre class="prettyprint source linenums"><code>import { execSync } from 'child_process';
+import fs from 'fs';
+import chalk from 'chalk';
+/**
+ * Verifies the installation of NGINX on the system.
+ * @returns {string|null} - The path to the NGINX executable or null if not found.
  * @example
- * import NetGet, { defaultHandler } from 'netget';
- * const netget = new NetGet();
- * const gateway = netget.Gateway({ host: 'localhost', port: 3000 });
- * gateway.listen();
- * gateway.addRoute('example.com', defaultHandler);
- * gateway.addRoute('sub.example.com', (req, res) => { 
- * res.send('Hello from sub.example.com!'); }
- * );
- * @module index
- */
+ * const nginxPath = verifyNginxInstallation();
+ * if (nginxPath) {
+ *  console.log(`NGINX found at: ${nginxPath}`);
+ * } else {
+ * console.log('NGINX not found on system PATH or common locations.');
+ * }
+ * @see {@link https://nginx.org/|NGINX}
+ * */
 
-import NetGet from './src/netget.js';
-export { defaultHandler } from './src/routes/defaultHandlers.js';
-export default NetGet;
-console.log("NetGet Loaded.");</code></pre>
+async function verifyNginxInstallation() {
+    const nginxPaths = [
+        '/usr/sbin/nginx',
+        '/usr/local/nginx/sbin/nginx',
+        '/usr/local/sbin/nginx',
+        '/usr/local/bin/nginx',
+        '/sbin/nginx',
+        '/opt/nginx/sbin/nginx',
+        '/opt/homebrew/bin/nginx', // Homebrew managed nginx on newer macOS
+        'C:\\Program Files\\nginx\\nginx.exe',
+        'C:\\nginx\\nginx.exe'
+    ];
+
+    // First, try to detect using 'which' or 'where' based on the platform
+    try {
+        const command = process.platform === 'win32' ? 'where' : 'which';
+        const result = execSync(`${command} nginx`).toString().trim();
+        if (result) {
+            console.log(chalk.green(`NGINX executable at: ${result}`));
+            return result;
+        }
+    } catch (error) {
+        // Delay warning until after all paths have been checked
+    }
+
+    // If 'which' or 'where' fails, check common paths directly
+    for (let nginxPath of nginxPaths) {
+        if (fs.existsSync(nginxPath)) {
+            console.log(chalk.green(`NGINX executable at: ${nginxPath}`));
+            return nginxPath;
+        }
+    }
+    console.warn(chalk.yellow(`NGINX not found on system PATH or any common locations.`));
+    return null;
+}
+
+export default verifyNginxInstallation;
+</code></pre>
         </article>
     </section>
 

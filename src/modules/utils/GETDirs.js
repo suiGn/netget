@@ -1,5 +1,4 @@
 //netget/src/modules/utils/GETDirs.js
-import fs from 'fs';
 import path from 'path';
 import os from 'os';
 import { ensureDirectoryExists } from './pathUtils.js';
@@ -19,6 +18,7 @@ const DIRECTORIES = {
     devSSLCertificatesPath: path.join(BASE_DIR, 'dev', 'ssl', 'certificates'),
     devSSLCertificateKeyPath: path.join(BASE_DIR, 'dev', 'ssl', 'key'),
 };
+
 /* Safety and Non-Destructive Behavior
 No Deletion or Overwriting: The script does not contain any commands to delete or overwrite files or directories.
  The fs.mkdirSync() function only creates directories; it does not modify or delete existing files or directories.
@@ -35,18 +35,6 @@ function initializeDirectories() {
         // checkPermissions(dir, 0o755); // Uncomment if needed
     });
 }
-
-/**
- * Checks and corrects permissions of a directory.
- * @param {string} dirPath - Path of the directory to check.
- * @param {number} desiredMode - Desired permission mode (e.g., 0o755).
- */
-const checkPermissions = (dirPath, desiredMode) => {
-    const stats = fs.statSync(dirPath);
-    if ((stats.mode & 0o777) !== desiredMode) {
-        fs.chmodSync(dirPath, desiredMode);
-    }
-};
 
 /**
  * Get paths to important directories.

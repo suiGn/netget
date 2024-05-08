@@ -7,7 +7,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet index.js</title>
+  <title>NetGet src/modules/utils/pathUtils.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -121,7 +121,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>index.js</h1>
+                    <h1>src/modules/utils/pathUtils.js</h1>
                 </header>
                 
 
@@ -130,26 +130,63 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Entry point of netGet node module.
- * default exports NetGet
- * defaultHandler exports defaultHandler
- * @example
- * import NetGet, { defaultHandler } from 'netget';
- * const netget = new NetGet();
- * const gateway = netget.Gateway({ host: 'localhost', port: 3000 });
- * gateway.listen();
- * gateway.addRoute('example.com', defaultHandler);
- * gateway.addRoute('sub.example.com', (req, res) => { 
- * res.send('Hello from sub.example.com!'); }
- * );
- * @module index
- */
+            <pre class="prettyprint source linenums"><code>import fs from 'fs';
+import chalk from 'chalk';
 
-import NetGet from './src/netget.js';
-export { defaultHandler } from './src/routes/defaultHandlers.js';
-export default NetGet;
-console.log("NetGet Loaded.");</code></pre>
+/**
+ * Checks and corrects permissions of a directory.
+ * @param {string} dirPath - Path of the directory to check.
+ * @param {number} desiredMode - Desired permission mode (e.g., 0o755).
+ */
+const checkPermissions = (dirPath, desiredMode) => {
+    const stats = fs.statSync(dirPath);
+    if ((stats.mode &amp; 0o777) !== desiredMode) {
+        fs.chmodSync(dirPath, desiredMode);
+    }
+};
+
+
+/**
+ * Function to ensure the directory exists and has the correct permissions.
+ * @param {string} directory - The directory path to check or create.
+ * @param {number} [desiredMode=0o755] - The desired permission mode to set if the directory is created or permissions are incorrect.
+ */
+function ensureDirectoryExists(directory, desiredMode = 0o755) {
+    try {
+        let directoryExists = fs.existsSync(directory);
+        if (!directoryExists) {
+            fs.mkdirSync(directory, { recursive: true });
+            console.log(chalk.green(`Directory created: ${directory}`));
+        } else {
+            //console.log(chalk.blue(`Directory already exists: ${directory}`));
+        }
+        // Check and set permissions whether the directory was just created or already existed
+        checkPermissions(directory, desiredMode);
+    } catch (error) {
+        if (error.code === 'EACCES') {
+            console.error(chalk.red(`Permission denied to create or modify directory at ${directory}.`));
+            console.error(chalk.yellow(`To resolve this, you can run the following command with administrator privileges:`));
+            console.info(chalk.cyan(`sudo mkdir -p ${directory} &amp;&amp; sudo chmod ${desiredMode.toString(8)} ${directory}`));
+            throw new Error(`PermissionError: ${error.message}`);
+        } else {
+            console.error(chalk.red(`An error occurred while trying to ensure directory exists at ${directory}: ${error.message}`));
+        }
+    }
+}
+
+
+/**
+ * Checks if a specified path (directory or file) exists.
+ * @param {string} path - The path to check.
+ * @returns {boolean} - True if the path exists, false otherwise.
+ */
+function Path_Exists(path) {
+    return fs.existsSync(path);
+}
+
+// Export both functions explicitly
+export { ensureDirectoryExists, Path_Exists, checkPermissions };
+</code></pre>
         </article>
     </section>
 

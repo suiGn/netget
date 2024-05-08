@@ -1,9 +1,12 @@
 // findNginxConfig.js
 import fs from 'fs';
-import os from 'os';
-import path from 'path';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
+
+/**
+ * Finds the NGINX configuration file path.
+ * @returns {string|null} - The path to the NGINX configuration file or null if not found.
+ */
 
 const findNginxConfig = () => {
     // Array of potential standard paths for nginx.conf

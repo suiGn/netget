@@ -7,7 +7,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet index.js</title>
+  <title>NetGet src/netget.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -121,7 +121,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>index.js</h1>
+                    <h1>src/netget.js</h1>
                 </header>
                 
 
@@ -130,26 +130,54 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Entry point of netGet node module.
- * default exports NetGet
- * defaultHandler exports defaultHandler
- * @example
- * import NetGet, { defaultHandler } from 'netget';
+            <pre class="prettyprint source linenums"><code>// src/netget.js
+import Gateway from './Gateway.js';
+/**
+ * Represents the main entry point for NetGet functionalities.
+ * Handles the instantiation of gateways and configuration loading.
+ * Entry point for the NetGet service as a node module.
+ * Exports the NetGet class.
+ * Example:
  * const netget = new NetGet();
  * const gateway = netget.Gateway({ host: 'localhost', port: 3000 });
  * gateway.listen();
- * gateway.addRoute('example.com', defaultHandler);
- * gateway.addRoute('sub.example.com', (req, res) => { 
- * res.send('Hello from sub.example.com!'); }
- * );
- * @module index
  */
-
-import NetGet from './src/netget.js';
-export { defaultHandler } from './src/routes/defaultHandlers.js';
-export default NetGet;
-console.log("NetGet Loaded.");</code></pre>
+class NetGet {
+  /**
+   * Constructs the NetGet service, initializing any necessary base configurations.
+   * @constructor
+   * @param {Object} config - The configuration object for the NetGet service.
+   */
+  constructor() {
+    // Initialization code, if necessary
+  }
+  /**
+   * Creates a Gateway instance with specified configuration.
+   * @param {Object} config - Configuration options for the Gateway.
+   * @returns {Gateway} An instance of the Gateway configured with the provided options.
+   */
+  Gateway(config) {
+    const gateway = new Gateway(config);
+    return gateway;
+  }
+  /**
+   * Loads and parses the domain configuration from a specified file.
+   * @param {string} domainConfigPath - The path to the domain configuration file.
+   * @returns {Object|null} The parsed domain configuration object or null if an error occurs.
+   */
+  static loadDomainConfig(domainConfigPath) {
+    try {
+      const data = fs.readFileSync(domainConfigPath, 'utf8');
+      const domainConfig = JSON.parse(data);
+      console.log('Loaded Domain Configuration:', domainConfig);
+      return domainConfig;
+    } catch (err) {
+      console.error('Error loading domain configuration:', err);
+      return null;
+    }
+  }
+}
+export default NetGet;</code></pre>
         </article>
     </section>
 

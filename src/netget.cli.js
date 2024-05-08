@@ -5,7 +5,6 @@ import { handleGateways } from './modules/Gateways/Gateways.js';
 import { handleGets } from './modules/Gets/Gets.js';
 import  NetGetMainMenu  from './modules/netget_MainMenu.cli.js';
 
-
 // Entry Points Options and Commands
 program
   .description('NetGet Command Line Interface')

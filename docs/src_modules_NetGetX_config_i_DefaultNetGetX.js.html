@@ -1,4 +1,136 @@
-//i_DefaultNetGetX.js
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  ...
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NetGet src/modules/NetGetX/config/i_DefaultNetGetX.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="style.css">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">NetGet</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://suign.github.io/all.this/"
+                        >
+                            All.This
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://suign.github.io/"
+                        >
+                            @Source
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/suiGn/netget"
+                        >
+                            Github
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://netget.me"
+                        >
+                            netget.me
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://www.neurons.me/all-this"
+                        >
+                            What is all.this?
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="Gateway.html">Gateway</a></li><li><a href="NetGet.html">NetGet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Path_Exists">Path_Exists</a></li><li><a href="global.html#checkForChoco">checkForChoco</a></li><li><a href="global.html#checkNginxStatus">checkNginxStatus</a></li><li><a href="global.html#checkPermissions">checkPermissions</a></li><li><a href="global.html#determineInstallCommand">determineInstallCommand</a></li><li><a href="global.html#displayManualInstructions">displayManualInstructions</a></li><li><a href="global.html#ensureDirectoryExists">ensureDirectoryExists</a></li><li><a href="global.html#escapeDataForShell">escapeDataForShell</a></li><li><a href="global.html#execCommand">execCommand</a></li><li><a href="global.html#execShellCommand">execShellCommand</a></li><li><a href="global.html#findNginxConfig">findNginxConfig</a></li><li><a href="global.html#getDirectoryPaths">getDirectoryPaths</a></li><li><a href="global.html#getLocalIP">getLocalIP</a></li><li><a href="global.html#getNginxConfigAndDir">getNginxConfigAndDir</a></li><li><a href="global.html#getPublicIP">getPublicIP</a></li><li><a href="global.html#handleDarwinError">handleDarwinError</a></li><li><a href="global.html#handleInstallationError">handleInstallationError</a></li><li><a href="global.html#handleLinuxError">handleLinuxError</a></li><li><a href="global.html#handlePermissionError">handlePermissionError</a></li><li><a href="global.html#handlePermissionErrorForEnsureDir">handlePermissionErrorForEnsureDir</a></li><li><a href="global.html#handleWindowsError">handleWindowsError</a></li><li><a href="global.html#i_DefaultNetGetX">i_DefaultNetGetX</a></li><li><a href="global.html#initializeDirectories">initializeDirectories</a></li><li><a href="global.html#installNginx">installNginx</a></li><li><a href="global.html#nginxRestart">nginxRestart</a></li><li><a href="global.html#setDefaultServerBlock">setDefaultServerBlock</a></li><li><a href="global.html#setNginxConfigAndDir">setNginxConfigAndDir</a></li><li><a href="global.html#setNginxExecutable">setNginxExecutable</a></li><li><a href="global.html#testGateway">testGateway</a></li><li><a href="global.html#tryElevatedPrivileges">tryElevatedPrivileges</a></li><li><a href="global.html#verifyNginxInstallation">verifyNginxInstallation</a></li><li><a href="global.html#verifyServerBlock">verifyServerBlock</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>src/modules/NetGetX/config/i_DefaultNetGetX.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//i_DefaultNetGetX.js
 import chalk from 'chalk';
 import path from 'path';
 import { 
@@ -26,7 +158,7 @@ import handlePermissionErrorForEnsureDir from '../../utils/handlePermissionError
 
 /**
  * Sets default paths for NGINX and other directories if they are not already set.
- * @returns {Promise<Object>} The updated user configuration object.
+ * @returns {Promise&lt;Object>} The updated user configuration object.
  * @example
  * i_DefaultNetGetX(); 
  * Returns the sate of the configuration object set in xConfig.js to x.
@@ -196,7 +328,7 @@ let xConfig = await loadOrCreateXConfig();
  // Verify and set NGINX configuration path
  if (!xConfig.nginxPath || !xConfig.nginxDir) {
     const nginxPath = await getNginxConfigAndDir();
-    if (nginxPath && nginxPath.configPath) {
+    if (nginxPath &amp;&amp; nginxPath.configPath) {
         console.log(chalk.green(`Found NGINX configuration path: ${nginxPath.configPath}`));
         const setSuccess = await setNginxConfigAndDir(nginxPath.configPath, nginxPath.basePath);
         if (setSuccess) {
@@ -224,7 +356,7 @@ if (!xConfig.nginxExecutable) {
 } 
 
 // Check if the nginxDir is set and the path exists before attempting to create XBlocks-available directory
-if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
+if (xConfig.nginxDir &amp;&amp; Path_Exists(xConfig.nginxDir)) {
     // Ensure 'XBlocks-available' directory exists or create it
     const xBlocksAvailablePath = path.join(xConfig.nginxDir, 'XBlocks-available');
     try {
@@ -238,7 +370,7 @@ if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
         }
     }
     // Check if the directory was successfully created or already exists and update configuration if necessary
-    if (!xConfig.XBlocksAvailable && Path_Exists(xBlocksAvailablePath)) {
+    if (!xConfig.XBlocksAvailable &amp;&amp; Path_Exists(xBlocksAvailablePath)) {
         await saveXConfig({ XBlocksAvailable: xBlocksAvailablePath });
         xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
         console.log(chalk.green("nginx/XBlocks-available path set successfully."));
@@ -252,7 +384,7 @@ if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
 
 
 // Check if the nginxDir is set and the path exists before attempting XBlocs-enabled directory creation
-if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
+if (xConfig.nginxDir &amp;&amp; Path_Exists(xConfig.nginxDir)) {
     // Ensure 'XBlocks-enabled' directory exists or create it
     const xBlocksEnabledPath = path.join(xConfig.nginxDir, 'XBlocks-enabled');
     try {
@@ -266,7 +398,7 @@ if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
         }
     }
     // Check if the directory was successfully created or already exists and update configuration if necessary
-    if (!xConfig.XBlocksEnabled && Path_Exists(xBlocksEnabledPath)) {
+    if (!xConfig.XBlocksEnabled &amp;&amp; Path_Exists(xBlocksEnabledPath)) {
         await saveXConfig({ XBlocksEnabled: xBlocksEnabledPath });
         xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
         console.log(chalk.green("nginx/XBlocks-enabled path set successfully."));
@@ -281,7 +413,7 @@ if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
 
 //DEVELOPMENT SETTINGS
 // Ensure 'dev_X' directory exists or create it
-if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
+if (xConfig.nginxDir &amp;&amp; Path_Exists(xConfig.nginxDir)) {
     // Ensure 'dev_X' directory exists or create it
     const dev_X = path.join(xConfig.nginxDir, 'dev_X');
     try {
@@ -295,7 +427,7 @@ if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
         }
     }
     // Check if the directory was successfully created or already exists and update configuration if necessary
-    if (!xConfig.nginxDevDir && Path_Exists(dev_X)) {
+    if (!xConfig.nginxDevDir &amp;&amp; Path_Exists(dev_X)) {
         await saveXConfig({ nginxDevDir: dev_X });
         xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
         console.log(chalk.green("nginx/dev_X path set successfully."));
@@ -308,7 +440,7 @@ if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
 }
 
 // Check if the nginxDevDir is set and the path exists before attempting to create subdirectories
-if (xConfig.nginxDevDir && Path_Exists(xConfig.nginxDevDir)) {
+if (xConfig.nginxDevDir &amp;&amp; Path_Exists(xConfig.nginxDevDir)) {
     // Ensure DEV 'XBlocks-available' directory exists or create it
     const dev_xBlocksAvailablePath = path.join(xConfig.nginxDevDir, 'XBlocks-available');
     try {
@@ -322,7 +454,7 @@ if (xConfig.nginxDevDir && Path_Exists(xConfig.nginxDevDir)) {
         }
     }
     // Check if the directory was successfully created or already exists and update configuration if necessary
-    if (!xConfig.dev_XBlocksAvailable && Path_Exists(dev_xBlocksAvailablePath)) {
+    if (!xConfig.dev_XBlocksAvailable &amp;&amp; Path_Exists(dev_xBlocksAvailablePath)) {
         await saveXConfig({ dev_XBlocksAvailable: dev_xBlocksAvailablePath });
         xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
         console.log(chalk.green("nginx/dev_X/XBlocks-available path set successfully."));
@@ -336,7 +468,7 @@ if (xConfig.nginxDevDir && Path_Exists(xConfig.nginxDevDir)) {
 
 
 // Check if the nginxDevDir is set and the path exists before attempting to create subdirectories
-if (xConfig.nginxDevDir && Path_Exists(xConfig.nginxDevDir)) {
+if (xConfig.nginxDevDir &amp;&amp; Path_Exists(xConfig.nginxDevDir)) {
     // Ensure DEV 'XBlocks-enabled' directory exists or create it
     const dev_xBlocksEnabledPath = path.join(xConfig.nginxDevDir, 'XBlocks-enabled');
     try {
@@ -350,7 +482,7 @@ if (xConfig.nginxDevDir && Path_Exists(xConfig.nginxDevDir)) {
     }
 }
     // Check if the directory was successfully created or already exists and update configuration if necessary
-    if (!xConfig.dev_XBlocksEnabled && Path_Exists(dev_xBlocksEnabledPath)) {
+    if (!xConfig.dev_XBlocksEnabled &amp;&amp; Path_Exists(dev_xBlocksEnabledPath)) {
         await saveXConfig({ dev_XBlocksEnabled: dev_xBlocksEnabledPath });
         xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
         console.log(chalk.green("nginx/devX/XBlocks enabled path set successfully."));
@@ -410,3 +542,49 @@ return x;
 
 };
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>
+<style>
+.center-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 89px;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+</style>
+<div class="center-div">
+  <img src="https://suign.github.io/neurons.me/neurons_logo.png" alt="Witness our Seal.">
+</div>
+<a href="http://neurons.me" target="_blank">neurons.me</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>

@@ -3,6 +3,10 @@ import chalk from 'chalk';
 import { exec } from 'child_process';
 import { execShellCommand } from '../../utils/execShellCommand.js';  
 
+/**
+ * Checks if Chocolatey is installed on Windows.
+ * @returns {Promise<boolean>} - Returns true if Chocolatey is installed, otherwise false.
+    */
 const checkForChoco = () => {
     return new Promise((resolve, reject) => {
         exec('choco', (error, stdout, stderr) => {
@@ -14,7 +18,10 @@ const checkForChoco = () => {
         });
     });
 };
-
+/** Determine the appropriate installation command based on the OS. 
+* @param {string} version - The version of NGINX to install.
+* @returns {string|null} - The installation command for the OS or null if unsupported.
+**/
 const determineInstallCommand = (version) => {
     switch (os.platform()) {
         case 'darwin': return 'brew install nginx';
@@ -24,6 +31,10 @@ const determineInstallCommand = (version) => {
     }
 };
 
+/**
+ * Installs NGINX on the system.
+ * @returns {Promise<boolean>} - Returns true if installation was successful, otherwise false.
+ **/
 const installNginx = async () => {
     if (os.platform() === 'win32' && !await checkForChoco()) {
         console.error(chalk.yellow('Chocolatey is not installed. Please install Chocolatey or install NGINX manually.'));
@@ -46,6 +57,12 @@ const installNginx = async () => {
     }
 };
 
+/**
+ * Handles errors encountered during installation.
+ * @param {string} installCmd - The installation command that failed.
+ * @param {Error} error - The error object thrown during installation.
+* @returns {boolean} - Returns true if the error is non-fatal, otherwise false. 
+**/
 const handleInstallationError = async (installCmd, error) => {
     // Log the error and provide OS-specific advice
     console.error(chalk.red(`Installation error encountered: ${error.message}`));
@@ -63,6 +80,12 @@ const handleInstallationError = async (installCmd, error) => {
     }
 };
 
+/**
+ * Handles errors specific to macOS.
+ * @param {string} installCmd - The installation command that failed.
+ * @param {Error} error - The error object thrown during installation.
+ * @returns {boolean} - Returns true if the error is non-fatal, otherwise false.
+ * */
 const handleDarwinError = (installCmd, error) => {
     if (error.message.includes('Permission denied')) {
         console.log(chalk.cyan("Homebrew might need permissions to write to its directories. This error may not be fatal, proceeding with setup."));
@@ -73,6 +96,12 @@ const handleDarwinError = (installCmd, error) => {
     }
 };
 
+/**
+ * Handles errors specific to Linux.
+ * @param {string} installCmd - The installation command that failed.
+ * @param {Error} error - The error object thrown during installation.
+ * @returns {boolean} - Returns true if the error is non-fatal, otherwise false.
+ * */
 const handleLinuxError = (installCmd, error) => {
     if (error.message.toLowerCase().includes('permission denied')) {
         console.log(chalk.cyan("Try running the command with sudo or adjust permissions as necessary. Error may not halt setup."));
@@ -83,6 +112,12 @@ const handleLinuxError = (installCmd, error) => {
     }
 };
 
+/**
+ * Handles errors specific to Windows.
+ * @param {string} installCmd - The installation command that failed.
+ * @param {Error} error - The error object thrown during installation.
+ * @returns {boolean} - Returns true if the error is non-fatal, otherwise false.
+ * */
 const handleWindowsError = (installCmd, error) => {
     if (error.message.toLowerCase().includes('permission denied')) {
         console.log(chalk.cyan("Check if you have administrative privileges to run the installation. Error may not halt setup."));
@@ -92,6 +127,7 @@ const handleWindowsError = (installCmd, error) => {
         return false;
     }
 };
+
 
 const suggestHomebrewFix = () => {
     console.log(chalk.cyan("Ensure Homebrew is properly set up and has necessary permissions. Consider consulting Homebrew's troubleshooting guide."));

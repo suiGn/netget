@@ -7,7 +7,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet index.js</title>
+  <title>NetGet src/modules/NetGetX/NGINX/checkNginxStatus.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -121,7 +121,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>index.js</h1>
+                    <h1>src/modules/NetGetX/NGINX/checkNginxStatus.js</h1>
                 </header>
                 
 
@@ -130,26 +130,46 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Entry point of netGet node module.
- * default exports NetGet
- * defaultHandler exports defaultHandler
- * @example
- * import NetGet, { defaultHandler } from 'netget';
- * const netget = new NetGet();
- * const gateway = netget.Gateway({ host: 'localhost', port: 3000 });
- * gateway.listen();
- * gateway.addRoute('example.com', defaultHandler);
- * gateway.addRoute('sub.example.com', (req, res) => { 
- * res.send('Hello from sub.example.com!'); }
- * );
- * @module index
+            <pre class="prettyprint source linenums"><code>// netget/src/modules/NetGetX/NGINX/checkNginxStatus.js
+import chalk from 'chalk';
+import { exec } from 'child_process';
+/**
+ * Checks the status of NGINX configuration.
+ * @param {Object} x - The configuration object containing paths and settings for NGINX.
  */
 
-import NetGet from './src/netget.js';
-export { defaultHandler } from './src/routes/defaultHandlers.js';
-export default NetGet;
-console.log("NetGet Loaded.");</code></pre>
+export async function checkNginxStatus(x) {
+    try {
+        const nginxCommand = x.nginxExecutable;
+        // Form the command to check the status of NGINX with userConfig
+        const statusCommand = `${nginxCommand} -t`;
+        // Wrap exec in a Promise to handle async operations correctly
+        await new Promise((resolve, reject) => {
+            exec(statusCommand, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(chalk.red(`Error checking NGINX status: ${error.message}`));
+                    reject();
+                    return;
+                }
+                // Log stdout and check if stderr contains actual errors
+                console.log(chalk.blue(`Output:\n${stdout}`));
+                if (stderr &amp;&amp; !stderr.includes('test is successful')) {
+                    console.error(chalk.red(`NGINX Error: ${stderr}`));
+                } else {
+                    console.log(chalk.green('NGINX is configured correctly.'));
+                    if (stderr) {
+                        console.log(chalk.yellow(`Notices:\n${stderr}`));
+                    }
+                }
+                resolve();
+            });
+        });
+
+    } catch (error) {
+        console.error(chalk.red(`Failed to load NGINX configuration: ${error.message}`));
+    }
+}
+</code></pre>
         </article>
     </section>
 

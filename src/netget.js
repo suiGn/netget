@@ -3,10 +3,18 @@ import Gateway from './Gateway.js';
 /**
  * Represents the main entry point for NetGet functionalities.
  * Handles the instantiation of gateways and configuration loading.
+ * Entry point for the NetGet service as a node module.
+ * Exports the NetGet class.
+ * Example:
+ * const netget = new NetGet();
+ * const gateway = netget.Gateway({ host: 'localhost', port: 3000 });
+ * gateway.listen();
  */
 class NetGet {
   /**
    * Constructs the NetGet service, initializing any necessary base configurations.
+   * @constructor
+   * @param {Object} config - The configuration object for the NetGet service.
    */
   constructor() {
     // Initialization code, if necessary

@@ -111,7 +111,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="Gateway.html">Gateway</a></li></ul><h3>Global</h3><ul><li><a href="global.html#testGateway">testGateway</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="Gateway.html">Gateway</a></li><li><a href="NetGet.html">NetGet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Path_Exists">Path_Exists</a></li><li><a href="global.html#checkForChoco">checkForChoco</a></li><li><a href="global.html#checkNginxStatus">checkNginxStatus</a></li><li><a href="global.html#checkPermissions">checkPermissions</a></li><li><a href="global.html#determineInstallCommand">determineInstallCommand</a></li><li><a href="global.html#displayManualInstructions">displayManualInstructions</a></li><li><a href="global.html#ensureDirectoryExists">ensureDirectoryExists</a></li><li><a href="global.html#escapeDataForShell">escapeDataForShell</a></li><li><a href="global.html#execCommand">execCommand</a></li><li><a href="global.html#execShellCommand">execShellCommand</a></li><li><a href="global.html#findNginxConfig">findNginxConfig</a></li><li><a href="global.html#getDirectoryPaths">getDirectoryPaths</a></li><li><a href="global.html#getLocalIP">getLocalIP</a></li><li><a href="global.html#getNginxConfigAndDir">getNginxConfigAndDir</a></li><li><a href="global.html#getPublicIP">getPublicIP</a></li><li><a href="global.html#handleDarwinError">handleDarwinError</a></li><li><a href="global.html#handleInstallationError">handleInstallationError</a></li><li><a href="global.html#handleLinuxError">handleLinuxError</a></li><li><a href="global.html#handlePermissionError">handlePermissionError</a></li><li><a href="global.html#handlePermissionErrorForEnsureDir">handlePermissionErrorForEnsureDir</a></li><li><a href="global.html#handleWindowsError">handleWindowsError</a></li><li><a href="global.html#i_DefaultNetGetX">i_DefaultNetGetX</a></li><li><a href="global.html#initializeDirectories">initializeDirectories</a></li><li><a href="global.html#installNginx">installNginx</a></li><li><a href="global.html#nginxRestart">nginxRestart</a></li><li><a href="global.html#setDefaultServerBlock">setDefaultServerBlock</a></li><li><a href="global.html#setNginxConfigAndDir">setNginxConfigAndDir</a></li><li><a href="global.html#setNginxExecutable">setNginxExecutable</a></li><li><a href="global.html#testGateway">testGateway</a></li><li><a href="global.html#tryElevatedPrivileges">tryElevatedPrivileges</a></li><li><a href="global.html#verifyNginxInstallation">verifyNginxInstallation</a></li><li><a href="global.html#verifyServerBlock">verifyServerBlock</a></li></ul></div>
                 
             </nav>
         </div>
@@ -148,55 +148,70 @@
         <article><img src="https://suign.github.io/assets/imgs/netget.png" alt="netget.me" width="244" height="203">
 <h1>NetGet</h1>
 <hr>
-<h3>[Project Status : Experimental and Under Development, Subject to Major Changes]</h3>
-<h2>The module is in active development, and as such, it is subject to significant changes as we refine our approach and methodologies to best support our goals.
-visit: https://neurons.me to learn more.</h2>
 <h1>Unleash the Cyberspace Within</h1>
-<p><strong>NetGet</strong> streamlines the orchestration of digital domains with the simplicity of a pedal's press, enabling seamless symphonies across networked realms. Acts as a dynamic conduit, <strong>directing internet traffic to local services</strong>. Inspired by the vast digital landscapes of cyberpunk lore.</p>
-<p>Visit <a href="https://netget.me">netget.me</a></p>
+<blockquote>
+<p>In development stage and subject to changes.</p>
+<p>Learn more at: <a href="https://netget.me">netget.me</a></p>
+</blockquote>
+<p><strong>NetGet</strong> streamlines the orchestration of domains and networks with the simplicity of a pedal's press, enabling seamless connections across networked realms. Acts as a dynamic conduit, <strong>directing internet traffic to local services</strong>. Inspired by the vast digital landscapes of cyberpunk lore and the simplicity of guitar pedals.</p>
 <h2>Installation</h2>
-<p>Install NetGet via npm:</p>
+<p><strong>NetGet</strong> is available as an npm package and can be installed globally using npm. This allows you to use <strong>NetGet</strong> from anywhere on your system.</p>
+<pre class="prettyprint source lang-bash"><code>npm install -g netget
+</code></pre>
+<h2>Starting the CLI</h2>
+<p>Once installed, you can start the NetGetX CLI by simply running the following command in your terminal:</p>
+<pre class="prettyprint source lang-bash"><code>netget
+</code></pre>
+<h2>What Does NetGetX Do?</h2>
+<p><strong>NetGetX</strong> serves as a front face to the public. Acting as a reverse proxy to redirect all traffic in a specify Port.</p>
+<p>By using NetGetX, you ensure that NGINX is optimally configured to act as a robust, efficient channel, directing incoming traffic to the right internal endpoints without manual intervention.</p>
+<hr>
+<h1>NetGet GateWays</h1>
+<p><strong>NetGet</strong> is particularly useful in environments where multiple services or applications must be accessible through a single entry point, commonly known as a <strong>reverse proxy setup.</strong></p>
+<p><strong>Local NetGet Setup:</strong> On your local machine, <strong>NetGet</strong> operates within your Node.js environment, managing local traffic and processing requests according to your configured rules. The GateWays doesn't directly face the internet and instead communicates with an external <strong>NetGetX</strong> instance that does.</p>
+<h2>Install as a Node Module Dependency.</h2>
 <pre class="prettyprint source lang-bash"><code>npm install netget
 </code></pre>
-<h2>Usage</h2>
-<p>Import NetGet in your Node.js application:</p>
-<pre class="prettyprint source lang-js"><code>import { Gateway } from 'netget';
-// Initialize and configure your Gateway
-const gateway = new Gateway();
-gateway.listen();
+<h3>GateWay SetUp</h3>
+<pre class="prettyprint source lang-js"><code>// NETGET
+import NetGet from 'netget';
+import { routes } from './GET/routes.js';
+let netget = new NetGet();
+netget.Gateway({ routes: routes }).listen();
 </code></pre>
-<p>Now you can:</p>
-<pre class="prettyprint source lang-bash"><code>npm start
-</code></pre>
-<p>Your main application and the gateway will be hosted at localhost.</p>
-<h2>Configuration</h2>
-<p>NetGet relies on a <code>domains.json</code> file for routing configuration, structured as follows:</p>
-<pre class="prettyprint source lang-json"><code>{
-  &quot;name&quot;: &quot;YourDomainConfigName&quot;,
-  &quot;domains&quot;: {
-    &quot;example.com&quot;: &quot;exampleHandler&quot;,
-    &quot;anotherdomain.com&quot;: &quot;anotherHandler&quot;
+<p>If no port specified the Gateway listens at http://localhost:3004/</p>
+<p>This will set up a gateway that will listen to all traffic in a specific port, detect the domain, host, subdomain and act accordingly.</p>
+<h3>Constructor:</h3>
+<ul>
+<li>Initializes a new instance of the Gateway class.</li>
+<li>@param {Object} config - The configuration object for the gateway.</li>
+<li>@param {Object} [config.host='localhost']  - The host name on which the gateway will listen.</li>
+<li>@param {number} [config.port=3432] - The port number on which the gateway will listen.</li>
+<li>@param {Object} [config.routes={}] - An object mapping domains to their respective request handlers.</li>
+<li>@param {string} [config.domainsConfigPath='./config/domains.json'] - The path to the domains configuration file.</li>
+</ul>
+<pre class="prettyprint source lang-js"><code>class Gateway {
+  constructor({   
+   host = process.env.HOST || 'localhost', 
+   port = process.env.NETGET_PORT || 3432, 
+   routes = {},
+   domainsConfigPath = process.env.DOMAINS_CONFIG_PATH || './config/domains.json' 
+  } = {}) {
+   this.host = host;
+   this.port = port;
+   this.routes = routes;
+   this.domainsConfigPath = domainsConfigPath;
+   this.app = express();
+   this.initialize().catch(err => console.error('Initialization error:', err));
   }
-}
 </code></pre>
-<p>Each domain key maps to a handler module that exports a function to handle requests for that domain.
-By default, NetGet searches for a <code>domains.json</code> configuration in the <code>./config</code> directory, streamlining the setup process.</p>
-<p><strong>NetGet</strong> is particularly useful in environments where multiple services or applications must be accessible through a single entry point, commonly known as a <strong>reverse proxy setup.</strong></p>
-<p>Scenario: Local and Remote NetGet Interaction
-Local NetGet Setup: On your local machine, NetGet operates within your Node.js environment, managing local traffic and processing requests according to your configured rules. It doesn't directly face the internet and instead communicates with an external NetGet instance that does.</p>
-<p>Remote NetGet as a Reverse Proxy: The main.netget.me hosted on Nginx acts as your gateway to the internet. It receives internet traffic and forwards it to the appropriate local NetGet instance based on the domain routing configured.</p>
-<p>Handshaker Mechanism: For machines not directly accessible via a public IP, the remote NetGet instance (main.netget.me) can act as a handshaker. Your local NetGet instance communicates with this handshaker, which then relays traffic between the internet and your local network.</p>
+<p>It detect the host making the request, domain, subdomain and acts accordingly through the routes given and its handlers.</p>
 <h3>Scalable Web Services</h3>
 <p>In a microservices architecture, <strong>NetGet can route requests to different services</strong> within your infrastructure, making it an ideal solution for developers looking to scale their applications horizontally. Each service can have its own domain, and <strong>NetGet</strong> will ensure that requests are forwarded to the correct service.</p>
 <h3>Personal Hosting Solutions</h3>
 <p>For personal web hosting, <strong>NetGet</strong> provides an <strong>easy-to-set-up gateway</strong> for routing traffic to various self-hosted applications. Users with several web applications running on a home server can use <strong>NetGet</strong> to manage access to these applications through different domains.</p>
 <h3>Secure Access Control</h3>
 <p>Combined with authentication layers, NetGet can control access to various parts of a web infrastructure, ensuring that only authorized users can access specific services.</p>
-<h3>Simplified Configuration</h3>
-<p>With NetGet, the complexity of setting up a domain routing system is abstracted away. Users can define their routing logic in a simple JSON configuration file, making the management of domain routes straightforward and maintainable.</p>
-<h3>Dynamic Load Balancing</h3>
-<p>NetGet can be extended to include load balancing capabilities, distributing incoming requests across multiple instances of a service to balance the load and improve performance.</p>
-<p>By using <strong>NetGet,</strong> developers and system administrators can create a more organized and efficient network topology, where the flow of requests is handled systematically, aligning with the concept of futuristic control and management of digital spaces.</p>
 <hr>
 <h1>About All.This</h1>
 <h2>Modular Data Structures:</h2>

@@ -1,10 +1,17 @@
-// verifyNginxInstallation.js
+// verifyNginxConfig.js
 import fs from 'fs';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 
+/**
+ * Verifies the NGINX config
+ * and executable paths set in the configuration object.
+ * Checks if the NGINX configuration path and executable exist and tries to execute NGINX to ensure it's operational.
+ *
+ * @param {Object} xConfig - The configuration object containing paths and settings for NGINX.
+ * @returns {Promise<boolean>} - Returns true if NGINX is properly configured and executable, otherwise returns false.
+ */
 export default async function verifyNginxConfig(xConfig) {
-    //console.log(chalk.blue('Verifying NGINX installation...'));
     // Verify if all required paths are set and exist
     if (!xConfig.nginxPath || !fs.existsSync(xConfig.nginxPath)) {
         console.log(chalk.red('NGINX configuration path is not set or does not exist.'));
@@ -27,4 +34,3 @@ export default async function verifyNginxConfig(xConfig) {
     }
     return true;
 }
-

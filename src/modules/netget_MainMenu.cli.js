@@ -5,14 +5,16 @@ import  NetGetX_CLI  from './NetGetX/NetGetX.cli.js';
 import { i_DefaultNetGetX } from './NetGetX/config/i_DefaultNetGetX.js';
 import { handleGateways } from './Gateways/Gateways.js';
 import { handleGets } from './Gets/Gets.js';
-
+/**
+ * Main menu for the NetGet CLI.
+ */
 console.log(`
 Welcome to:
 ╔╗╔┌─┐┌┬┐╔═╗┌─┐┌┬┐
 ║║║├┤  │ ║ ╦├┤  │ 
 ╝╚╝└─┘ ┴ ╚═╝└─┘ ┴ 
 `);
-console.log(`v2.4.31`);  // Logs the current version of the application
+console.log(`v2.4.32`);  // Logs the current version of the application
 export default async function NetGetMainMenu() {
     const answers = await inquirer.prompt([
     {
