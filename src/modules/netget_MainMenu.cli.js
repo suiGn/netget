@@ -3,6 +3,7 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import  NetGetX_CLI  from './NetGetX/NetGetX.cli.js';
 import { i_DefaultNetGetX } from './NetGetX/config/i_DefaultNetGetX.js';
+import { handleAccessPoints } from './AccessPoints/AccessPoints.js';
 import { handleGateways } from './Gateways/Gateways.js';
 import { handleGets } from './Gets/Gets.js';
 /**
@@ -14,15 +15,15 @@ Welcome to:
 ║║║├┤  │ ║ ╦├┤  │ 
 ╝╚╝└─┘ ┴ ╚═╝└─┘ ┴ 
 `);
-console.log(`v2.4.32`);  // Logs the current version of the application
+console.log(`v2.4.33`);  // Logs the current version of the application
 export default async function NetGetMainMenu() {
     const answers = await inquirer.prompt([
     {
         type: 'list',
         name: 'action',
         message: 'Main Menu:',
-        choices: ['NetGetX', 'Gateways', 'Gets', new inquirer.Separator(), 'Exit'],
-        },
+        choices: ['NetGetX', 'Gateways', 'Gets', 'AccessPoints', new inquirer.Separator(), 'Exit'],
+    },
     ]);
 
     switch (answers.action) {
@@ -49,6 +50,10 @@ export default async function NetGetMainMenu() {
         case 'Gets':
             console.log(chalk.yellow('Selected Gets'));
             // Call Gets functionality here
+            break;
+        case 'AccessPoints':
+            console.log(chalk.magenta('Selected AccessPoints'));
+            await handleAccessPoints();  // Call AccessPoints functionality here
             break;
         case 'Exit':
             console.log(chalk.green('Exiting NetGet CLI.'));

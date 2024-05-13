@@ -1,25 +1,33 @@
-// netget/src/modules/NetGetX/NGINX/checkNginxStatus.js
 import chalk from 'chalk';
 import { exec } from 'child_process';
+import handlePermission from '../../utilities/handlePermission'; // Adjust path as necessary
+
 /**
  * Checks the status of NGINX configuration.
  * @param {Object} x - The configuration object containing paths and settings for NGINX.
  */
-
 export async function checkNginxStatus(x) {
     try {
         const nginxCommand = x.nginxExecutable;
-        // Form the command to check the status of NGINX with userConfig
         const statusCommand = `${nginxCommand} -t`;
-        // Wrap exec in a Promise to handle async operations correctly
+        
         await new Promise((resolve, reject) => {
-            exec(statusCommand, (error, stdout, stderr) => {
+            exec(statusCommand, async (error, stdout, stderr) => {
                 if (error) {
-                    console.error(chalk.red(`Error checking NGINX status: ${error.message}`));
-                    reject();
+                    if (error.message.includes('permission denied')) {
+                        console.error(chalk.red(`Permission denied error: ${error.message}`));
+                        await handlePermission(
+                            "checking NGINX status",
+                            `sudo ${statusCommand}`,
+                            `To manually check NGINX status, run the following command with elevated privileges:\n${`sudo ${statusCommand}`}`
+                        );
+                        reject();
+                    } else {
+                        console.error(chalk.red(`Error checking NGINX status: ${error.message}`));
+                        reject();
+                    }
                     return;
                 }
-                // Log stdout and check if stderr contains actual errors
                 console.log(chalk.blue(`Output:\n${stdout}`));
                 if (stderr && !stderr.includes('test is successful')) {
                     console.error(chalk.red(`NGINX Error: ${stderr}`));

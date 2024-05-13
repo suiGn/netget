@@ -8,7 +8,7 @@ import  NetGetMainMenu  from './modules/netget_MainMenu.cli.js';
 // Entry Points Options and Commands
 program
   .description('NetGet Command Line Interface')
-  .version('1.0.3')
+  .version('1.0.4')
   .action(NetGetMainMenu);
 
 program.command('netget-x')
