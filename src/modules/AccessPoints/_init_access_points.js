@@ -1,10 +1,5 @@
 // Path: netget/src/modules/AccessPoints/AccessPoints.js
-// Compare this snippet from netget/src/modules/NetGetX/NGINX/NGINX.js:
-// import fs from 'fs';
-// import { execShellCommand } from '../../utils/execShellCommand.js';
-// import { exec } from 'child_process';
-// import chalk from 'chalk';
-// import { handleInstallationError } from '../NGINX/installNginx.js';
+
 function init_access_points() {
     var access_points = [];
     var access_points_file = fs.readFileSync('access_points.json', 'utf8');

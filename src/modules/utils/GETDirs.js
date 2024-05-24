@@ -7,16 +7,9 @@ const BASE_DIR = path.join(os.homedir(), '.get');
 const DIRECTORIES = {
     getPath: BASE_DIR,
     static: path.join(BASE_DIR, 'static'),
-    staticDefault: path.join(BASE_DIR, 'static', 'default'),
-    SSLPath: path.join(BASE_DIR, 'ssl'),
-    SSLCertificatesPath: path.join(BASE_DIR, 'ssl', 'certificates'),
-    SSLCertificateKeyPath: path.join(BASE_DIR, 'ssl', 'key'),
     devPath: path.join(BASE_DIR, 'dev'),
     devStatic: path.join(BASE_DIR, 'dev', 'static'),
-    devStaticDefault: path.join(BASE_DIR, 'dev', 'static', 'default'),
-    devSSLPath: path.join(BASE_DIR, 'dev', 'ssl'),
-    devSSLCertificatesPath: path.join(BASE_DIR, 'dev', 'ssl', 'certificates'),
-    devSSLCertificateKeyPath: path.join(BASE_DIR, 'dev', 'ssl', 'key'),
+    gatewayPath: path.join(BASE_DIR, 'Gateways'),
 };
 
 /* Safety and Non-Destructive Behavior

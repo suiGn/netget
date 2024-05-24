@@ -1,13 +1,14 @@
 // netget_MainMenu.js
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import  NetGetX_CLI  from './NetGetX/NetGetX.cli.js';
 import { i_DefaultNetGetX } from './NetGetX/config/i_DefaultNetGetX.js';
-import { handleAccessPoints } from './AccessPoints/AccessPoints.js';
-import { handleGateways } from './Gateways/Gateways.js';
-import { handleGets } from './Gets/Gets.js';
+import  NetGetX_CLI  from './NetGetX/NetGetX.cli.js';
+import { i_DefaultGateway } from './Gateways/config/i_DefaultGateway.js';
+import { Gateways_CLI } from './Gateways/gateways.cli.js';
+//import { handleAccessPoints } from './AccessPoints/AccessPoints.js';
+//import { handleGets } from './Gets/Gets.js';
 /**
- * Main menu for the NetGet CLI.
+ * the NetGet CLI.
  */
 console.log(`
 Welcome to:
@@ -15,7 +16,7 @@ Welcome to:
 ║║║├┤  │ ║ ╦├┤  │ 
 ╝╚╝└─┘ ┴ ╚═╝└─┘ ┴ 
 `);
-console.log(`v2.4.33`);  // Logs the current version of the application
+console.log(`v2.4.5`);
 export default async function NetGetMainMenu() {
     const answers = await inquirer.prompt([
     {
@@ -28,32 +29,46 @@ export default async function NetGetMainMenu() {
 
     switch (answers.action) {
         case 'NetGetX':
-            const x = await i_DefaultNetGetX();  // Load production configuration
+            const x = await i_DefaultNetGetX();
             if (x) {
                 console.log(`
-                        ██╗  ██╗ .nginxPath at: ${chalk.green(x.nginxPath)}
-                        ╚██╗██╔╝ .XBlocksAvailable at: ${chalk.green(x.XBlocksAvailable)}
-                         ╚███╔╝  .XBlocksEnabled at: ${chalk.green(x.XBlocksEnabled)}
-                         ██╔██╗  .netgetXExecutable at: ${chalk.green(x.nginxExecutable)}
-                        ██╔╝ ██╗ .publicIP: ${chalk.green(x.publicIP)}
-                        ╚═╝  ╚═╝ .localIP: ${chalk.green(x.localIP)}
+                    ██╗  ██╗ .OutPort: ${chalk.green(x.xMainOutPutPort)}
+                    ╚██╗██╔╝ .XBlocks Available: ${chalk.green(x.XBlocksAvailable)}
+                     ╚███╔╝  .XBlocks Enabled: ${chalk.green(x.XBlocksEnabled)}
+                     ██╔██╗  .netgetXExecutable at: ${chalk.green(x.nginxExecutable)}
+                    ██╔╝ ██╗ .publicIP: ${chalk.green(x.publicIP)}
+                    ╚═╝  ╚═╝ .localIP: ${chalk.green(x.localIP)}
                         `);
-                        await NetGetX_CLI();  // Pass the development flag to the CLI
+                    await NetGetX_CLI(x); 
                     } else {
-                        console.log(chalk.red('Setup verification failed. Please resolve any issues before proceeding.'));
+                    console.log(chalk.red('Setup verification failed. Please resolve any issues before proceeding.'));
                     }
-                    break;
-        case 'Gateways':
-            console.log(chalk.yellow('Selected Gateways'));
-            // Call Gateways functionality here
             break;
+
+            case 'Gateways':
+                const g = await i_DefaultGateway(); //Load production configuration
+                if (g) {
+                    console.log(`
+                       __________________ 
+                      |   The GATEWAY    |---->>
+                      |_______...________|
+      PORT:3432--- >>>|_______...________|---->>>  ${chalk.green(g)}
+                      |_______...________|---->>>
+                      |_______...________|---->>>
+                    `);
+                    await Gateways_CLI(g);  // Pass the development flag to the CLI
+                } else {
+                    console.log(chalk.red('Setup verification failed. Please resolve any issues before proceeding.'));
+                }
+                break;
+
         case 'Gets':
             console.log(chalk.yellow('Selected Gets'));
             // Call Gets functionality here
             break;
         case 'AccessPoints':
             console.log(chalk.magenta('Selected AccessPoints'));
-            await handleAccessPoints();  // Call AccessPoints functionality here
+            //await handleAccessPoints();  // Call AccessPoints functionality here
             break;
         case 'Exit':
             console.log(chalk.green('Exiting NetGet CLI.'));

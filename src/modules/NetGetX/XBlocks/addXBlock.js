@@ -11,15 +11,14 @@ const userConfigPath = path.join(__dirname, 'userConfig.json');
 
 // Function to execute shell commands using Promises
 const execShellCommand = (cmd) => {
-  return new Promise((resolve, reject) => {
-    exec(cmd, (error, stdout, stderr) => {
-      if (error) {
-        reject(stderr || error.message);
-      } else {
-        resolve(stdout);
-      }
-    });
-  });
+return new Promise((resolve, reject) => {
+exec(cmd, (error, stdout, stderr) => {
+if (error) {
+reject(stderr || error.message);
+} else {
+resolve(stdout);
+}});
+});
 };
 
 // Load user configuration

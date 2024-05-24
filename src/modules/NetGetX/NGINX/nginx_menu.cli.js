@@ -1,13 +1,21 @@
 // nginx_menu.cli.js
-//NGINX Management Menu 
+// NGINX Management Menu 
 import inquirer from 'inquirer';
-import { exec } from 'child_process';
 import chalk from 'chalk';
-import { checkNginxStatus } from './checkNginxStatus.js';
+import { getState } from '../xState.js';
 import nginxRestart from './nginxRestart.js';
+import { checkNginxStatus } from './checkNginxStatus.js';
+import viewNginxLogs from './viewNginxLogs.js';
+import stopNginx from './stopNginx.js';
+import startNginx from './startNginx.js';
+import reloadNginx from './reloadNginx.js';
 import NetGetX_CLI from '../NetGetX.cli.js';
-import { getState, updateState } from '../xState.js';
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    // Application specific logging, throwing an error, or other logic here
+});
 
+// Main function to display NGINX management menu
 export default async function nginxMenu() {
     const x = getState();
     console.log(chalk.green('NGINX Management Menu'));
@@ -30,15 +38,59 @@ export default async function nginxMenu() {
         case 'NGINX Status':
             await checkNginxStatus(x);
             break;
+
         case 'Start NGINX':
+            try {
+                const success = await startNginx(x);
+                if (!success) {
+                    console.log(chalk.red('NGINX start operation failed.'));
+                }
+            } catch (error) {
+                console.error(chalk.red(`Error during NGINX start operation: ${error.message}`));
+            }
+            break;
+
         case 'Stop NGINX':
+            try {
+                const success = await stopNginx(x);
+                if (!success) {
+                    console.log(chalk.red('NGINX stop operation failed.'));
+                }
+            } catch (error) {
+                console.error(chalk.red(`Error during NGINX stop operation: ${error.message}`));
+            }
+            break;
+
         case 'Restart NGINX':
-            await nginxRestart(x);
+            try {
+                const success = await nginxRestart(x);
+                if (!success) {
+                    console.log(chalk.red('NGINX restart operation failed.'));
+                }
+            } catch (error) {
+                console.error(chalk.red(`Error during NGINX restart operation: ${error.message}`));
+            }
             break;
+
         case 'Reload NGINX':
-        case 'View NGINX Logs':
-            await execCommand(resolveCommand(answers.nginxAction));
+            try {
+                const success = await reloadNginx(x);
+                if (!success) {
+                    console.log(chalk.red('NGINX reload operation failed.'));
+                }
+            } catch (error) {
+                console.error(chalk.red(`Error during NGINX reload operation: ${error.message}`));
+            }
             break;
+
+        case 'View NGINX Logs':
+            try {
+                await viewNginxLogs(x);
+            } catch (error) {
+                console.error(chalk.red(`Error executing command: ${error.message}`));
+            }
+            break;
+
         case 'Back to NetGetX Menu':
             await NetGetX_CLI();
             return; // Exit to prevent loop
@@ -48,37 +100,18 @@ export default async function nginxMenu() {
     await nginxMenu();
 }
 
-function resolveCommand(action) {
-    switch (action) {
-        case 'Start NGINX':
-            return 'systemctl start nginx';
-        case 'Stop NGINX':
-            return 'systemctl stop nginx';
-        case 'Restart NGINX':
-            return 'systemctl restart nginx';
-        case 'Reload NGINX':
-            return 'nginx -s reload';
-        case 'View NGINX Logs':
-            return 'tail -f /var/log/nginx/error.log';
-        default:
-            throw new Error('Unsupported action');
-    }
-}
-
+// Execute shell commands and handle stdout, stderr, and errors
 async function execCommand(command) {
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                console.error(chalk.red(`Error: ${error.message}`));
-                reject(error);
+                reject(new Error(`Command failed: ${error.message}`));
                 return;
             }
             if (stderr) {
-                console.error(chalk.red(`STDERR: ${stderr}`));
-                reject(new Error(stderr));
+                reject(new Error(`Error during command execution: ${stderr}`));
                 return;
             }
-            console.log(chalk.green(`STDOUT: ${stdout}`));
             resolve(stdout);
         });
     });

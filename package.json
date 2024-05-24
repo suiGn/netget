@@ -8,7 +8,12 @@
         "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "postinstall": "node ./src/scripts/postInstall.js",
-        "doc": "jsdoc -c jsdoc.json"
+        "doc": "jsdoc -c jsdoc.json",
+        "gateway:start": "node -e \"require('./pm2Manager').manageGateway(process.argv[1], 'start')\"",
+        "gateway:stop": "node -e \"require('./pm2Manager').manageGateway(process.argv[1], 'stop')\"",
+        "gateway:restart": "node -e \"require('./pm2Manager').manageGateway(process.argv[1], 'restart')\"",
+        "gateway:delete": "node -e \"require('./pm2Manager').manageGateway(process.argv[1], 'delete')\"",
+        "gateway:status": "node -e \"require('./pm2Manager').manageGateway(process.argv[1], 'status')\""
     },
     "bin": {
         "netget": "./src/netget.cli.js"
@@ -35,6 +40,7 @@
         "inquirer": "^9.2.17",
         "morgan": "^1.10.0",
         "node-fetch": "^3.3.2",
+        "pm2": "^5.3.1",
         "sudo-prompt": "^9.2.1"
     },
     "repository": {

@@ -19,6 +19,9 @@ async function loadOrCreateXConfig() {
                 nginxPath: "",
                 nginxDir: "",
                 nginxExecutable: "",
+                xMainOutPutPort: 3432,
+                publicIP: "",
+                localIP: "",
                 XBlocksAvailable: "",
                 XBlocksEnabled: "",
                 nginxDevDir: "",
@@ -36,7 +39,7 @@ async function loadOrCreateXConfig() {
                 devSSLPath: "",
                 devSSLCertificatesPath: "",
                 devSSLCertificateKeyPath: "",
-                useSudo: false
+                useSudo: false,
             };
             fs.writeFileSync(USER_CONFIG_FILE, JSON.stringify(defaultConfig, null, 4));
             return defaultConfig;

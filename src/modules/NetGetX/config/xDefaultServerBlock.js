@@ -11,9 +11,9 @@ const xDefaultServerBlock = (xConfig) => {
         throw new Error("User configuration must be provided.");
     }
 
-    const { XBlocksAvailable, XBlocksEnabled, getPath } = xConfig;
-    if (!XBlocksAvailable || !XBlocksEnabled || !getPath) {
-        throw new Error("Invalid user configuration. Missing required paths.");
+    const { XBlocksAvailable, XBlocksEnabled, getPath, xMainOutPutPort } = xConfig;
+    if (!XBlocksAvailable || !XBlocksEnabled || !getPath || !xMainOutPutPort) {
+        throw new Error("Invalid user configuration. Missing required paths or port.");
     }
 
     return `
@@ -31,10 +31,25 @@ const xDefaultServerBlock = (xConfig) => {
             listen 80 default_server;  # Listen only on HTTP
             server_name _;  # Catch-all for server names not matched by other server blocks
             root ${getPath}/static/default;  # Set to user's .get directory
+
+            # Deny access to sensitive files
+            location ~* \.(env|env\.local|env\.prod|env\.production|env\.save)$ {
+                deny all;
+                return 404;
+            }
+
+            # Deny access to .htaccess and .git directories for additional security
+            location ~ /\.ht {
+                deny all;
+            }
+
+            location ~ /.git {
+                deny all;
+            }
     
             # First try to handle the request through the proxy
             location / {
-                proxy_pass http://localhost:3004;
+                proxy_pass http://localhost:${xMainOutPutPort};
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
