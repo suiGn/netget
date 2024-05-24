@@ -1,7 +1,8 @@
+// netget/src/modules/utils/handlePermissions.js
 import { exec } from 'child_process';
+import fs from 'fs';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import os from 'os';
 
 /**
  * Handles permission errors generically.
@@ -13,6 +14,7 @@ const handlePermission = async (taskDescription, autoCommand, manualInstructions
     const choices = [
         { name: 'Retry with elevated privileges', value: 'sudo' },
         { name: 'Display manual configuration instructions', value: 'manual' },
+        { name: 'Try to change file permissions', value: 'changePermissions' },
         { name: 'Cancel operation', value: 'cancel' }
     ];
 
@@ -25,10 +27,30 @@ const handlePermission = async (taskDescription, autoCommand, manualInstructions
 
     switch (action) {
         case 'sudo':
-            await tryElevatedPrivileges(autoCommand);
+            await tryElevatedPrivileges(autoCommand, manualInstructions);
             break;
         case 'manual':
             displayManualInstructions(manualInstructions);
+            break;
+        case 'changePermissions':
+            const { filePath, requiredPermissions } = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'filePath',
+                    message: 'Enter the path of the file to change permissions:'
+                },
+                {
+                    type: 'input',
+                    name: 'requiredPermissions',
+                    message: 'Enter the required permissions (e.g., 755) [default: 755]:',
+                    default: '755'
+                }
+            ]);
+            if (requiredPermissions) {
+                await checkAndSetFilePermissions(filePath, requiredPermissions);
+            } else {
+                console.log(chalk.red('Permissions value is required.'));
+            }
             break;
         case 'cancel':
             console.log(chalk.blue('Operation canceled by the user.'));
@@ -39,11 +61,13 @@ const handlePermission = async (taskDescription, autoCommand, manualInstructions
 /**
  * Tries to execute a command with elevated privileges.
  * @param {string} command - Command to execute with elevated privileges.
+ * @param {string} manualInstructions - Instructions for manual permission resolution.
  */
-const tryElevatedPrivileges = async (command) => {
+const tryElevatedPrivileges = async (command, manualInstructions) => {
     try {
-        await execShellCommand(command);
-        console.log(chalk.green('Permissions adjusted with elevated privileges.'));
+        const result = await execShellCommand(`sudo ${command}`);
+        console.log(chalk.green('Command executed with elevated privileges.'));
+        console.log(result);
     } catch (error) {
         console.error(chalk.red(`Failed with elevated privileges: ${error.message}`));
         displayManualInstructions(manualInstructions);
@@ -55,15 +79,20 @@ const tryElevatedPrivileges = async (command) => {
  * @param {string} instructions - Instructions for manual permission resolution.
  */
 const displayManualInstructions = (instructions) => {
-    console.log(chalk.yellow(`To manually configure, follow these instructions:`));
+    console.log(chalk.yellow('To manually configure, follow these instructions:'));
     console.info(chalk.cyan(instructions));
-}
+};
 
+/**
+ * Executes a shell command.
+ * @param {string} cmd - Command to execute.
+ * @returns {Promise<string>} - A promise that resolves with the command output.
+ */
 const execShellCommand = (cmd) => {
     return new Promise((resolve, reject) => {
         exec(cmd, (error, stdout, stderr) => {
             if (error) {
-                reject(new Error(error));
+                reject(error);
             } else {
                 resolve(stdout ? stdout : stderr);
             }
@@ -71,4 +100,25 @@ const execShellCommand = (cmd) => {
     });
 };
 
-export default handlePermission;
+/**
+ * Checks and sets file permissions if necessary.
+ * @param {string} filePath - Path to the file to check permissions for.
+ * @param {string} requiredPermissions - The permissions required (e.g., '755').
+ */
+const checkAndSetFilePermissions = async (filePath, requiredPermissions) => {
+    try {
+        const stats = fs.statSync(filePath);
+        const currentPermissions = `0${(stats.mode & 0o777).toString(8)}`;
+        
+        if (currentPermissions !== requiredPermissions) {
+            await execShellCommand(`sudo chmod ${requiredPermissions} ${filePath}`);
+            console.log(chalk.green(`Permissions for ${filePath} set to ${requiredPermissions}.`));
+        } else {
+            console.log(chalk.green(`Permissions for ${filePath} are already set to ${requiredPermissions}.`));
+        }
+    } catch (error) {
+        console.error(chalk.red(`Failed to check/set permissions for ${filePath}: ${error.message}`));
+    }
+};
+
+export { handlePermission, checkAndSetFilePermissions };

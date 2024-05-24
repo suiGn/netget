@@ -17,7 +17,6 @@ import {
     Path_Exists } from '../../utils/pathUtils.js';
 import { initializeDirectories,
          getDirectoryPaths } from '../../utils/GETDirs.js';
-         
 import verifyNginxInstallation from '../NGINX/verifyNginxInstallation.js';
 import nginxInstallationOptions from '../NGINX/nginxInstallationOptions.cli.js'; 
 import verifyNginxConfig from './verifyNginxConfig.js';
@@ -37,165 +36,25 @@ import handlePermissionErrorForEnsureDir from '../../utils/handlePermissionError
 export async function i_DefaultNetGetX() {
 initializeDirectories(); // Initialize all necessary directories
 let DEFAULT_DIRECTORIES = getDirectoryPaths(); // Get paths to .get default directories
-
-const nginxInstalled = await verifyNginxInstallation(); // Verify NGINX installation
+let xConfig = await loadOrCreateXConfig();
+/* NGINX
+╔═╗┌─┐┌┬┐┬ ┬┌─┐
+╠═╝├─┤ │ ├─┤└─┐
+╩  ┴ ┴ ┴ ┴ ┴└─┘*/
+// Verify Installation
+const nginxInstalled = verifyNginxInstallation();
 if (!nginxInstalled) {
     console.log(chalk.yellow("NGINX is not installed. Redirecting to installation options..."));
     await nginxInstallationOptions();
     // Optionally re-check after installation attempt
-    if (!await verifyNginxInstallation()) {
+    if (!verifyNginxInstallation()) {
         console.log(chalk.red("NGINX still not detected after installation attempt. Please manually install NGINX and retry."));
         return false; // Exiting or return to a higher menu level could be handled here
     }
 }
-
-let xConfig = await loadOrCreateXConfig();
-
-//console.log("Default Directories" , DEFAULT_DIRECTORIES);
-/* Verify .get Paths
- ┏┓┏┓┏┳┓
- ┃┓┣  ┃ 
-•┗┛┗┛ ┻   
- */
-    if(!xConfig.getPath){
-    const getDefaultPath = DEFAULT_DIRECTORIES.getPath;
-    if (Path_Exists(getDefaultPath)) {
-        await saveXConfig({ getPath: getDefaultPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        } else {
-        console.log(`Default getPath does not exist: ${getDefaultPath}, not updating configuration.`);
-    }
-}
-
-    if(!xConfig.static){
-    const getDefaultStatic = DEFAULT_DIRECTORIES.static;
-    if (Path_Exists(getDefaultStatic)) {
-        await saveXConfig({ static: getDefaultStatic });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-    } else {
-        console.log(`Default static does not exist: ${getDefaultStatic}, not updating configuration.`);
-    }
-}  
-
-    if(!xConfig.staticDefault){
-    const getDefaultStaticDefault = DEFAULT_DIRECTORIES.staticDefault;
-    if (Path_Exists(getDefaultStaticDefault)) {
-        await saveXConfig({ staticDefault: getDefaultStaticDefault });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-    } else {
-        console.log(`Default staticDefault does not exist: ${getDefaultStaticDefault}, not updating configuration.`);
-    }   
-}
-
-
-    if(!xConfig.SSLPath){
-    const getDefaultSSLPath = DEFAULT_DIRECTORIES.SSLPath;
-    if (Path_Exists(getDefaultSSLPath)) {
-        await saveXConfig({ SSLPath: getDefaultSSLPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-    }else{
-        console.log(`Default SSLPath does not exist: ${getDefaultSSLPath}, not updating configuration.`);
-    }
-}
-
-
-    if(!xConfig.SSLCertificatesPath){
-    const getDefaultSSLCertificatesPath = DEFAULT_DIRECTORIES.SSLCertificatesPath;
-    if (Path_Exists(getDefaultSSLCertificatesPath)) {
-        await saveXConfig({ SSLCertificatesPath: getDefaultSSLCertificatesPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-    } else {
-    console.log(`Default SSLCertificatesPath does not exist: ${getDefaultSSLCertificatesPath}, not updating configuration.`);
-}
-}
-
-    if(!xConfig.SSLCertificateKeyPath){
-    const getDefaultSSLCertificateKeyPath = DEFAULT_DIRECTORIES.SSLCertificateKeyPath;
-    if (Path_Exists(getDefaultSSLCertificateKeyPath)) {
-        //console.log(`Default SSLCertificateKeyPath exists: ${getDefaultSSLCertificateKeyPath}`);
-        await saveXConfig({ SSLCertificateKeyPath: getDefaultSSLCertificateKeyPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        //console.log(`SSLCertificateKeyPath updated in configuration.`);
-    } else {
-        console.log(`Default SSLCertificateKeyPath does not exist: ${getDefaultSSLCertificateKeyPath}, not updating configuration.`);
-    }
-}
-
-    if(!xConfig.devPath){
-    const getDefaultDevPath = DEFAULT_DIRECTORIES.devPath;
-    if (Path_Exists(getDefaultDevPath)) {
-        //console.log(`Default devPath exists: ${getDefaultDevPath}`);
-        await saveXConfig({ devPath: getDefaultDevPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        //console.log(`devPath updated in configuration.`);
-    } else {
-        console.log(`Default devPath does not exist: ${getDefaultDevPath}, not updating configuration.`);
-    }
-}
-
-    if(!xConfig.devStatic){
-    const getDefaultDevStatic = DEFAULT_DIRECTORIES.devStatic;
-    if (Path_Exists(getDefaultDevStatic)) {
-        await saveXConfig({ devStatic: getDefaultDevStatic });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-    } else {
-        console.log(`Default devStatic does not exist: ${getDefaultDevStatic}, not updating configuration.`);
-    }
-}
-
-    if(!xConfig.devStaticDefault){
-    const getDefaultDevStaticDefault = DEFAULT_DIRECTORIES.devStaticDefault;
-    if (Path_Exists(getDefaultDevStaticDefault)) {
-        //console.log(`Default devStaticDefault exists: ${getDefaultDevStaticDefault}`);
-        await saveXConfig({ devStaticDefault: getDefaultDevStaticDefault });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        //console.log(`devStaticDefault updated in configuration.`);
-    } else {
-        console.log(`Default devStaticDefault does not exist: ${getDefaultDevStaticDefault}, not updating configuration.`);
-    }
-}
-    
-    if(!xConfig.devSSLPath){
-    const getDefaultDevSSLPath = DEFAULT_DIRECTORIES.devSSLPath;
-    if (Path_Exists(getDefaultDevSSLPath)) {
-        //console.log(`Default devSSLPath exists: ${getDefaultDevSSLPath}`);
-        await saveXConfig({ devSSLPath: getDefaultDevSSLPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        //console.log(`devSSLPath updated in configuration.`);
-    } else {
-        console.log(`Default devSSLPath does not exist: ${getDefaultDevSSLPath}, not updating configuration.`);
-    }
-}
-    
-    if(!xConfig.devSSLCertificatesPath){
-    const getDefaultDevSSLCertificatesPath = DEFAULT_DIRECTORIES.devSSLCertificatesPath;
-    if (Path_Exists(getDefaultDevSSLCertificatesPath)) {
-        //console.log(`Default devSSLCertificatesPath exists: ${getDefaultDevSSLCertificatesPath}`);
-        await saveXConfig({ devSSLCertificatesPath: getDefaultDevSSLCertificatesPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        //console.log(`devSSLCertificatesPath updated in configuration.`);
-    } else {
-        console.log(`Default devSSLCertificatesPath does not exist: ${getDefaultDevSSLCertificatesPath}, not updating configuration.`);
-    }
-}
-
-    if(!xConfig.devSSLCertificateKeyPath){
-    const getDefaultDevSSLCertificateKeyPath = DEFAULT_DIRECTORIES.devSSLCertificateKeyPath;
-    if (Path_Exists(getDefaultDevSSLCertificateKeyPath)) {
-        await saveXConfig({ devSSLCertificateKeyPath: getDefaultDevSSLCertificateKeyPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-    } else {
-        console.log(`Default devSSLCertificateKeyPath does not exist: ${getDefaultDevSSLCertificateKeyPath}, not updating configuration.`);
-    }
-}
-
-/* Verify NGINX Paths are set correctly.
-    ╔═╗┌─┐┌┬┐┬ ┬┌─┐
-    ╠═╝├─┤ │ ├─┤└─┐
-    ╩  ┴ ┴ ┴ ┴ ┴└─┘*/
- // Verify and set NGINX configuration path
- if (!xConfig.nginxPath || !xConfig.nginxDir) {
-    const nginxPath = await getNginxConfigAndDir();
+ // Verify and set NGINX configuration paths
+if (!xConfig.nginxPath || !xConfig.nginxDir) {
+const nginxPath = await getNginxConfigAndDir();
     if (nginxPath && nginxPath.configPath) {
         console.log(chalk.green(`Found NGINX configuration path: ${nginxPath.configPath}`));
         const setSuccess = await setNginxConfigAndDir(nginxPath.configPath, nginxPath.basePath);
@@ -208,167 +67,238 @@ let xConfig = await loadOrCreateXConfig();
         console.log(chalk.yellow(`NGINX configuration path not found.`));
     }
 }
-
-
-/* Check and set NGINX executable
-    ╔═╗═╗ ╦╔═╗╔═╗╦ ╦╔╦╗╔═╗╔╗ ╦  ╔═╗
-    ║╣ ╔╩╦╝║╣ ║  ║ ║ ║ ╠═╣╠╩╗║  ║╣ 
-    ╚═╝╩ ╚═╚═╝╚═╝╚═╝ ╩ ╩ ╩╚═╝╩═╝╚═╝*/
+/* NGINX 
+ ╔═╗═╗ ╦╔═╗╔═╗╦ ╦╔╦╗╔═╗╔╗ ╦  ╔═╗
+ ║╣ ╔╩╦╝║╣ ║  ║ ║ ║ ╠═╣╠╩╗║  ║╣ 
+ ╚═╝╩ ╚═╚═╝╚═╝╚═╝ ╩ ╩ ╩╚═╝╩═╝╚═╝
+Check and set executable*/
 if (!xConfig.nginxExecutable) {
     if (await setNginxExecutable(xConfig)) {
+        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+         }else{
+        console.log(chalk.red('Failed to set NGINX executable.'));
+        console.log(chalk.red('Please Make Sure NGINX Is Installed.'));
+      }  
+    } 
+
+/*
+ ┏┓┏┓┏┳┓
+ ┃┓┣  ┃ 
+•┗┛┗┛ ┻ 
+Verify .get Paths  
+ */
+if(!xConfig.getPath){
+const getDefaultPath = DEFAULT_DIRECTORIES.getPath;
+    if (Path_Exists(getDefaultPath)) {
+        await saveXConfig({ getPath: getDefaultPath });
+        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+        } else {
+        console.log(`Default getPath does not exist: ${getDefaultPath}, not updating configuration.`);
+    }
+}
+
+if(!xConfig.static){
+const getDefaultStatic = DEFAULT_DIRECTORIES.static;
+    if (Path_Exists(getDefaultStatic)) {
+        await saveXConfig({ static: getDefaultStatic });
+        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+    } else {
+        console.log(`Default static does not exist: ${getDefaultStatic}, not updating configuration.`);
+    }
+}  
+
+if(!xConfig.staticDefault){
+const getDefaultStaticDefault = DEFAULT_DIRECTORIES.staticDefault;
+    if (Path_Exists(getDefaultStaticDefault)) {
+        await saveXConfig({ staticDefault: getDefaultStaticDefault });
+        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+    } else {
+        console.log(`Default staticDefault does not exist: ${getDefaultStaticDefault}, not updating configuration.`);
+    }   
+}
+
+if(!xConfig.devPath){
+const getDefaultDevPath = DEFAULT_DIRECTORIES.devPath;
+    if (Path_Exists(getDefaultDevPath)) {
+        //console.log(`Default devPath exists: ${getDefaultDevPath}`);
+        await saveXConfig({ devPath: getDefaultDevPath });
+        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+        //console.log(`devPath updated in configuration.`);
+    } else {
+        console.log(`Default devPath does not exist: ${getDefaultDevPath}, not updating configuration.`);
+    }
+}
+
+if(!xConfig.devStatic){
+const getDefaultDevStatic = DEFAULT_DIRECTORIES.devStatic;
+    if (Path_Exists(getDefaultDevStatic)) {
+        await saveXConfig({ devStatic: getDefaultDevStatic });
+        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+    } else {
+        console.log(`Default devStatic does not exist: ${getDefaultDevStatic}, not updating configuration.`);
+    }
+}
+
+if(!xConfig.devStaticDefault){
+const getDefaultDevStaticDefault = DEFAULT_DIRECTORIES.devStaticDefault;
+    if (Path_Exists(getDefaultDevStaticDefault)) {
+        //console.log(`Default devStaticDefault exists: ${getDefaultDevStaticDefault}`);
+        await saveXConfig({ devStaticDefault: getDefaultDevStaticDefault });
+        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+        //console.log(`devStaticDefault updated in configuration.`);
+    } else {
+        console.log(`Default devStaticDefault does not exist: ${getDefaultDevStaticDefault}, not updating configuration.`);
+    }
+}
+
+
+/*
+██   ██ ██████  ██       ██████   ██████ ██   ██ ███████ 
+ ██ ██  ██   ██ ██      ██    ██ ██      ██  ██  ██      
+  ███   ██████  ██      ██    ██ ██      █████   ███████ 
+ ██ ██  ██   ██ ██      ██    ██ ██      ██  ██       ██ 
+██   ██ ██████  ███████  ██████   ██████ ██   ██ ███████ 
+
+ █████  ██    ██  █████  ██ ██       █████  ██████  ██      ███████ 
+██   ██ ██    ██ ██   ██ ██ ██      ██   ██ ██   ██ ██      ██      
+███████ ██    ██ ███████ ██ ██      ███████ ██████  ██      █████   
+██   ██  ██  ██  ██   ██ ██ ██      ██   ██ ██   ██ ██      ██      
+██   ██   ████   ██   ██ ██ ███████ ██   ██ ██████  ███████ ███████ */
+// Check paths before attempting to create XBlocks-available directory
+if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
+// Ensure 'XBlocks-available' directory exists or create it
+const xBlocksAvailablePath = path.join(xConfig.nginxDir, 'XBlocks-available');
+try { ensureDirectoryExists(xBlocksAvailablePath); } 
+catch (error) {
+    if (error.message.startsWith('PermissionError')) {
+    // This is where you involve user decision
+    await handlePermissionErrorForEnsureDir(xBlocksAvailablePath);
+    } else {
+    console.error(chalk.red(`Setup failed: ${error.message}`));
+    }}
+// Check if the directory was successfully created or already exists and update configuration if necessary
+if (!xConfig.XBlocksAvailable && Path_Exists(xBlocksAvailablePath)) {
+    await saveXConfig({ XBlocksAvailable: xBlocksAvailablePath });
     xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-     }else{
-    console.log(chalk.red('Failed to set NGINX executable.'));
-    console.log(chalk.red('Please Make Sure NGINX Is Installed.'));
-  }  
-} 
-
-// Check if the nginxDir is set and the path exists before attempting to create XBlocks-available directory
-if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
-    // Ensure 'XBlocks-available' directory exists or create it
-    const xBlocksAvailablePath = path.join(xConfig.nginxDir, 'XBlocks-available');
-    try {
-        ensureDirectoryExists(xBlocksAvailablePath);
-    } catch (error) {
-        if (error.message.startsWith('PermissionError')) {
-            // This is where you involve user decision
-            await handlePermissionErrorForEnsureDir(xBlocksAvailablePath);
-        } else {
-            console.error(chalk.red(`Setup failed: ${error.message}`));
-        }
-    }
-    // Check if the directory was successfully created or already exists and update configuration if necessary
-    if (!xConfig.XBlocksAvailable && Path_Exists(xBlocksAvailablePath)) {
-        await saveXConfig({ XBlocksAvailable: xBlocksAvailablePath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        console.log(chalk.green("nginx/XBlocks-available path set successfully."));
+    console.log(chalk.green("nginx/XBlocks-available path set successfully."));
     } else if (!Path_Exists(xBlocksAvailablePath)) {
-        console.log(chalk.red("nginx/XBlocks-available path not set."));
+    console.log(chalk.red("nginx/XBlocks-available path not set."));
     }
 } else {
-    // Log a message if the nginxDir is not set or the path does not exist
     console.log(chalk.yellow("Cannot proceed: NGINX directory path is not set or does not exist."));
 }
+/*
+██   ██ ██████  ██       ██████   ██████ ██   ██ ███████ 
+ ██ ██  ██   ██ ██      ██    ██ ██      ██  ██  ██      
+  ███   ██████  ██      ██    ██ ██      █████   ███████ 
+ ██ ██  ██   ██ ██      ██    ██ ██      ██  ██       ██ 
+██   ██ ██████  ███████  ██████   ██████ ██   ██ ███████ 
 
-
-// Check if the nginxDir is set and the path exists before attempting XBlocs-enabled directory creation
+███████ ███    ██  █████  ██████  ██      ███████ ██████  
+██      ████   ██ ██   ██ ██   ██ ██      ██      ██   ██ 
+█████   ██ ██  ██ ███████ ██████  ██      █████   ██   ██ 
+██      ██  ██ ██ ██   ██ ██   ██ ██      ██      ██   ██ 
+███████ ██   ████ ██   ██ ██████  ███████ ███████ ██████*/
+// Check paths before attempting to create XBlocks-enabled directory
 if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
-    // Ensure 'XBlocks-enabled' directory exists or create it
-    const xBlocksEnabledPath = path.join(xConfig.nginxDir, 'XBlocks-enabled');
-    try {
-        ensureDirectoryExists(xBlocksEnabledPath);
-    } catch (error) {
-        if (error.message.startsWith('PermissionError')) {
-            // This is where you involve user decision
-            await handlePermissionErrorForEnsureDir(xBlocksEnabledPath);
-        } else {
-            console.error(chalk.red(`Setup failed: ${error.message}`));
-        }
-    }
-    // Check if the directory was successfully created or already exists and update configuration if necessary
-    if (!xConfig.XBlocksEnabled && Path_Exists(xBlocksEnabledPath)) {
-        await saveXConfig({ XBlocksEnabled: xBlocksEnabledPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        console.log(chalk.green("nginx/XBlocks-enabled path set successfully."));
+// Ensure 'XBlocks-enabled' directory exists or create it
+const xBlocksEnabledPath = path.join(xConfig.nginxDir, 'XBlocks-enabled');
+    try {  ensureDirectoryExists(xBlocksEnabledPath);  } 
+    catch (error) {
+    if (error.message.startsWith('PermissionError')) {
+    // This is where you involve user decision
+    await handlePermissionErrorForEnsureDir(xBlocksEnabledPath);
+    } else { console.error(chalk.red(`Setup failed: ${error.message}`)); }}
+// Check if the directory was successfully created or already exists and update configuration if necessary
+if (!xConfig.XBlocksEnabled && Path_Exists(xBlocksEnabledPath)) {
+    await saveXConfig({ XBlocksEnabled: xBlocksEnabledPath });
+    xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+    console.log(chalk.green("nginx/XBlocks-enabled path set successfully."));
     } else if (!Path_Exists(xBlocksEnabledPath)) {
-        console.log(chalk.red("nginx/XBlocks-enabled path not set."));
-    }
-} else {
-    // Log a message if the nginxDir is not set or the path does not exist
-    console.log(chalk.yellow("Cannot proceed: NGINX directory path is not set or does not exist."));
-}
+    console.log(chalk.red("nginx/XBlocks-enabled path not set."));
+    }} else { console.log(chalk.yellow("Cannot proceed: NGINX directory path is not set or does not exist.")); }
    
-
-//DEVELOPMENT SETTINGS
-// Ensure 'dev_X' directory exists or create it
+/* nginx/dev_X
+████████▄     ▄████████  ▄█    █▄           ▀████    ▐████▀ 
+███   ▀███   ███    ███ ███    ███            ███▌   ████▀  
+███    ███   ███    █▀  ███    ███             ███  ▐███    
+███    ███  ▄███▄▄▄     ███    ███             ▀███▄███▀    
+███    ███ ▀▀███▀▀▀     ███    ███              ████▀██▄     
+███    ███   ███    █▄  ███    ███            ▐███  ▀███    
+███   ▄███   ███    ███ ███    ███           ▄███     ███▄  
+████████▀    ██████████  ▀██████▀ ████ ████ ████       ███▄*/
 if (xConfig.nginxDir && Path_Exists(xConfig.nginxDir)) {
-    // Ensure 'dev_X' directory exists or create it
-    const dev_X = path.join(xConfig.nginxDir, 'dev_X');
-    try {
-        ensureDirectoryExists(dev_X);
-    } catch (error) {
-        if (error.message.startsWith('PermissionError')) {
-            // This is where you involve user decision
-            await handlePermissionErrorForEnsureDir(dev_X);
-        } else {
-            console.error(chalk.red(`Setup failed: ${error.message}`));
-        }
-    }
-    // Check if the directory was successfully created or already exists and update configuration if necessary
-    if (!xConfig.nginxDevDir && Path_Exists(dev_X)) {
-        await saveXConfig({ nginxDevDir: dev_X });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        console.log(chalk.green("nginx/dev_X path set successfully."));
+// Ensure 'dev_X' directory exists or create it
+const dev_X = path.join(xConfig.nginxDir, 'dev_X');
+try { ensureDirectoryExists(dev_X); } 
+catch (error) {
+    if (error.message.startsWith('PermissionError')) {
+    await handlePermissionErrorForEnsureDir(dev_X);
+    } else {
+    console.error(chalk.red(`Setup failed: ${error.message}`));
+    }}
+// Check if the directory was successfully created or already exists and update configuration if necessary
+if (!xConfig.nginxDevDir && Path_Exists(dev_X)) {
+    await saveXConfig({ nginxDevDir: dev_X });
+    xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+    console.log(chalk.green("nginx/dev_X path set successfully."));
     } else if (!Path_Exists(dev_X)) {
-        console.log(chalk.yellow("nginx/dev_X path not set."));
-    }
-} else {
-    // Log a message if the nginxDir is not set or the path does not exist
-    console.log(chalk.yellow("Cannot proceed: NGINX directory path is not set or does not exist."));
-}
-
+    console.log(chalk.yellow("nginx/dev_X path not set."));
+    }} else { console.log(chalk.yellow("Cannot proceed: NGINX directory path is not set or does not exist.")); }
+//DEV_X XBLOCKS-AVAILABLE 
 // Check if the nginxDevDir is set and the path exists before attempting to create subdirectories
 if (xConfig.nginxDevDir && Path_Exists(xConfig.nginxDevDir)) {
-    // Ensure DEV 'XBlocks-available' directory exists or create it
-    const dev_xBlocksAvailablePath = path.join(xConfig.nginxDevDir, 'XBlocks-available');
-    try {
-        ensureDirectoryExists(dev_xBlocksAvailablePath);
-    } catch (error) {
-        if (error.message.startsWith('PermissionError')) {
-            // This is where you involve user decision
-            await handlePermissionErrorForEnsureDir(dev_xBlocksAvailablePath);
-        } else {
-            console.error(chalk.red(`Setup failed: ${error.message}`));
-        }
-    }
+// Ensure DEV 'XBlocks-available' directory exists or create it
+const dev_xBlocksAvailablePath = path.join(xConfig.nginxDevDir, 'XBlocks-available');
+try { ensureDirectoryExists(dev_xBlocksAvailablePath); }
+catch (error) {
+    if (error.message.startsWith('PermissionError')) {
+    // This is where you involve user decision
+    await handlePermissionErrorForEnsureDir(dev_xBlocksAvailablePath);
+    } else {
+    console.error(chalk.red(`Setup failed: ${error.message}`)); }}
     // Check if the directory was successfully created or already exists and update configuration if necessary
     if (!xConfig.dev_XBlocksAvailable && Path_Exists(dev_xBlocksAvailablePath)) {
-        await saveXConfig({ dev_XBlocksAvailable: dev_xBlocksAvailablePath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        console.log(chalk.green("nginx/dev_X/XBlocks-available path set successfully."));
+    await saveXConfig({ dev_XBlocksAvailable: dev_xBlocksAvailablePath });
+    xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+    console.log(chalk.green("nginx/dev_X/XBlocks-available path set successfully."));
     } else if (!Path_Exists(dev_xBlocksAvailablePath)) {
-        console.log(chalk.red("nginx/dev_X/XBlocks-available path not set."));
-    }
-} else {
-    // Log a message if the nginxDevDir is not set or the path does not exist
-    console.log(chalk.yellow("Cannot proceed: NGINX DevDir path is not set or does not exist."));
-}
-
-
-// Check if the nginxDevDir is set and the path exists before attempting to create subdirectories
+    console.log(chalk.red("nginx/dev_X/XBlocks-available path not set."));
+    }} else { console.log(chalk.yellow("Cannot proceed: NGINX DevDir path is not set or does not exist.")); }
+//DEV_X XBLOCKS-ENABLED
+//Check if the nginxDevDir is set and the path exists before attempting to create subdirectories
 if (xConfig.nginxDevDir && Path_Exists(xConfig.nginxDevDir)) {
-    // Ensure DEV 'XBlocks-enabled' directory exists or create it
-    const dev_xBlocksEnabledPath = path.join(xConfig.nginxDevDir, 'XBlocks-enabled');
-    try {
-    ensureDirectoryExists(dev_xBlocksEnabledPath);
-} catch (error) {
-    if (error.message.startsWith('PermissionError')) {
-        // This is where you involve user decision
-        await handlePermissionErrorForEnsureDir(dev_xBlocksEnabledPath);
-    } else {
-        console.error(chalk.red(`Setup failed: ${error.message}`));
-    }
-}
-    // Check if the directory was successfully created or already exists and update configuration if necessary
-    if (!xConfig.dev_XBlocksEnabled && Path_Exists(dev_xBlocksEnabledPath)) {
-        await saveXConfig({ dev_XBlocksEnabled: dev_xBlocksEnabledPath });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        console.log(chalk.green("nginx/devX/XBlocks enabled path set successfully."));
+// Ensure DEV 'XBlocks-enabled' directory exists or create it
+const dev_xBlocksEnabledPath = path.join(xConfig.nginxDevDir, 'XBlocks-enabled');
+try { ensureDirectoryExists(dev_xBlocksEnabledPath); } catch (error) {
+if (error.message.startsWith('PermissionError')) {
+// This is where you involve user decision
+await handlePermissionErrorForEnsureDir(dev_xBlocksEnabledPath);
+} else { console.error(chalk.red(`Setup failed: ${error.message}`)); }}
+// Check if the directory was successfully created or already exists and update configuration if necessary
+if (!xConfig.dev_XBlocksEnabled && Path_Exists(dev_xBlocksEnabledPath)) {
+    await saveXConfig({ dev_XBlocksEnabled: dev_xBlocksEnabledPath });
+    xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+    console.log(chalk.green("nginx/devX/XBlocks enabled path set successfully."));
     } else if (!Path_Exists(dev_xBlocksEnabledPath)) {
-        console.log(chalk.red("nginx/devX/XBlocks enabled path not set."));
-    }
-} else {
-    // Log a message if the nginxDevDir is not set or the path does not exist
-    console.log(chalk.yellow("Cannot proceed: NGINX DevDir path is not set or does not exist."));
-}
+    console.log(chalk.red("nginx/devX/XBlocks enabled path not set."));
+    }} else { console.log(chalk.yellow("Cannot proceed: NGINX DevDir path is not set or does not exist.")); }
 
+/*
+╔═╗╔═╗╦═╗╔╦╗╔═╗
+╠═╝║ ║╠╦╝ ║ ╚═╗
+╩  ╚═╝╩╚═ ╩ ╚═╝*/
+if(!xConfig.xMainOutPutPort){
+    await saveXConfig({ xMainOutPutPort: 3432 });
+    xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+}
 
 /* Verify All Good. 
-    ╔╗╔╔═╗╦╔╗╔═╗ ╦  ╔═╗╦ ╦╔═╗╔═╗╦╔═╔═╗
-    ║║║║ ╦║║║║╔╩╦╝  ║  ╠═╣║╣ ║  ╠╩╗╚═╗
-    ╝╚╝╚═╝╩╝╚╝╩ ╚═  ╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝*/
-    let nginxVerified = await verifyNginxConfig(xConfig);
-    if (!nginxVerified) {
+╔╗╔╔═╗╦╔╗╔═╗ ╦  ╔═╗╦ ╦╔═╗╔═╗╦╔═╔═╗
+║║║║ ╦║║║║╔╩╦╝  ║  ╠═╣║╣ ║  ╠╩╗╚═╗
+╝╚╝╚═╝╩╝╚╝╩ ╚═  ╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝*/
+let nginxVerified = await verifyNginxConfig(xConfig);
+if (!nginxVerified) {
         console.log(chalk.yellow('Initial NGINX verification failed. Attempting to resolve...'));
         try {
             await nginxInstallationOptions();  // Attempt automated fixes
@@ -387,6 +317,7 @@ if (xConfig.nginxDevDir && Path_Exists(xConfig.nginxDevDir)) {
         }
     } 
 
+
 /* Verify NGINX server block is correctly configured for netgetX.
     ╔═╗╔═╗╦═╗╦  ╦╔═╗╦═╗  ╔╗ ╦  ╔═╗╔═╗╦╔═
     ╚═╗║╣ ╠╦╝╚╗╔╝║╣ ╠╦╝  ╠╩╗║  ║ ║║  ╠╩╗
@@ -399,14 +330,23 @@ if (!serverBlockVerified) {
 
 const publicIP = await getPublicIP();  // Properly await the asynchronous call
 const localIP = getLocalIP();
-let x = {
-    ...xConfig, // spreads all properties of xConfig into x
-    publicIP: publicIP,
-    localIP: localIP
+if(publicIP != xConfig.publicIP){
+    console.log("PublicIP has changed from: " + xConfig.publicIP + " new Detected: " + publicIP);
+    await saveXConfig({ publicIP: publicIP });
+    xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
 };
+
+if(localIP != xConfig.localIP){
+    console.log("LocalIP has changed from: " + xConfig.localIP + " new Detected: " + localIP);
+    await saveXConfig({ localIP: localIP });
+    xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
+};
+
+let x = {
+    ...xConfig // spreads all properties of xConfig into x
+};
+
 initializeState(x);
 console.log(chalk.green('Setup Verification Successful.'));
 return x;
-
 };
-
