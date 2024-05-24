@@ -2,6 +2,8 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import NetGetMainMenu from '../netget_MainMenu.cli.js';
 import { manageGateway } from './gatewayPM2.js';
+import { addNewGateway } from './addGateway.cli.js';
+import pm2 from 'pm2';
 
 export async function Gateways_CLI(g) {
     console.clear();  // Clear the console when entering the Gateways menu
@@ -11,7 +13,6 @@ export async function Gateways_CLI(g) {
         const gatewayNames = g.gateways.map(gateway => gateway.name);
         const mainMenuOptions = [
             ...gatewayNames,
-            'Show more Gateways...',
             'Add Gateway',
             'Go Back'  // Added Go Back option
         ];
@@ -29,11 +30,6 @@ export async function Gateways_CLI(g) {
                 console.log(chalk.blue('Returning to the main menu...'));
                 await NetGetMainMenu();
                 return;
-
-            case 'Show more Gateways...':
-                console.clear();  // Clear the console when showing more gateways
-                console.log(chalk.blue('Showing more gateways...'));
-                break;
 
             case 'Add Gateway':
                 console.clear();  // Clear the console when adding a new gateway
@@ -53,9 +49,10 @@ export async function Gateways_CLI(g) {
 }
 
 async function showGatewayActions(gateway) {
+    await displayGatewayStatus(gateway.name);
+
     while (true) {
-        console.log(chalk.yellow(`Interacting with Gateway: ${gateway.name}`));
-        const actions = ['start', 'stop', 'restart', 'delete', 'status', 'Go Back'];  // Added status and Go Back option
+        const actions = ['start', 'stop', 'restart', 'delete', 'status', 'logs', 'Go Back'];  // Added logs and Go Back option
         const { action } = await inquirer.prompt({
             type: 'list',
             name: 'action',
@@ -63,23 +60,77 @@ async function showGatewayActions(gateway) {
             choices: actions,
         });
 
-        switch (action) {
-            case 'Go Back':
-                console.clear();  // Clear the console when going back to the previous menu
-                return;  // Exit the loop to go back to the previous menu
+        if (action === 'Go Back') {
+            console.clear();  // Clear the console when going back to the previous menu
+            return;  // Exit the loop to go back to the previous menu
+        }
 
-            case 'start':
-            case 'stop':
-            case 'restart':
-            case 'delete':
-            case 'status':
-                console.clear();  // Clear the console before performing an action
-                await manageGateway(gateway.name, action);  // Pass the gateway name and action to manageGateway
-                break;
+        console.clear();  // Clear the console before performing an action
+        try {
+            const result = await manageGateway(gateway.name, action);  // Pass the gateway name and action to manageGateway
 
-            default:
-                console.log(chalk.red('Invalid choice, please try again.'));
-                break;
+            // Display the result of the action
+            console.log(chalk.blue(`Result of ${action} action:`));
+            console.log(result);
+        } catch (error) {
+            console.error(chalk.red(`Error during ${action} action: ${error}`));
+        }
+
+        // Clear the console and redisplay the status after performing an action
+        if (action !== 'status' && action !== 'logs') {
+            console.clear();
+            await displayGatewayStatus(gateway.name);
         }
     }
+}
+
+
+async function displayGatewayStatus(gatewayName) {
+    return new Promise((resolve) => {
+        pm2.connect((err) => {
+            if (err) {
+                console.error(chalk.red('PM2 connection error:'), err);
+                process.exit(2);
+            }
+
+            pm2.describe(gatewayName, (err, desc) => {
+                if (err) {
+                    console.error(chalk.red(`Failed to get status for ${gatewayName}`), err);
+                } else if (desc && desc.length > 0) {
+                    const statusInfo = desc[0].pm2_env;
+                    const procInfo = desc[0].monit; // Contains CPU and memory usage
+
+                    console.log(chalk.blue(`Current status of ${gatewayName}:`));
+
+                    const formatLine = (label, value) => `${chalk.bold(label.padEnd(20, ' '))}: ${chalk.green(value || 'N/A')}`;
+
+                    let statusOutput = '';
+
+                    statusOutput += formatLine('Name', statusInfo.name) + '\n';
+                    statusOutput += formatLine('PID', desc[0].pid || 'N/A') + '\n';  // Using desc[0].pid for PID
+                    statusOutput += formatLine('Port', statusInfo.env.PORT || 'N/A') + '\n'; // Add port information
+                    statusOutput += formatLine('Status', statusInfo.status) + '\n';
+                    if (statusInfo.pm_uptime) {
+                        const uptime = Date.now() - statusInfo.pm_uptime;
+                        const uptimeFormatted = `${Math.floor(uptime / (1000 * 60 * 60))}h ${Math.floor((uptime / (1000 * 60)) % 60)}m`;
+                        statusOutput += formatLine('Started at', new Date(statusInfo.pm_uptime).toLocaleString()) + '\n';
+                        statusOutput += formatLine('Uptime', uptimeFormatted) + '\n';
+                    }
+                    statusOutput += formatLine('Restarts', statusInfo.restart_time) + '\n';
+                    if (procInfo) {
+                        statusOutput += formatLine('CPU', `${procInfo.cpu}%`) + '\n';
+                        statusOutput += formatLine('Memory', `${(procInfo.memory / 1024 / 1024).toFixed(2)} MB`) + '\n';
+                    }
+                    statusOutput += formatLine('User', statusInfo.username) + '\n';
+                    statusOutput += formatLine('Watching', statusInfo.watch ? 'Yes' : 'No') + '\n';
+
+                    console.log(statusOutput.trim());
+                } else {
+                    console.log(chalk.yellow(`${gatewayName} is not currently managed by PM2.`));
+                }
+                pm2.disconnect(); // Disconnects from PM2
+                resolve();
+            });
+        });
+    });
 }

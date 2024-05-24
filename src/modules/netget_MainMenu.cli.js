@@ -5,6 +5,7 @@ import { i_DefaultNetGetX } from './NetGetX/config/i_DefaultNetGetX.js';
 import  NetGetX_CLI  from './NetGetX/NetGetX.cli.js';
 import { i_DefaultGateway } from './Gateways/config/i_DefaultGateway.js';
 import { Gateways_CLI } from './Gateways/gateways.cli.js';
+import { PortManagement_CLI } from './PortManagement/portManagement.cli.js';
 //import { handleAccessPoints } from './AccessPoints/AccessPoints.js';
 //import { handleGets } from './Gets/Gets.js';
 /**
@@ -23,7 +24,7 @@ export default async function NetGetMainMenu() {
         type: 'list',
         name: 'action',
         message: 'Main Menu:',
-        choices: ['NetGetX', 'Gateways', 'Gets', 'AccessPoints', new inquirer.Separator(), 'Exit'],
+        choices: ['NetGetX', 'Gateways', 'Gets', 'AccessPoints',  new inquirer.Separator(), 'Port Management', new inquirer.Separator(), 'Exit', new inquirer.Separator()],
     },
     ]);
 
@@ -70,6 +71,11 @@ export default async function NetGetMainMenu() {
             console.log(chalk.magenta('Selected AccessPoints'));
             //await handleAccessPoints();  // Call AccessPoints functionality here
             break;
+
+        case 'Port Management':
+            await PortManagement_CLI();
+            break;
+    
         case 'Exit':
             console.log(chalk.green('Exiting NetGet CLI.'));
             process.exit();

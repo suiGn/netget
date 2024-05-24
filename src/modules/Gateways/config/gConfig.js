@@ -9,7 +9,9 @@ const defaultConfig = {
         {
             name: 'netget-gateway',
             port: 3432,
+            fallbackPort: 3433,
             status: 'stopped'
+        
         }
     ]
 };
