@@ -6,7 +6,10 @@ import setDefaultServerBlock from './setDefaultServerBlock.js';
  * Prompts the user for the server block configuration options.
  * @param {object} xConfig The user configuration object.
  * @returns {Promise<boolean>} True if the configuration was successfully restored or the user wants to proceed with the current configuration.
- */
+ * @category NetGetX
+ * @subcategory Config
+ * @module serverBlockConfigOptions
+*/
 
 export const serverBlockConfigOptions = async (xConfig) => {
     const answers = await inquirer.prompt([

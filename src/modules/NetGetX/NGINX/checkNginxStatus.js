@@ -5,6 +5,9 @@ import { handlePermission } from '../../utils/handlePermissions.js'; // Adjust p
 /**
  * Checks the status of NGINX configuration.
  * @param {Object} x - The configuration object containing paths and settings for NGINX.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module checkNginxStatus
  */
 export async function checkNginxStatus(x) {
     try {

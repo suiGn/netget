@@ -18,7 +18,10 @@ const checkPermissions = (dirPath, desiredMode) => {
  * Function to ensure the directory exists and has the correct permissions.
  * @param {string} directory - The directory path to check or create.
  * @param {number} [desiredMode=0o755] - The desired permission mode to set if the directory is created or permissions are incorrect.
- */
+ * @category Utils
+ * @subcategory General
+ * @module pathUtils
+*/
 function ensureDirectoryExists(directory, desiredMode = 0o755) {
     try {
         let directoryExists = fs.existsSync(directory);
@@ -47,7 +50,10 @@ function ensureDirectoryExists(directory, desiredMode = 0o755) {
  * Checks if a specified path (directory or file) exists.
  * @param {string} path - The path to check.
  * @returns {boolean} - True if the path exists, false otherwise.
- */
+ * @category Utils
+ * @subcategory General
+ * @module pathUtils
+*/
 function Path_Exists(path) {
     return fs.existsSync(path);
 }

@@ -5,7 +5,10 @@ import os from 'os';
 /**
  * Handles permission errors when creating directories.
  * @param {string} directory - The directory path where permission was denied.
- */
+ * @category Utils
+ * @subcategory General
+ * @module handlePermissionsForEnsureDir
+*/
 const handlePermissionErrorForEnsureDir = async (directory) => {
     const choices = [
         { name: 'Retry with elevated privileges', value: 'sudo' },
@@ -36,7 +39,10 @@ const handlePermissionErrorForEnsureDir = async (directory) => {
 /**
  * Tries to create the directory with elevated privileges.
  * @param {string} directory - The directory path to create.
- */
+ * @category Utils
+ * @subcategory General
+ * @module handlePermissionsForEnsureDir
+*/
 
 const tryElevatedPrivileges = async (directory) => {
     let command;
@@ -58,7 +64,10 @@ const tryElevatedPrivileges = async (directory) => {
 /**
  * Displays manual configuration instructions for setting directory permissions.
  * @param {string} directory - The directory path to display instructions for.
- */
+ * @category Utils
+ * @subcategory General
+ * @module handlePermissionsForEnsureDir
+*/
 
 const displayManualInstructions = (directory) => {
     if (os.platform() === 'win32') {

@@ -31,6 +31,9 @@ import handlePermissionErrorForEnsureDir from '../../utils/handlePermissionError
  * Returns the sate of the configuration object set in xConfig.js to x.
  * x = {
  *    getPath: '/var/www/html'...
+ * @category NetGetX
+ * @subcategory Config
+ * @module i_DefaultNetGetX
  * */
 
 export async function i_DefaultNetGetX() {

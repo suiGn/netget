@@ -9,6 +9,9 @@ import { saveXConfig } from './xConfig.js';
  * Finds the NGINX configuration file and its base directory on the system.
  * Adjusts the approach based on the operating system for better compatibility.
  * @returns {object} An object containing paths to the NGINX configuration file and its base directory or null values if not found.
+ * @category NetGetX
+ * @subcategory Config
+ * @module NginxPaths
  */
 async function getNginxConfigAndDir() {
     const isWindows = os.platform() === 'win32';
@@ -52,6 +55,9 @@ async function getNginxConfigAndDir() {
  * @param {string} nginxConfigPath The NGINX configuration path to be set.
  * @param {string} nginxBasePath The NGINX base path to be set.
  * @returns {Promise<boolean>} True if the path was set and saved successfully.
+ * @category NetGetX
+ * @subcategory Config
+ * @module NginxPaths
  */
 async function setNginxConfigAndDir(nginxConfigPath, nginxBasePath) {
     try {
@@ -70,6 +76,9 @@ async function setNginxConfigAndDir(nginxConfigPath, nginxBasePath) {
  * 
  * @param {Object} xConfig - The configuration object that holds NGINX related settings.
  * @returns {Promise<boolean>} Returns true if the executable path is successfully set, otherwise false.
+ * @category NetGetX
+ * @subcategory Config
+ * @module NginxPaths
  */
 async function setNginxExecutable(xConfig) {
     if (!xConfig.nginxPath) {

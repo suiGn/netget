@@ -11,7 +11,10 @@ import generateSelfSignedCerts from './generateSelfSignedCerts.js';
  * Adds a temporary self-signed SSL configuration to the NGINX config file.
  * @param {string} nginxConfigPath - The path to the NGINX configuration file.
  * @param {string} sslDir - The directory containing the self-signed SSL certificates.
- */
+ * @category NetGetX
+ * @subcategory SSL 
+ * @module sslUtils
+*/
 async function addTemporarySSLConfig(nginxConfigPath, sslDir) {
     if (!nginxConfigPath) {
         console.error(chalk.red("NGINX configuration path is not defined. Cannot add temporary SSL config."));
@@ -55,7 +58,10 @@ server {
 /**
  * Removes the temporary self-signed SSL configuration from the NGINX config file.
  * @param {string} nginxConfigPath - The path to the NGINX configuration file.
- */
+ * @category NetGetX
+ * @subcategory SSL 
+ * @module sslUtils
+*/
 async function removeTemporarySSLConfig(nginxConfigPath) {
     if (!nginxConfigPath) {
         console.error(chalk.red("NGINX configuration path is not defined. Cannot remove temporary SSL config."));
@@ -76,7 +82,10 @@ async function removeTemporarySSLConfig(nginxConfigPath) {
  * Handles permission issues if they arise.
  * @param {Object} xConfig - The configuration object.
  * @returns {Promise<Object>} - The updated configuration object.
- */
+ * @category NetGetX
+ * @subcategory SSL 
+ * @module sslUtils
+*/
 async function ensureSSLDirectories(xConfig) {
     if (xConfig.nginxDir) {
         const sslPaths = [

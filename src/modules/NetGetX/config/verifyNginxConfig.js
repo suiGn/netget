@@ -10,6 +10,9 @@ import { execSync } from 'child_process';
  *
  * @param {Object} xConfig - The configuration object containing paths and settings for NGINX.
  * @returns {Promise<boolean>} - Returns true if NGINX is properly configured and executable, otherwise returns false.
+ * @category NetGetX
+ * @subcategory Config
+ * @module verifyNginxConfig
  */
 export default async function verifyNginxConfig(xConfig) {
     // Verify if all required paths are set and exist

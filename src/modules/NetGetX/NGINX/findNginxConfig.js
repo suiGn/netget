@@ -6,6 +6,9 @@ import { execSync } from 'child_process';
 /**
  * Finds the NGINX configuration file path.
  * @returns {string|null} - The path to the NGINX configuration file or null if not found.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module findNginxConfig
  */
 
 const findNginxConfig = () => {

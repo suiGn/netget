@@ -5,6 +5,9 @@ import chalk from 'chalk';
  * View NGINX logs based on the provided configuration.
  * @param {Object} config - The configuration object which should include the NGINX log path.
  * @returns {Promise<void>} Promise resolving when the command execution is complete.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module viewNginxLogs
  */
 const viewNginxLogs = async (config) => {
     const logCommand = process.platform === 'win32' ? 'type' : 'less';
@@ -17,6 +20,8 @@ const viewNginxLogs = async (config) => {
  * Executes an interactive shell command and handles the output.
  * @param {string} command - The command to execute.
  * @returns {Promise<void>} Promise resolving when the command execution is complete.
+ * @category NetGetX
+ * @subcategory NGINX
  */
 const execCommandInteractive = (command) => {
     return new Promise((resolve, reject) => {

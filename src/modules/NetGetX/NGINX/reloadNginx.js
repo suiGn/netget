@@ -5,6 +5,9 @@ import chalk from 'chalk';
  * Reloads the NGINX server using the provided configuration.
  * @param {Object} config - The configuration object which should include the NGINX executable path.
  * @returns {Promise<boolean>} Promise resolving to true if reload was successful, false otherwise.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module reloadNginx
  */
 const reloadNginx = async (config) => {
     const reloadCommand = 'sudo nginx -s reload';
@@ -16,6 +19,9 @@ const reloadNginx = async (config) => {
  * Executes a shell command and logs the output or errors.
  * @param {string} command - The command to execute.
  * @returns {Promise<boolean>} Promise resolving to true if command was successful, false otherwise.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module reloadNginx
  */
 const execCommand = (command) => {
     return new Promise((resolve, reject) => {

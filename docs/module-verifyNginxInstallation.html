@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   ...
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NetGet src/handlers/defaultHandler.js</title>
+  <title>NetGet Documentation verifyNginxInstallation</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -21,7 +19,7 @@
   <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
   <link type="text/css" rel="stylesheet" href="styles/app.min.css">
   <link type="text/css" rel="stylesheet" href="styles/iframe.css">
-  <link type="text/css" rel="stylesheet" href="style.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   
@@ -113,52 +111,126 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="Gateway.html">Gateway</a></li></ul><h3>Global</h3><ul><li><a href="global.html#testGateway">testGateway</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="Gateway.html">Gateway</a></li><li><a href="NetGet.html">NetGet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkPermissions">checkPermissions</a></li><li><a href="global.html#ensureRequiredConfig">ensureRequiredConfig</a></li><li><a href="global.html#execShellCommand">execShellCommand</a></li><li><a href="global.html#getState">getState</a></li><li><a href="global.html#initializeDirectories">initializeDirectories</a></li><li><a href="global.html#testGateway">testGateway</a></li><li><a href="global.html#updateState">updateState</a></li></ul></div><div class="category"><h2>Gateways</h2><h3>Modules / Main</h3><ul><li><a href="module-addGateway.html">addGateway</a></li><li><a href="module-gState.html">gState</a></li><li><a href="module-gatewayPM2.html">gatewayPM2</a></li></ul><h3>Modules / Config</h3><ul><li><a href="module-gConfig.html">gConfig</a></li></ul></div><div class="category"><h2>NetGetX</h2><h3>Modules / Config</h3><ul><li><a href="module-NginxPaths.html">NginxPaths</a></li><li><a href="module-i_DefaultNetGetX.html">i_DefaultNetGetX</a></li><li><a href="module-serverBlockConfigOptions.html">serverBlockConfigOptions</a></li><li><a href="module-setDefaultServerBlock.html">setDefaultServerBlock</a></li><li><a href="module-verifyNginxConfig.html">verifyNginxConfig</a></li><li><a href="module-verifyServerBlock.html">verifyServerBlock</a></li><li><a href="module-xConfig.html">xConfig</a></li><li><a href="module-xDefaultServerBlock.html">xDefaultServerBlock</a></li><li><a href="module-x_StateAndConfig.html">x_StateAndConfig</a></li></ul><h3>Modules / NGINX</h3><ul><li><a href="module-checkNginxStatus.html">checkNginxStatus</a></li><li><a href="module-findNginxConfig.html">findNginxConfig</a></li><li><a href="module-installNginx.html">installNginx</a></li><li><a href="module-nginxRestart.html">nginxRestart</a></li><li><a href="module-reloadNginx.html">reloadNginx</a></li><li><a href="module-startNginx.html">startNginx</a></li><li><a href="module-stopNginx.html">stopNginx</a></li><li><a href="module-verifyNginxInstallation.html">verifyNginxInstallation</a></li><li><a href="module-viewNginxLogs.html">viewNginxLogs</a></li></ul><h3>Modules / SSL</h3><ul><li><a href="module-generateSelfSignedCerts.html">generateSelfSignedCerts</a></li><li><a href="module-sslUtils.html">sslUtils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkAndInstallCertbot">checkAndInstallCertbot</a></li><li><a href="global.html#ensureOutputPort">ensureOutputPort</a></li><li><a href="global.html#initializeState">initializeState</a></li></ul></div><div class="category"><h2>Utils</h2><h3>Modules / General</h3><ul><li><a href="module-GETDirs.html">GETDirs</a></li><li><a href="module-handlePermissions.html">handlePermissions</a></li><li><a href="module-handlePermissionsForEnsureDir.html">handlePermissionsForEnsureDir</a></li><li><a href="module-ipUtils.html">ipUtils</a></li><li><a href="module-pathUtils.html">pathUtils</a></li><li><a href="module-promptForDomainAndEmail.html">promptForDomainAndEmail</a></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>src/handlers/defaultHandler.js</h1>
+                    <p>Module</p>
+                    <h1>verifyNginxInstallation</h1>
                 </header>
                 
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>// ./src/handlers/defaultHandler.js
-/**
- * Renders a default response when no specific handler is found for a request.
- * This function serves as a fallback handler to provide informative feedback to the user or administrator.
- * It indicates whether no handlers are defined at all or if a specific handler for the requested domain is missing.
- * 
- * @param {Object} req - The HTTP request object provided by Express.js.
- * @param {Object} res - The HTTP response object provided by Express.js.
- * @param {boolean} [noHandlersDefined=false] - Indicates whether no handlers have been defined in the gateway.
- */
-export default function defaultHandler(req, res, noHandlersDefined = false) {
-  let message = " ";
-  if (noHandlersDefined) {
-    message += " No handlers have been defined.&lt;br/> To configure your domain handlers, please refer to Docs: &lt;br/>  https://netget.me ";
-  } else {
-    message += ` No specific handler found for ${req.hostname}.&lt;br/> If you are the administrator, please define a handler for this domain.`;
-  }
+</header>
 
-  const showDomainListLink = !noHandlersDefined;
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Verifies the installation of NGINX on the system.</p></div>
+        
 
-  res.render('index', {
-      title: "Gateway Initiated!",
-      message: message,
-      showDomainListLink: showDomainListLink
-  });
-}
-</code></pre>
-        </article>
-    </section>
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://nginx.org/">NGINX</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="src_modules_NetGetX_NGINX_verifyNginxInstallation.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_modules_NetGetX_NGINX_verifyNginxInstallation.js.html">src/modules/NetGetX/NGINX/verifyNginxInstallation.js</a>, <a href="src_modules_NetGetX_NGINX_verifyNginxInstallation.js.html#line4">line 4</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    
+        <pre class="prettyprint"><code>const nginxPath = verifyNginxInstallation();
+if (nginxPath) {
+ console.log(`NGINX found at: ${nginxPath}`);
+} else {
+console.log('NGINX not found on system PATH or common locations.');
+}</code></pre>
+    
+
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
 
 
 

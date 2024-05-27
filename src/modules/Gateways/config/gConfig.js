@@ -19,7 +19,11 @@ const defaultConfig = {
 /**
  * Loads the gateway configuration file or creates it if it does not exist.
  * @returns {object} The gateway configuration.
- */ async function loadOrCreateGConfig() {
+ * @category Gateways
+ * @subcategory Config
+ * @module gConfig
+ */ 
+async function loadOrCreateGConfig() {
     try {
         if (!fs.existsSync(CONFIG_FILE)) {
             console.log(chalk.blue('Configuration file not found, creating default configuration.'));
@@ -36,7 +40,11 @@ const defaultConfig = {
 /**
  * Saves the gateway configuration to a file.
  * @param {object} config - The gateway configuration to save.
- */ async function saveGConfig(config) {
+ * @category Gateways
+ * @subcategory Config
+ * @module gConfig
+ */ 
+async function saveGConfig(config) {
     try {
         fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2), 'utf-8');
         console.log(chalk.green('Gateway configuration saved successfully.'));
@@ -49,6 +57,9 @@ const defaultConfig = {
 /**
  * Adds a new gateway to the configuration.
  * @param {object} newGateway - The new gateway to add.
+ * @category Gateways
+ * @subcategory Config
+ * @module gConfig
  */
 async function addGateway(newGateway) {
     try {

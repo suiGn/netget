@@ -6,6 +6,9 @@ import { execShellCommand } from '../../utils/execShellCommand.js';
 /**
  * Checks if Chocolatey is installed on Windows.
  * @returns {Promise<boolean>} - Returns true if Chocolatey is installed, otherwise false.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module installNginx
     */
 const checkForChoco = () => {
     return new Promise((resolve, reject) => {
@@ -21,6 +24,9 @@ const checkForChoco = () => {
 /** Determine the appropriate installation command based on the OS. 
 * @param {string} version - The version of NGINX to install.
 * @returns {string|null} - The installation command for the OS or null if unsupported.
+* @category NetGetX
+* @subcategory NGINX
+* @module installNginx
 **/
 const determineInstallCommand = (version) => {
     switch (os.platform()) {
@@ -34,6 +40,9 @@ const determineInstallCommand = (version) => {
 /**
  * Installs NGINX on the system.
  * @returns {Promise<boolean>} - Returns true if installation was successful, otherwise false.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module installNginx
  **/
 const installNginx = async () => {
     if (os.platform() === 'win32' && !await checkForChoco()) {
@@ -61,7 +70,10 @@ const installNginx = async () => {
  * Handles errors encountered during installation.
  * @param {string} installCmd - The installation command that failed.
  * @param {Error} error - The error object thrown during installation.
-* @returns {boolean} - Returns true if the error is non-fatal, otherwise false. 
+ * @returns {boolean} - Returns true if the error is non-fatal, otherwise false. 
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module installNginx
 **/
 const handleInstallationError = async (installCmd, error) => {
     // Log the error and provide OS-specific advice
@@ -85,6 +97,9 @@ const handleInstallationError = async (installCmd, error) => {
  * @param {string} installCmd - The installation command that failed.
  * @param {Error} error - The error object thrown during installation.
  * @returns {boolean} - Returns true if the error is non-fatal, otherwise false.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module installNginx
  * */
 const handleDarwinError = (installCmd, error) => {
     if (error.message.includes('Permission denied')) {
@@ -101,6 +116,9 @@ const handleDarwinError = (installCmd, error) => {
  * @param {string} installCmd - The installation command that failed.
  * @param {Error} error - The error object thrown during installation.
  * @returns {boolean} - Returns true if the error is non-fatal, otherwise false.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module installNginx
  * */
 const handleLinuxError = (installCmd, error) => {
     if (error.message.toLowerCase().includes('permission denied')) {
@@ -117,6 +135,9 @@ const handleLinuxError = (installCmd, error) => {
  * @param {string} installCmd - The installation command that failed.
  * @param {Error} error - The error object thrown during installation.
  * @returns {boolean} - Returns true if the error is non-fatal, otherwise false.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module installNginx
  * */
 const handleWindowsError = (installCmd, error) => {
     if (error.message.toLowerCase().includes('permission denied')) {

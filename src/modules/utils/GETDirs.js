@@ -32,6 +32,9 @@ function initializeDirectories() {
 /**
  * Get paths to important directories.
  * @returns {object} Object containing paths to key directories.
+ * @category Utils
+ * @subcategory General
+ * @module GETDirs
  */
 function getDirectoryPaths() {
     return DIRECTORIES;

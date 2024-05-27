@@ -5,7 +5,11 @@
  * @param {object} xConfig The user configuration object.
  * @returns {string} The default server block configuration.
  * @example
- * xDefaultServerBlock(xConfig); */
+ * xDefaultServerBlock(xConfig);
+ * @category NetGetX
+ * @subcategory Config
+ * @module xDefaultServerBlock
+ *  */
 const xDefaultServerBlock = (xConfig) => {
     if (!xConfig) {
         throw new Error("User configuration must be provided.");

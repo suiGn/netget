@@ -5,7 +5,9 @@ let xState = {};
 /**
  * Initializes the X State with the provided data.
  * @param {Object} data - The data to initialize the X State with.
- */
+ * @category NetGetX
+ * @subcategory General
+*/
 export const initializeState = (data) => {
     xState = { ...data };
     console.log(chalk.cyan('X State Initialized.'));

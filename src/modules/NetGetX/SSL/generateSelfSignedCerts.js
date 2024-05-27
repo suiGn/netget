@@ -7,6 +7,9 @@ import fs from 'fs';
 /**
  * Ensures the directory exists, creating it if necessary.
  * @param {string} dirPath - The path to the directory to ensure.
+ * @category NetGetX
+ * @subcategory SSL
+ * @module generateSelfSignedCerts
  */
 const ensureDirectoryExists = (dirPath) => {
     if (!fs.existsSync(dirPath)) {
@@ -18,7 +21,10 @@ const ensureDirectoryExists = (dirPath) => {
  * Generates self-signed SSL certificates.
  * @param {string} basePath - The base path where SSL certificates and keys will be stored.
  * @returns {Promise<boolean>} - A promise that resolves to true if the certificates were generated successfully, otherwise false.
- */
+ * @category NetGetX
+ * @subcategory SSL 
+ * @module generateSelfSignedCerts
+*/
 const generateSelfSignedCerts = (basePath) => {
     return new Promise((resolve, reject) => {
         const sslDir = path.join(basePath, 'ssl');

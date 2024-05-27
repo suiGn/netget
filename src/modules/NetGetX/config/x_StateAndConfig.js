@@ -5,6 +5,9 @@ import { getConfig } from './getConfig.js';
  *
  * @param {Object} stateX - The current state to compare with the xConfig.
  * @returns {Promise<void>} - A promise that resolves when the comparison is complete.
+ * @category NetGetX
+ * @subcategory Config
+ * @module x_StateAndConfig
  */
 async function displayStateAndConfig(stateX) {
     let x = await getConfig();

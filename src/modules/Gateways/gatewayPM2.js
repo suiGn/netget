@@ -15,6 +15,9 @@ const __dirname = path.dirname(__filename);
  * @param {string} gatewayName - The name of the gateway to manage.
  * @param {string} action - The action to perform (start, stop, restart, delete, status, logs).
  * @returns {Promise<string>} - A promise that resolves to a status message or logs.
+ * @category Gateways
+ * @subcategory Main
+ * @module gatewayPM2
  */
 const manageGateway = async (gatewayName, action) => {
     const config = await loadOrCreateGConfig();

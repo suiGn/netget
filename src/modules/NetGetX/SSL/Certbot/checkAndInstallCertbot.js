@@ -5,7 +5,9 @@ import chalk from 'chalk';
 /**
  * Check if Certbot and Certbot NGINX plugin are installed, and install them if necessary.
  * @returns {Promise<boolean>} Promise resolving to true if Certbot and its NGINX plugin are installed, false otherwise.
- */
+ * @category NetGetX
+ * @subcategory SSL 
+*/
 const checkAndInstallCertbot = () => {
     return new Promise((resolve, reject) => {
         exec('certbot --version', (error, stdout, stderr) => {

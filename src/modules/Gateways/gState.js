@@ -5,6 +5,9 @@ let gState = {};
 /**
  * Initializes the X State with the provided data.
  * @param {Object} data - The data to initialize the X State with.
+ * @category Gateways
+ * @subcategory Main
+ * @module gState
  */
 export const initializeState = (data) => {
     gState = { ...data };
@@ -23,6 +26,9 @@ export const getState = () => {
 /**
  * Updates the X State with the provided data.
  * @param {Object} newData - The data to update the X State with.
+ * @category Gateways
+ * @subcategory Main
+ * @module gState
  */
 export const updateState = (newData) => {
     gState = { ...gState, ...newData };

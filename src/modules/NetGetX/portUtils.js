@@ -5,6 +5,8 @@ import { saveXConfig, loadOrCreateXConfig } from './config/xConfig.js';
 /**
  * Ensures that the output port is set in the configuration.
  * @returns {Promise<number>} The output port number.
+ * @category NetGetX
+ * @subcategory General
  */
 export async function ensureOutputPort() {
     let xConfig = await loadOrCreateXConfig();

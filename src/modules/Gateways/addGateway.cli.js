@@ -5,6 +5,9 @@ import { addGateway, loadOrCreateGConfig } from './config/gConfig.js';
 
 /**
  * Prompts the user to add a new gateway and updates the configuration.
+ * @category Gateways
+ * @subcategory Main
+ * @module addGateway
  */
 async function addNewGateway() {
     // Load the existing configuration

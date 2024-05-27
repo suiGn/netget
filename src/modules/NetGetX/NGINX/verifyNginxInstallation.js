@@ -12,6 +12,9 @@ import chalk from 'chalk';
  * console.log('NGINX not found on system PATH or common locations.');
  * }
  * @see {@link https://nginx.org/|NGINX}
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module verifyNginxInstallation
  * */
 
 async function verifyNginxInstallation() {

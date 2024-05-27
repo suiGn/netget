@@ -5,6 +5,9 @@ import chalk from 'chalk';
  * Restarts the NGINX server using the provided configuration.
  * @param {Object} config - The configuration object which should include the NGINX executable path.
  * @returns {Promise<boolean>} Promise resolving to true if restart was successful, false otherwise.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module nginxRestart
  */
 const nginxRestart = async (config) => {
     let restartCommand;
@@ -32,6 +35,9 @@ const nginxRestart = async (config) => {
  * Executes a shell command and logs the output or errors.
  * @param {string} command - The command to execute.
  * @returns {Promise<boolean>} Promise resolving to true if command was successful, false otherwise.
+ * @category NetGetX
+ * @subcategory NGINX
+ * @module nginxRestart
  */
 const execCommand = (command) => {
     return new Promise((resolve, reject) => {
