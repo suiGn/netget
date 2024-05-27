@@ -23,6 +23,7 @@ async function loadOrCreateXConfig() {
                 nginxDir: "",
                 nginxExecutable: "",
                 xMainOutPutPort: 3432,
+                enforceHttps: true,
                 publicIP: "",
                 localIP: "",
                 XBlocksAvailable: "",
