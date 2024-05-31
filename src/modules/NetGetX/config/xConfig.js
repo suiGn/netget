@@ -23,7 +23,7 @@ async function loadOrCreateXConfig() {
                 nginxDir: "",
                 nginxExecutable: "",
                 xMainOutPutPort: 3432,
-                enforceHttps: true,
+                domains: {},               
                 publicIP: "",
                 localIP: "",
                 XBlocksAvailable: "",
@@ -33,16 +33,8 @@ async function loadOrCreateXConfig() {
                 dev_XBlocksEnabled: "",
                 getPath: "",
                 static: "",
-                staticDefault: "",
-                SSLPath: "",
-                SSLCertificatesPath: "",
-                SSLCertificateKeyPath: "",
                 devPath: "",
                 devStatic: "",
-                devStaticDefault: "",
-                devSSLPath: "",
-                devSSLCertificatesPath: "",
-                devSSLCertificateKeyPath: "",
                 useSudo: false,
             };
             fs.writeFileSync(USER_CONFIG_FILE, JSON.stringify(defaultConfig, null, 4));
@@ -68,8 +60,8 @@ async function saveXConfig(updates) {
     try {
         // Ensure the configuration directory exists
         if (!fs.existsSync(CONFIG_DIR)) {
-            console.log(chalk.yellow(`Configuration directory does not exist at ${CONFIG_DIR}.`));
-            return false;
+            console.log(chalk.yellow(`Configuration directory does not exist at ${CONFIG_DIR}. Creating...`));
+            fs.mkdirSync(CONFIG_DIR);
         }
 
         let config = {};
@@ -79,16 +71,39 @@ async function saveXConfig(updates) {
             config = JSON.parse(data);
         }
 
-        // Apply updates
-        Object.assign(config, updates);
+        // Apply updates to the appropriate domain or root level
+        let updatesApplied = {};
+        if (updates.domain) {
+            if (!config.domains) {
+                config.domains = {};
+            }
+            const domain = updates.domain;
+            if (!config.domains[domain]) {
+                config.domains[domain] = {};
+            }
+            Object.assign(config.domains[domain], updates);
+            updatesApplied[domain] = updates;
+            delete updates.domain;  // Remove domain from updates to prevent root-level updates
+        } else {
+            Object.assign(config, updates);
+            updatesApplied = updates;
+        }
+
         // Write the updated configuration back to the file
         await fs.promises.writeFile(USER_CONFIG_FILE, JSON.stringify(config, null, 4));
-        // Convert updates object to string for better readability in the log
-        const updatesStr = JSON.stringify(updates, null, 2);  // Pretty print the updates object
-        for (const [key, value] of Object.entries(updates)) {
-            console.log(`xConfig.${chalk.bgWhite.black.bold(key)}: ${chalk.yellow(value)} : ${chalk.bgGreen.bold("Success")}.`);
-        }  
-        } catch (error) {
+        console.log(chalk.green('Configuration updated successfully.'));
+        
+        // Log only the updated values
+        for (const [key, value] of Object.entries(updatesApplied)) {
+            if (typeof value === 'object' && !Array.isArray(value)) {
+                for (const [subKey, subValue] of Object.entries(value)) {
+                    console.log(`xConfig.domains[${key}].${chalk.bgWhite.black.bold(subKey)}: ${chalk.yellow(subValue)} : ${chalk.bgGreen.bold("Success")}.`);
+                }
+            } else {
+                console.log(`xConfig.${chalk.bgWhite.black.bold(key)}: ${chalk.yellow(value)} : ${chalk.bgGreen.bold("Success")}.`);
+            }
+        }
+    } catch (error) {
         console.error(chalk.red(`Failed to update user configuration: ${error.message}`));
         throw new Error('Failed to update user configuration.');
     }

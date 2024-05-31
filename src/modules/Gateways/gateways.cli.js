@@ -52,7 +52,15 @@ async function showGatewayActions(gateway) {
     await displayGatewayStatus(gateway.name);
 
     while (true) {
-        const actions = ['start', 'stop', 'restart', 'delete', 'status', 'logs', 'Go Back'];  // Added logs and Go Back option
+        const actions = [
+        'start', 
+        'stop', 
+        'restart', 
+        'delete', 
+        'status', 
+        'logs', 
+        'Go Back']; 
+
         const { action } = await inquirer.prompt({
             type: 'list',
             name: 'action',
@@ -83,7 +91,6 @@ async function showGatewayActions(gateway) {
         }
     }
 }
-
 
 async function displayGatewayStatus(gatewayName) {
     return new Promise((resolve) => {

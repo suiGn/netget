@@ -20,7 +20,7 @@ const verifyServerBlock = async (xConfig) => {
     try {
         const configData = fs.readFileSync(nginxConfigPath, 'utf8');
         if (configData.includes(expectedServerBlock.trim())) {
-            console.log(chalk.green('Server Ready for NetGetX...'));
+            //console.log(chalk.green('Server Ready for NetGetX...'));
             return true;
         } else {
             console.log(chalk.yellow('Default NGINX server block does not match the expected default setup.'));

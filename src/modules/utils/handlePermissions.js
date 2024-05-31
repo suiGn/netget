@@ -1,4 +1,3 @@
-// netget/src/modules/utils/handlePermissions.js
 import { exec } from 'child_process';
 import fs from 'fs';
 import inquirer from 'inquirer';
@@ -12,7 +11,7 @@ import chalk from 'chalk';
  * @category Utils
  * @subcategory General
  * @module handlePermissions
-*/
+ */
 const handlePermission = async (taskDescription, autoCommand, manualInstructions) => {
     const choices = [
         { name: 'Retry with elevated privileges', value: 'sudo' },
@@ -21,12 +20,15 @@ const handlePermission = async (taskDescription, autoCommand, manualInstructions
         { name: 'Cancel operation', value: 'cancel' }
     ];
 
+    console.log(chalk.blue(`Prompting user for action: ${taskDescription}`));
     const { action } = await inquirer.prompt({
         type: 'list',
         name: 'action',
         message: `Permission denied for ${taskDescription}. How would you like to proceed?`,
         choices: choices
     });
+
+    console.log(chalk.blue(`User selected action: ${action}`));
 
     switch (action) {
         case 'sudo':
@@ -68,9 +70,10 @@ const handlePermission = async (taskDescription, autoCommand, manualInstructions
  * @category Utils
  * @subcategory General
  * @module handlePermissions
-*/
+ */
 const tryElevatedPrivileges = async (command, manualInstructions) => {
     try {
+        console.log(chalk.blue(`Attempting to run command with elevated privileges: ${command}`));
         const result = await execShellCommand(`sudo ${command}`);
         console.log(chalk.green('Command executed with elevated privileges.'));
         console.log(result);
@@ -86,7 +89,7 @@ const tryElevatedPrivileges = async (command, manualInstructions) => {
  * @category Utils
  * @subcategory General
  * @module handlePermissions
-*/
+ */
 const displayManualInstructions = (instructions) => {
     console.log(chalk.yellow('To manually configure, follow these instructions:'));
     console.info(chalk.cyan(instructions));
@@ -99,7 +102,7 @@ const displayManualInstructions = (instructions) => {
  * @category Utils
  * @subcategory General
  * @module handlePermissions
-*/
+ */
 const execShellCommand = (cmd) => {
     return new Promise((resolve, reject) => {
         exec(cmd, (error, stdout, stderr) => {
@@ -119,7 +122,7 @@ const execShellCommand = (cmd) => {
  * @category Utils
  * @subcategory General
  * @module handlePermissions 
-*/
+ */
 const checkAndSetFilePermissions = async (filePath, requiredPermissions) => {
     try {
         const stats = fs.statSync(filePath);

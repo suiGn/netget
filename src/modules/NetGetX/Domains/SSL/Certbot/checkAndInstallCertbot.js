@@ -1,4 +1,4 @@
-//netget/src/modules/NetGetX/Certbot/checkAndInstallCertbot.js
+//netget/src/modules/NetGetX/SSL/Certbot/checkAndInstallCertbot.js
 import { exec } from 'child_process';
 import chalk from 'chalk';
 

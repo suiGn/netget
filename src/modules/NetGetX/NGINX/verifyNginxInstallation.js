@@ -35,7 +35,7 @@ async function verifyNginxInstallation() {
         const command = process.platform === 'win32' ? 'where' : 'which';
         const result = execSync(`${command} nginx`).toString().trim();
         if (result) {
-            console.log(chalk.green(`NGINX executable at: ${result}`));
+            //console.log(chalk.green(`NGINX executable at: ${result}`));
             return result;
         }
     } catch (error) {
@@ -45,7 +45,7 @@ async function verifyNginxInstallation() {
     // If 'which' or 'where' fails, check common paths directly
     for (let nginxPath of nginxPaths) {
         if (fs.existsSync(nginxPath)) {
-            console.log(chalk.green(`NGINX executable at: ${nginxPath}`));
+            //console.log(chalk.green(`NGINX executable at: ${nginxPath}`));
             return nginxPath;
         }
     }

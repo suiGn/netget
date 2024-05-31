@@ -19,9 +19,11 @@ import { initializeDirectories,
          getDirectoryPaths } from '../../utils/GETDirs.js';
 import verifyNginxInstallation from '../NGINX/verifyNginxInstallation.js';
 import nginxInstallationOptions from '../NGINX/nginxInstallationOptions.cli.js'; 
+import { generateSelfSignedCert, checkSelfSignedCertificates } from '../NGINX/selfSignedCertificates.js';
 import verifyNginxConfig from './verifyNginxConfig.js';
-import verifyServerBlock from './verifyServerBlock.js'; 
+import verifyServerBlock from '../mainServer/verifyServerBlock.js'; 
 import handlePermissionErrorForEnsureDir from '../../utils/handlePermissionErrorForEnsureDir.js';
+import { checkLocalHostEntryExists, addLocalHostEntry } from '../../utils/localHosts.js';
 
 /**
  * Sets default paths for NGINX and other directories if they are not already set.
@@ -40,6 +42,22 @@ export async function i_DefaultNetGetX() {
 initializeDirectories(); // Initialize all necessary directories
 let DEFAULT_DIRECTORIES = getDirectoryPaths(); // Get paths to .get default directories
 let xConfig = await loadOrCreateXConfig();
+
+const entry = '127.0.0.1 local.netget';
+//console.log(chalk.blue(`Checking if entry exists in hosts: ${entry}`));
+if (!checkLocalHostEntryExists(entry)) {
+    console.log(chalk.blue(`Entry does not exist, adding: ${entry}`));
+    await addLocalHostEntry(entry);
+}
+console.log(chalk.blue(`Host: ${entry}`));
+
+if (!checkSelfSignedCertificates()) {
+    console.log(chalk.blue('Self-signed certificates not found, generating new ones.'));
+    await generateSelfSignedCert();
+} else {
+    console.log(chalk.blue('Self-signed certificates already exist.'));
+}
+
 /* NGINX
 ╔═╗┌─┐┌┬┐┬ ┬┌─┐
 ╠═╝├─┤ │ ├─┤└─┐
@@ -49,10 +67,9 @@ const nginxInstalled = verifyNginxInstallation();
 if (!nginxInstalled) {
     console.log(chalk.yellow("NGINX is not installed. Redirecting to installation options..."));
     await nginxInstallationOptions();
-    // Optionally re-check after installation attempt
     if (!verifyNginxInstallation()) {
         console.log(chalk.red("NGINX still not detected after installation attempt. Please manually install NGINX and retry."));
-        return false; // Exiting or return to a higher menu level could be handled here
+        return false;
     }
 }
  // Verify and set NGINX configuration paths
@@ -110,15 +127,6 @@ const getDefaultStatic = DEFAULT_DIRECTORIES.static;
     }
 }  
 
-if(!xConfig.staticDefault){
-const getDefaultStaticDefault = DEFAULT_DIRECTORIES.staticDefault;
-    if (Path_Exists(getDefaultStaticDefault)) {
-        await saveXConfig({ staticDefault: getDefaultStaticDefault });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-    } else {
-        console.log(`Default staticDefault does not exist: ${getDefaultStaticDefault}, not updating configuration.`);
-    }   
-}
 
 if(!xConfig.devPath){
 const getDefaultDevPath = DEFAULT_DIRECTORIES.devPath;
@@ -141,19 +149,6 @@ const getDefaultDevStatic = DEFAULT_DIRECTORIES.devStatic;
         console.log(`Default devStatic does not exist: ${getDefaultDevStatic}, not updating configuration.`);
     }
 }
-
-if(!xConfig.devStaticDefault){
-const getDefaultDevStaticDefault = DEFAULT_DIRECTORIES.devStaticDefault;
-    if (Path_Exists(getDefaultDevStaticDefault)) {
-        //console.log(`Default devStaticDefault exists: ${getDefaultDevStaticDefault}`);
-        await saveXConfig({ devStaticDefault: getDefaultDevStaticDefault });
-        xConfig = await loadOrCreateXConfig(); // Reload to ensure all config updates are reflected
-        //console.log(`devStaticDefault updated in configuration.`);
-    } else {
-        console.log(`Default devStaticDefault does not exist: ${getDefaultDevStaticDefault}, not updating configuration.`);
-    }
-}
-
 
 /*
 ██   ██ ██████  ██       ██████   ██████ ██   ██ ███████ 

@@ -1,13 +1,14 @@
 //netget/src/modules/NetGetX/NetGetX.cli.js
 import inquirer from 'inquirer';
-import { showXBlocks } from './XBlocks/showXBlocks.js'; 
+//import { showXBlocks } from './XBlocks/showXBlocks.js'; 
 import chalk from 'chalk';
-import { handleAddNewXBlock } from './XBlocks/handleAddNewXBlock.js';
+import  XBlocksMenu  from './XBlocks/XBlocksMenu.cli.js'; // Import the new addXBlockMenu
 import { i_DefaultNetGetX } from './config/i_DefaultNetGetX.js';
 import NetGetMainMenu from '../netget_MainMenu.cli.js';
 import nginxMenu from './NGINX/nginx_menu.cli.js';
 import displayStateAndConfig from './config/x_StateAndConfig.js'; // Correct import statement
-import { netGetXSettings } from './netGetXOptions.js'; 
+import netGetXSettingsMenu from './NetGetX_Settings.cli.js'; 
+import domainsMenu from './Domains/domains.cli.js';
 
 export default async function NetGetX_CLI(x) {
     x = x ?? await i_DefaultNetGetX();
@@ -18,9 +19,9 @@ export default async function NetGetX_CLI(x) {
             name: 'option',
             message: 'Select an action:',
             choices: [
-                'Show XBlocks',
-                'Add New XBlock',
-                'NetGetX Settings',
+                'XBlocks',
+                'Domains and Certificates',
+                'Settings',
                 'NGINX Menu',
                 'xConfig/xState',
                 //'Show X Discovery Nodes',
@@ -32,16 +33,14 @@ export default async function NetGetX_CLI(x) {
         });
 
         switch (answers.option) {
-            case 'Show XBlocks':
-                await showXBlocks();
-                console.log('Show XBlocks');
+            case 'XBlocks':
+                await XBlocksMenu(x);
                 break;
-            case 'Add New XBlock':
-                await handleAddNewXBlock();
-                console.log('Add New XBlock');
+            case 'Domains and Certificates':
+                await domainsMenu();
                 break;
-            case 'NetGetX Settings':
-                await netGetXSettings();
+            case 'Settings':
+                await netGetXSettingsMenu(x);
                 break;
             case 'NGINX Menu':
                 await nginxMenu();
@@ -54,9 +53,8 @@ export default async function NetGetX_CLI(x) {
                 await NetGetMainMenu();
                 break;
             case 'Exit':
-                console.log(chalk.blue('Exiting NetGetX...'));
-                exit = true;
-                break;
+                console.log(chalk.blue('Exiting NetGet...'));
+                process.exit(); 
             default:
                 console.log(chalk.red('Invalid choice, please try again.'));
                 break;

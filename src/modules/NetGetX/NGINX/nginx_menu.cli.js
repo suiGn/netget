@@ -3,7 +3,7 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { getState } from '../xState.js';
-import nginxRestart from './nginxRestart.js';
+import nginxRestart from './restartNginx.js';
 import { checkNginxStatus } from './checkNginxStatus.js';
 import viewNginxLogs from './viewNginxLogs.js';
 import stopNginx from './stopNginx.js';
