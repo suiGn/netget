@@ -1,7 +1,12 @@
+//netget/src/modules/NetGetX/XBlocks/createXBlock.js
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
+import {
+    checkCertificates,
+    obtainSSLCertificates,
+} from '../Domains/SSL/SSLCertificates.js';
 
 /**
  * Parses the server_name directive from an NGINX configuration file.
@@ -65,9 +70,21 @@ const createXBlock = async (domain, xConfig) => {
     ]);
 
     if (responses.enforceSSL) {
-        if (!fs.existsSync(domainConfig.SSLCertificatesPath)) {
-            console.log(chalk.yellow(`SSL certificate for ${domain} not found. Please issue a certificate.`));
-            return;
+        const certExists = await checkCertificates(domain);
+        if (!certExists) {
+            console.log(chalk.yellow(`SSL certificate for ${domain} not found. Do you want to issue a certificate?`));
+            const { issueCert } = await inquirer.prompt({
+                type: 'confirm',
+                name: 'issueCert',
+                message: `Do you want to issue a certificate for ${domain}?`,
+                default: true
+            });
+            if (issueCert) {
+                await obtainSSLCertificates(domain, domainConfig.email);
+            } else {
+                console.log(chalk.red('SSL certificate not found. Cannot enforce SSL without a certificate.'));
+                return;
+            }
         }
     }
 

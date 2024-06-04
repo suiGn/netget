@@ -1,3 +1,4 @@
+//netget/src/modules/NetGetX/Domains/SSL/SSLCertificates.js
 import inquirer from 'inquirer';
 import { exec } from 'child_process';
 import { spawn } from 'child_process';
