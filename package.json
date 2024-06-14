@@ -1,6 +1,6 @@
 {
     "name": "netget",
-    "version": "2.4.6",
+    "version": "2.4.8",
     "description": "Rette Adepto/ Recibido Directamente.",
     "type": "module",
     "main": "index.js",
@@ -16,19 +16,12 @@
         "gateway:status": "node -e \"require('./pm2Manager').manageGateway(process.argv[1], 'status')\""
     },
     "bin": {
-        "netget": "./src/netget.cli.js"
+        "netget": "./src/netget.cli.js",
+        ".get": "./src/netget.cli.js"
     },
-    "keywords": [
-        "netget",
-        "gateway",
-        "networking",
-        "express-middleware",
-        "dynamic-routing",
-        "service-mesh",
-        "api-gateway",
-        "local-development",
-        "modular-network",
-        "nodejs"
+    "keywords": [ "netget", "gateway", "networking",
+        "express-middleware", "dynamic-routing", "service-mesh", "api-gateway",
+        "local-development", "modular-network", "nodejs"
     ],
     "bugs": {
         "url": "https://github.com/suiGn/netget/issues"
@@ -42,9 +35,6 @@
         "node-fetch": "^3.3.2",
         "pm2": "^5.3.1",
         "sudo-prompt": "^9.2.1"
-    }, 
-    "devDependencies": {
-
     },
     "repository": {
         "type": "git",

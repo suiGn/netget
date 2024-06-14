@@ -3,10 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import {
-    checkCertificates,
-    obtainSSLCertificates,
-} from '../Domains/SSL/SSLCertificates.js';
+import { checkCertificates, obtainSSLCertificates } from '../Domains/SSL/SSLCertificates.js';
+import { handlePermission } from '../../utils/handlePermissions.js';
 
 /**
  * Parses the server_name directive from an NGINX configuration file.
@@ -108,8 +106,21 @@ server {
 `;
 
     const xBlockPath = path.join(XBlocksAvailable, `${domain}.conf`);
-    fs.writeFileSync(xBlockPath, xBlockContent);
-    console.log(chalk.green(`XBlock for ${domain} created successfully at ${xBlockPath}.`));
+
+    try {
+        fs.writeFileSync(xBlockPath, xBlockContent);
+        console.log(chalk.green(`XBlock for ${domain} created successfully at ${xBlockPath}.`));
+    } catch (error) {
+        if (error.code === 'EACCES') {
+            await handlePermission(
+                `creating XBlock for ${domain}`,
+                `echo "${xBlockContent}" | sudo tee ${xBlockPath}`,
+                `Manually create the XBlock configuration file at ${xBlockPath} with the following content:\n\n${xBlockContent}`
+            );
+        } else {
+            console.error(chalk.red(`Failed to create XBlock for ${domain}: ${error.message}`));
+        }
+    }
 };
 
 export { createXBlock };

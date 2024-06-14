@@ -1,5 +1,5 @@
 //netget/src/modules/NetGetX/Domains/SSL/SSLCertificates.js
-import inquirer from 'inquirer';
+import fs from 'fs';
 import { exec } from 'child_process';
 import { spawn } from 'child_process';
 import chalk from 'chalk';

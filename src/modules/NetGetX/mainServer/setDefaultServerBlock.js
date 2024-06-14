@@ -1,7 +1,7 @@
-// netget/src/modules/NetGetX/config/configureDefaultServerBlock.js
+// netget/src/modules/NetGetX/config/setDefaultServerBlock.js
 import fs from 'fs';
 import chalk from 'chalk';
-import xDefaultServerBlock from './xDefaultServerBlock.js';  
+import xDefaultServerBlock from './xDefaultServerBlock.js';
 import inquirer from 'inquirer';
 import { exec } from 'child_process';
 import os from 'os';

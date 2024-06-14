@@ -4,10 +4,8 @@
       "./README.md",
      "./src/netget.js", 
       "./src/Gateway.js",
-
       "./src/modules/AccessPoints/AccessPoints.js",
       "./src/modules/AccessPoints/_init_access_points.js",
-      
       "./src/modules/Gateways/Gateway.js",
       "./src/modules/Gateways/addGateway.cli.js",
       "./src/modules/Gateways/config/gConfig.js",
@@ -17,9 +15,7 @@
       "./src/modules/Gateways/gateways.cli.js",
       "./src/modules/Gateways/notes.md",
       "./src/modules/Gateways/startGateway.js",
-
       "./src/modules/Gets/Gets.js",
-
       "./src/modules/NetGetX/NGINX/checkNginxStatus.js",
       "./src/modules/NetGetX/NGINX/disableSSLInNginxConfig.js",
       "./src/modules/NetGetX/NGINX/findNginxConfig.js",

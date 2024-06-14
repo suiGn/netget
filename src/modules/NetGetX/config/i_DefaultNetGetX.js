@@ -345,6 +345,5 @@ let x = {
 };
 
 initializeState(x);
-console.log(chalk.green('Setup Verification Successful.'));
 return x;
 };

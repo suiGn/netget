@@ -1,3 +1,4 @@
+//netget/src/modules/NetGetX/Domains/domains.cli.js
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { loadOrCreateXConfig } from '../config/xConfig.js';

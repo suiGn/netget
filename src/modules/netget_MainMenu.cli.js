@@ -17,7 +17,7 @@ Welcome to:
 ║║║├┤  │ ║ ╦├┤  │ 
 ╝╚╝└─┘ ┴ ╚═╝└─┘ ┴ 
 `);
-console.log(`v2.4.5`);
+console.log(`v2.4.6`);
 export default async function NetGetMainMenu() {
     const answers = await inquirer.prompt([
     {
@@ -32,14 +32,6 @@ export default async function NetGetMainMenu() {
         case 'NetGetX':
             const x = await i_DefaultNetGetX();
             if (x) {
-                console.log(`
-                    ██╗  ██╗ .OutPort: ${chalk.green(x.xMainOutPutPort)}
-                    ╚██╗██╔╝ .XBlocks Available: ${chalk.green(x.XBlocksAvailable)}
-                     ╚███╔╝  .XBlocks Enabled: ${chalk.green(x.XBlocksEnabled)}
-                     ██╔██╗  .netgetXExecutable at: ${chalk.green(x.nginxExecutable)}
-                    ██╔╝ ██╗ .publicIP: ${chalk.green(x.publicIP)}
-                    ╚═╝  ╚═╝ .localIP: ${chalk.green(x.localIP)}
-                        `);
                     await NetGetX_CLI(x); 
                     } else {
                     console.log(chalk.red('Setup verification failed. Please resolve any issues before proceeding.'));

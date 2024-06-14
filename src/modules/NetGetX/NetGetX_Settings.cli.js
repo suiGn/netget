@@ -19,9 +19,8 @@ const netGetXSettingsMenu = async (x) => {
     switch (answer.action) {
         case 'aboutNetGetX':
             console.log(chalk.green('About NetGetX'));
-            console.log(chalk.blue('NetGetX is a powerful tool for managing NGINX configurations and SSL setups.'));
-            console.log(chalk.blue('Version: 1.0.0'));
-            console.log(chalk.blue('Developed by: Your Name'));
+            console.log(chalk.blue('NetGetX is a powerful tool for managing servers, network configurations, domains and SSL setups.'));
+            console.log(chalk.blue('Developed by: neurons.me'));
             console.log(chalk.blue('For more information, visit the official documentation.'));
             break;
         case 'mainMenu':

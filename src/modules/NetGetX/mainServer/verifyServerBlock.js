@@ -1,7 +1,7 @@
-// netget/src/modules/NetGetX/config/verifyServerBlock.js
+//netget/src/modules/mainServer/verifyServerBlock.js
 import fs from 'fs';
 import chalk from 'chalk';
-import getDefaultServerBlock from './xDefaultServerBlock.js';  // Adjusted import to get the function
+import getDefaultServerBlock from './xDefaultServerBlock.js';
 import { serverBlockConfigOptions } from './serverBlockConfigOptions.cli.js';
 
 /**
@@ -15,12 +15,17 @@ import { serverBlockConfigOptions } from './serverBlockConfigOptions.cli.js';
  * @module verifyServerBlock
  */
 const verifyServerBlock = async (xConfig) => {
-    const nginxConfigPath = xConfig.nginxPath;  // Path to nginx.conf
-    const expectedServerBlock = getDefaultServerBlock(xConfig);  // Get the dynamic server block
+    const nginxConfigPath = xConfig.nginxPath;
+    const expectedServerBlock = getDefaultServerBlock(xConfig);
+    
     try {
         const configData = fs.readFileSync(nginxConfigPath, 'utf8');
-        if (configData.includes(expectedServerBlock.trim())) {
-            //console.log(chalk.green('Server Ready for NetGetX...'));
+
+        const normalizeWhitespace = (str) => str.replace(/\s+/g, ' ').trim();
+        const normalizedExpectedBlock = normalizeWhitespace(expectedServerBlock);
+        const normalizedConfigData = normalizeWhitespace(configData);
+
+        if (normalizedConfigData.includes(normalizedExpectedBlock)) {
             return true;
         } else {
             console.log(chalk.yellow('Default NGINX server block does not match the expected default setup.'));
@@ -28,7 +33,6 @@ const verifyServerBlock = async (xConfig) => {
                 console.log(chalk.green('Proceeding with existing configuration as per user preference.'));
                 return true;
             } else {
-                // Prompt the user for action and determine outcome based on their choice
                 const configurationSuccess = await serverBlockConfigOptions(xConfig);
                 return configurationSuccess;
             }

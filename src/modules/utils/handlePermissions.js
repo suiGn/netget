@@ -1,3 +1,4 @@
+//netget/src/modules/utils/handlePermissions.js
 import { exec } from 'child_process';
 import fs from 'fs';
 import inquirer from 'inquirer';

@@ -1,3 +1,4 @@
+//netget/src/modules/NetGetX/Domains/domainsOptions.js
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { loadOrCreateXConfig, saveXConfig } from '../config/xConfig.js';
@@ -30,45 +31,70 @@ const logAllDomainsTable = (domainsConfig) => {
     console.table(domainTable);
 };
 
-const addNewDomain = async () => {
-    const answers = await inquirer.prompt([
-        {
-            type: 'input',
-            name: 'domain',
-            message: 'Enter the new domain:',
-            validate: input => input ? true : 'Domain is required.'
-        },
-        {
-            type: 'input',
-            name: 'email',
-            message: 'Enter the email associated with this domain:',
-            validate: input => input ? true : 'Email is required.'
-        }
-    ]);
-
-    const { domain, email } = answers;
-    const xConfig = await loadOrCreateXConfig();
-
-    if (!xConfig.domains) {
-        xConfig.domains = {};
-    }
-
-    if (xConfig.domains[domain]) {
-        console.log(chalk.red(`Domain ${domain} already exists.`));
-        return;
-    }
-
-    const newDomainConfig = {
-        sslMode: 'letsencrypt',
-        email: email
-    };
-
-
-    // Save only the new domain configuration
-    await saveXConfig({ domain, ...newDomainConfig });
-
-    console.log(chalk.green(`Domain ${domain} added successfully.`));
+const validateDomain = (domain) => {
+    const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]{1,63}\.)+[a-zA-Z]{2,6}$/;
+    return domainRegex.test(domain) ? true : 'Enter a valid domain (e.g., example.com or sub.example.com)';
 };
+
+const addNewDomain = async () => {
+    while (true) {
+        const domainAnswer = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'domain',
+                message: 'Enter the new domain (e.g., example.com or sub.example.com) (type /b to go back):',
+                validate: input => {
+                    if (input === '/b') return true;
+                    return validateDomain(input);
+                }
+            }
+        ]);
+
+        if (domainAnswer.domain === '/b') {
+            console.log(chalk.blue('Going back to the previous menu...'));
+            return;
+        }
+
+        const emailAnswer = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'email',
+                message: 'Enter the email associated with this domain (type /b to go back):',
+                validate: input => input ? true : 'Email is required.'
+            }
+        ]);
+
+        if (emailAnswer.email === '/b') {
+            console.log(chalk.blue('Going back to the previous menu...'));
+            return;
+        }
+
+        const { domain, email } = { ...domainAnswer, ...emailAnswer };
+        const xConfig = await loadOrCreateXConfig();
+
+        if (!xConfig.domains) {
+            xConfig.domains = {};
+        }
+
+        if (xConfig.domains[domain]) {
+            console.log(chalk.red(`Domain ${domain} already exists.`));
+            return;
+        }
+
+        const newDomainConfig = {
+            sslMode: 'letsencrypt',
+            email: email
+        };
+
+        // Save only the new domain configuration
+        xConfig.domains[domain] = newDomainConfig;
+        await saveXConfig({ domains: xConfig.domains });
+
+        console.log(chalk.green(`Domain ${domain} added successfully.`));
+        return;  // Exit the loop after successful addition
+    }
+};
+
 
 const editOrDeleteDomain = async (domain) => {
     try {
@@ -104,7 +130,7 @@ const editOrDeleteDomain = async (domain) => {
             case 'deleteDomain':
                 // Implement delete domain functionality
                 delete xConfig.domains[domain];
-                await saveXConfig(xConfig);
+                await saveXConfig({ domains: xConfig.domains });
                 console.log(chalk.green(`Domain ${domain} deleted successfully.`));
                 return;
             case 'back':
@@ -122,6 +148,7 @@ const editOrDeleteDomain = async (domain) => {
 
 export {
     displayDomains,
+    validateDomain,
     addNewDomain,
     editOrDeleteDomain,
     logDomainInfo,
