@@ -20,7 +20,7 @@ const baseDir = path.dirname(fileURLToPath(import.meta.url));
  * host: 'localhost'
  * port: 3432
  * routes: {}
- * domainsConfigPath: './config/domains.json'
+ * domainsConfigPath: '~/.get/domains.json'
  * The gateway uses express as the underlying web server framework.
  * To use the gateway, create an instance of the Gateway class and call the listen method.
  * Example:
@@ -47,13 +47,13 @@ class Gateway {
    * @param {Object} [config.host='localhost']  - The host name on which the gateway will listen.
    * @param {number} [config.port=3432] - The port number on which the gateway will listen.
    * @param {Object} [config.routes={}] - An object mapping domains to their respective request handlers.
-   * @param {string} [config.domainsConfigPath='./config/domains.json'] - The path to the domains configuration file.
+   * @param {string} [config.domainsConfigPath='~/.get/domains.json'] - The path to the domains configuration file.
    */
   constructor({   
     host = process.env.HOST || 'localhost', 
     port = process.env.NETGET_PORT || 3432, 
     routes = {},
-    domainsConfigPath = process.env.DOMAINS_CONFIG_PATH || './config/domains.json' 
+    domainsConfigPath = process.env.DOMAINS_CONFIG_PATH || '~/.get/domains.json' 
   } = {}) {
     this.host = host;
     this.port = port;
