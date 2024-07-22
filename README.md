@@ -123,7 +123,7 @@ class Gateway {
    host = process.env.HOST || 'localhost', 
    port = process.env.NETGET_PORT || 3432, 
    routes = {},
-   domainsConfigPath = process.env.DOMAINS_CONFIG_PATH || './config/domains.json' 
+   domainsConfigPath = process.env.DOMAINS_CONFIG_PATH || '~/.get/domains.json' 
   } = {}) {
    this.host = host;
    this.port = port;
