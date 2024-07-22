@@ -86,24 +86,48 @@ const createXBlock = async (domain, xConfig) => {
         }
     }
 
+    const xMainOutPutPort = xConfig.xMainOutPutPort;
+    const mainServerName = xConfig.mainServerName;;
+
+    // SSL certificate paths
+    const sslCertificate = `/etc/letsencrypt/live/${mainServerName}/fullchain.pem`;
+    const sslCertificateKey = `/etc/letsencrypt/live/${mainServerName}/privkey.pem`;
+
     const xBlockContent = `
-server {
-    listen 80;
-    server_name ${domain};
-    root ${responses.staticPath};
-    index index.html index.htm;
+        server {
+            listen 80 default_server; oa link oa
+            listen [::]:80 default_server;
+            server_name *.${domain}
+            return 301 https://$host$request_uri;
+        }
 
-    location / {
-        try_files $uri $uri/ =404;
-    }
+            ${responses.enforceSSL ? `
+        server {
+            listen 443 ssl;
+            listen [::]:443 ssl;
+            server_name *.${domain};
 
-    ${responses.enforceSSL ? `
-    listen 443 ssl;
-    ssl_certificate ${domainConfig.SSLCertificatesPath};
-    ssl_certificate_key ${domainConfig.SSLCertificateKeyPath || ''};
-    ` : ''}
-}
-`;
+            ssl_certificate ${sslCertificate};
+            ssl_certificate_key ${sslCertificateKey};
+
+            include snippets/ssl-params.conf;
+
+            root ${getPath}/static/default;
+            index index.html index.htm index.nginx-debian.html;            
+
+            location / {
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-NginX-Proxy true;
+                proxy_pass http://localhost:${xMainOutPutPort};
+                proxy_ssl_session_reuse off;
+                proxy_set_header Host $http_host;
+                proxy_cache_bypass $http_upgrade;
+                proxy_redirect off;
+            }
+        }
+            ` : ''}
+        `;
 
     const xBlockPath = path.join(XBlocksAvailable, `${domain}.conf`);
 
