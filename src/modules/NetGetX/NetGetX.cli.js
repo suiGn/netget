@@ -17,7 +17,7 @@ export default async function NetGetX_CLI(x) {
     //availableXBlocks
     const availableXBlocks = getXBlocksList(XBlocksAvailable);
     const formattedXBlocksAvailable = availableXBlocks.length > 0 ? availableXBlocks.join(', ') : 'None';
-    //eneabledXBlocks
+    //enabledXBlocks
     const enabledXBlocks = getXBlocksEnabled(XBlocksEnabled);
     const formattedXBlocksEnabled = enabledXBlocks.length > 0 ? enabledXBlocks.join(', ') : 'None';
 const mainServerName = parseMainServerName(x.nginxPath);
