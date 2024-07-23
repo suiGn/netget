@@ -3,7 +3,7 @@ const xDefaultServerBlock = (xConfig) => {
         throw new Error("User configuration must be provided.");
     }
 
-    const mainServerName = xConfig.mainServerName || 'netget.site';
+    const mainServerName = xConfig.mainServerName || '';
 
     const { XBlocksAvailable, XBlocksEnabled, getPath, xMainOutPutPort} = xConfig;
     if (!XBlocksAvailable || !XBlocksEnabled || !getPath || !xMainOutPutPort) {
