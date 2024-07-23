@@ -62,7 +62,9 @@ const domainSSLConfiguration = async (domain) => {
             if (useWildcard) {
                 domainConfig.SSLCertificatesPath = wildcardCertPath;
                 domainConfig.SSLCertificateKeyPath = wildcardCertPath.replace('fullchain.pem', 'privkey.pem');
-                await saveXConfig({ domains: { [domain]: domainConfig } });
+                const xConfig = await loadOrCreateXConfig();
+                xConfig.domains[domain] = domainConfig;
+                await saveXConfig({ domains: xConfig.domains });
                 console.log(chalk.green(`Applied wildcard certificate from ${wildcardCertPath} to ${domain}.`));
             } else {
                 console.log(chalk.yellow(`Proceeding to issue a new certificate for ${domain}.`));
@@ -86,7 +88,9 @@ const issueCertificateForDomain = async (domain, domainConfig) => {
         if (!domainConfig.SSLCertificatesPath || !domainConfig.SSLCertificateKeyPath) {
             domainConfig.SSLCertificatesPath = `/etc/letsencrypt/live/${domain}/fullchain.pem`;
             domainConfig.SSLCertificateKeyPath = `/etc/letsencrypt/live/${domain}/privkey.pem`;
-            await saveXConfig({ domains: { [domain]: domainConfig } });
+            const xConfig = await loadOrCreateXConfig();
+            xConfig.domains[domain] = domainConfig;
+            await saveXConfig({ domains: xConfig.domains });
         }
 
         displayCurrentSSLConfiguration(domainConfig, domain);
@@ -145,7 +149,9 @@ const issueCertificateForDomain = async (domain, domainConfig) => {
             await obtainSSLCertificates(domain, domainConfig.email);
             domainConfig.SSLCertificatesPath = `/etc/letsencrypt/live/${domain}/fullchain.pem`;
             domainConfig.SSLCertificateKeyPath = `/etc/letsencrypt/live/${domain}/privkey.pem`;
-            await saveXConfig({ domains: { [domain]: domainConfig } });
+            const xConfig = await loadOrCreateXConfig();
+            xConfig.domains[domain] = domainConfig;
+            await saveXConfig({ domains: xConfig.domains });
         }
     }
 };
