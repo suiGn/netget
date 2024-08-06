@@ -70,7 +70,7 @@ async function mainServerMenu(x) {
                     choices: domainChoices
                 });
 
-                if (selectedDomain === 'go_back') {
+                if (selectedDomain === 'go_back') {     
                     console.log(chalk.blue('Going back to the previous menu...'));
                     break;
                 } else if (selectedDomain === 'add_new_domain') {
@@ -78,7 +78,7 @@ async function mainServerMenu(x) {
                     break;
                 }
 
-                const newServerName = x.domains[selectedDomain].domain;
+                const newServerName = selectedDomain;
 
                 try {
                     const success = await changeServerName(x.nginxPath, newServerName);
