@@ -13,7 +13,7 @@ import domainsMenu from './Domains/domains.cli.js';
 import { parseMainServerName } from './mainServer/utils.js';
 
 export default async function NetGetX_CLI(x) {
-    const { XBlocksAvailable, XBlocksEnabled, domains } = x;
+    const { XBlocksAvailable, XBlocksEnabled } = x;
     //availableXBlocks
     const availableXBlocks = getXBlocksList(XBlocksAvailable);
     const formattedXBlocksAvailable = availableXBlocks.length > 0 ? availableXBlocks.join(', ') : 'None';
