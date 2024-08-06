@@ -3,9 +3,7 @@ const xDefaultServerBlock = (xConfig) => {
         throw new Error("User configuration must be provided.");
     }
 
-    const mainServerName = xConfig.mainServerName || '';
-
-    const { XBlocksAvailable, XBlocksEnabled, getPath, xMainOutPutPort} = xConfig;
+    const { XBlocksAvailable, XBlocksEnabled, getPath, xMainOutPutPort, mainServerName} = xConfig;
     if (!XBlocksAvailable || !XBlocksEnabled || !getPath || !xMainOutPutPort) {
         throw new Error("Invalid user configuration. Missing required paths.");
     }
@@ -15,7 +13,6 @@ const xDefaultServerBlock = (xConfig) => {
     const sslCertificateKey = `/etc/letsencrypt/live/${mainServerName}/privkey.pem`;
 
     return `
-        error_log /var/log/nginx-error.log info;
   
         events {
             worker_connections 1024;  # High performance tweak
@@ -26,22 +23,33 @@ const xDefaultServerBlock = (xConfig) => {
             #include /etc/nginx/XBlocks-enabled/*;
 
             server {
-                listen 80;
-                listen [::]:80 ipv6only=on;
-                return 301 https://$host$request_uri;
-                root ${getPath}/static/default;
-                index index.html index.htm index.nginx-debian.html;   
+                listen 80 default_server;
+                listen [::]:80 default_server;
+
+                location / {
+                    return 301 https://$host$request_uri;
+                }
             }
-        
+
             server {
-                listen 443 ssl;
-                listen [::]:443 ssl;
-                server_name ${mainServerName}, *.${mainServerName};
+                listen 443 ssl http2;
+                listen [::]:443 ssl http2;
+                
+                server_name ${mainServerName};
                 
                 ssl_certificate ${sslCertificate};
                 ssl_certificate_key ${sslCertificateKey};
+
+                add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
  
-                include snippets/ssl-params.conf
+                include snippets/ssl-params.conf;
+
+                ## Access and error logs.
+                access_log /var/log/nginx/access.log;
+                error_log  /var/log/nginx/error.log info;
+
+                root ${getPath}/static/default;
+                index index.html index.htm index.nginx-debian.html;  
 
                 
                 location / {
