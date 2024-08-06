@@ -43,7 +43,7 @@ const isDomainUsed = (configDir, domain) => {
  * @param {Object} xConfig - The user configuration object.
  */
 const createXBlock = async (domain, xConfig) => {
-    const { XBlocksAvailable, domains } = xConfig;
+    const { XBlocksAvailable, getPath, domains, mainServerName } = xConfig;
 
     if (isDomainUsed(XBlocksAvailable, domain)) {
         console.log(chalk.red(`The domain ${domain} is already used in a server block.`));
@@ -64,6 +64,12 @@ const createXBlock = async (domain, xConfig) => {
             name: 'staticPath',
             message: 'Enter the static path for the domain:',
             default: `/var/www/${domain}/html`
+        },
+        {
+            type: 'input',
+            name: 'sslDomain',
+            message: 'Enter the domain SSL name for the SSL certifcate you will use:',
+            default: domain
         }
     ]);
 
@@ -86,24 +92,33 @@ const createXBlock = async (domain, xConfig) => {
         }
     }
 
+    // SSL certificate paths
+    const sslCertificate = `/etc/letsencrypt/live/${responses.sslDomain}/fullchain.pem`;
+    const sslCertificateKey = `/etc/letsencrypt/live/${responses.sslDomain}/privkey.pem`;
+
     const xBlockContent = `
-server {
-    listen 80;
-    server_name ${domain};
-    root ${responses.staticPath};
-    index index.html index.htm;
+        server {
+            listen 80;
+            
+            server_name ${domain};
+            return 301 https://$host$request_uri;
+            
+            location /{
+                root ${responses.staticPath};
+                index index.html index.htm index.nginx-debian.html;
+                try_files / = 404;
+            }
+        }
 
-    location / {
-        try_files $uri $uri/ =404;
-    }
+            ${responses.enforceSSL ? `
+        server {
+            listen 443 ssl;
+            ssl_certificates ${sslCertificate};
+            ssl_certificate_key ${sslCertificateKey};
 
-    ${responses.enforceSSL ? `
-    listen 443 ssl;
-    ssl_certificate ${domainConfig.SSLCertificatesPath};
-    ssl_certificate_key ${domainConfig.SSLCertificateKeyPath || ''};
-    ` : ''}
-}
-`;
+        }
+            ` : ''}
+        `;
 
     const xBlockPath = path.join(XBlocksAvailable, `${domain}.conf`);
 

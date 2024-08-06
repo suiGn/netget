@@ -6,6 +6,8 @@ import { getXBlocksList } from '../XBlocks/XBlocksUtils.js';
 import { handlePermission } from '../../utils/handlePermissions.js';
 import domainsMenu from '../Domains/domains.cli.js';
 
+
+
 /**
  * Menu for managing the Main Server configuration.
  * @param {Object} x - The user configuration object.
@@ -26,10 +28,19 @@ async function mainServerMenu(x) {
                 'Exit'
             ]
         });
-
+        
         switch (answers.option) {
             case 'View Main Server Configuration':
                 console.log(chalk.blue('Displaying current main server configuration...'));
+                console.log(chalk.blue('Main Server Output Port:', x.xMainOutPutPort));
+                console.log(chalk.blue('Static Path:', x.static));
+                const domainNames = Object.keys(x.domains);
+                if (!x.domains || Object.keys(x.domains).length === 0) {
+                    console.log(chalk.blue('No available domains.'));
+                } else {
+                    console.log(chalk.blue('Domains Name:', domainNames));
+                }
+                
                 // Implement viewing logic here
                 break;
             case 'Change Main Server Name':
@@ -59,7 +70,7 @@ async function mainServerMenu(x) {
                     choices: domainChoices
                 });
 
-                if (selectedDomain === 'go_back') {
+                if (selectedDomain === 'go_back') {     
                     console.log(chalk.blue('Going back to the previous menu...'));
                     break;
                 } else if (selectedDomain === 'add_new_domain') {
@@ -67,7 +78,7 @@ async function mainServerMenu(x) {
                     break;
                 }
 
-                const newServerName = x.domains[selectedDomain].domain;
+                const newServerName = selectedDomain;
 
                 try {
                     const success = await changeServerName(x.nginxPath, newServerName);

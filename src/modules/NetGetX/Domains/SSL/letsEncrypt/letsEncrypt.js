@@ -27,7 +27,7 @@ const verifyDNSRecord = async (domain) => {
     });
 };
 
-const letsEncryptMethod = async (xConfig) => {
+const letsEncryptMethod = async (xConfiguration) => {
     try {
         const answers = await inquirer.prompt([
             {
@@ -43,17 +43,21 @@ const letsEncryptMethod = async (xConfig) => {
                 validate: input => input ? true : 'Email is required.'
             }
         ]);
-
+        
         const { domain, email } = answers;
-
+        
         console.log(chalk.green(`Setting up LetsEncrypt SSL for domain ${domain} with email ${email}...`));
-
-        // Save initial configuration
-        await saveXConfig({
-            sslMode: 'letsencrypt',
-            domain,
-            email
-        });
+        
+        //const xConfig = await loadOrCreateXConfig();
+        //// Save initial configuration
+        //const initial_SSL = {
+        //    sslMode: 'letsencrypt',
+        //    email,
+        //    domain
+        //};
+//
+        //xConfig.domains[domain] = initial_SSL;
+        //await saveXConfig({ domains: xConfig.domains });
 
         await checkAndInstallCertbot();
         console.log(chalk.green('Certbot and NGINX plugin are ready.'));
@@ -66,13 +70,18 @@ const letsEncryptMethod = async (xConfig) => {
         await verifyDNSRecord(domain);
 
         const SSLPath = `/etc/letsencrypt/live/${domain}`;
-        await saveXConfig({
+        const SSlUpdate = {
             sslMode: 'letsencrypt',
-            domain,
             email,
             SSLCertificatesPath: `${SSLPath}/fullchain.pem`,
             SSLCertificateKeyPath: `${SSLPath}/privkey.pem`
-        });
+        };
+
+        const xConfig = await loadOrCreateXConfig();
+        delete xConfig.domains[domain];
+        console.log(xConfig.domains);
+        xConfig.domains[domain] = SSlUpdate;
+        await saveXConfig({ domains: xConfig.domains });
 
         console.log(chalk.green('SSL configuration updated successfully.'));
         await inquirer.prompt([
@@ -99,7 +108,7 @@ const letsEncryptMethod = async (xConfig) => {
         if (retryAnswers.retry) {
             try {
                 console.log(chalk.green('Retrying DNS verification...'));
-                await verifyDNSRecord(xConfig.domain);
+                await verifyDNSRecord(xConfiguration.domain);
                 console.log(chalk.green('DNS record verified successfully.'));
             } catch (retryError) {
                 console.error(chalk.red('Retry failed:', retryError.message));

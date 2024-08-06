@@ -19,9 +19,17 @@
         "netget": "./src/netget.cli.js",
         ".get": "./src/netget.cli.js"
     },
-    "keywords": [ "netget", "gateway", "networking",
-        "express-middleware", "dynamic-routing", "service-mesh", "api-gateway",
-        "local-development", "modular-network", "nodejs"
+    "keywords": [
+        "netget",
+        "gateway",
+        "networking",
+        "express-middleware",
+        "dynamic-routing",
+        "service-mesh",
+        "api-gateway",
+        "local-development",
+        "modular-network",
+        "nodejs"
     ],
     "bugs": {
         "url": "https://github.com/suiGn/netget/issues"

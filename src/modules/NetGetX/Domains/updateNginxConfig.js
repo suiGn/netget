@@ -5,6 +5,7 @@ import inquirer from 'inquirer';
 import { exec } from 'child_process';
 import os from 'os';
 import xDefaultServerBlock from '../mainServer/xDefaultServerBlock.js';
+import { loadOrCreateXConfig } from '../config/xConfig.js';
 
 /**
  * Updates the NGINX configuration for a specified domain.
@@ -25,7 +26,7 @@ const updateNginxConfig = async (domain) => {
         return;
     }
 
-    const serverBlock = xDefaultServerBlock(domainConfig, xConfig);
+    const serverBlock = xDefaultServerBlock(xConfig);
     const configPath = xConfig.nginxPath;
 
     try {

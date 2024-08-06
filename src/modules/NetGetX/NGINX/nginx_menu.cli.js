@@ -91,8 +91,10 @@ export default async function nginxMenu() {
             }
             break;
 
-        case 'Back to NetGetX Menu':
-            await NetGetX_CLI();
+            
+            case 'Back to NetGetX Menu':
+            //const x = await i_DefaultNetGetX();
+            await NetGetX_CLI(x);
             return; // Exit to prevent loop
     }
 

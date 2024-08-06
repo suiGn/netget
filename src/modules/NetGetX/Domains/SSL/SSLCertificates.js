@@ -2,6 +2,7 @@
 import fs from 'fs';
 import { exec } from 'child_process';
 import { spawn } from 'child_process';
+import inquirer from 'inquirer';
 import chalk from 'chalk';
 
 const verifyDNSRecord = async (domain, value) => {

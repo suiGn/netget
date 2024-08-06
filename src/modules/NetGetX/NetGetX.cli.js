@@ -13,11 +13,11 @@ import domainsMenu from './Domains/domains.cli.js';
 import { parseMainServerName } from './mainServer/utils.js';
 
 export default async function NetGetX_CLI(x) {
-    const { XBlocksAvailable, XBlocksEnabled, domains } = x;
+    const { XBlocksAvailable, XBlocksEnabled } = x;
     //availableXBlocks
     const availableXBlocks = getXBlocksList(XBlocksAvailable);
     const formattedXBlocksAvailable = availableXBlocks.length > 0 ? availableXBlocks.join(', ') : 'None';
-    //eneabledXBlocks
+    //enabledXBlocks
     const enabledXBlocks = getXBlocksEnabled(XBlocksEnabled);
     const formattedXBlocksEnabled = enabledXBlocks.length > 0 ? enabledXBlocks.join(', ') : 'None';
 const mainServerName = parseMainServerName(x.nginxPath);
