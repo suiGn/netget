@@ -2,8 +2,6 @@
 // NGINX Management Menu 
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import path from 'path';
-import os from 'os';
 import { getState } from '../xState.js';
 import nginxRestart from './restartNginx.js';
 import { checkNginxStatus } from './checkNginxStatus.js';
@@ -12,7 +10,6 @@ import stopNginx from './stopNginx.js';
 import startNginx from './startNginx.js';
 import reloadNginx from './reloadNginx.js';
 import NetGetX_CLI from '../NetGetX.cli.js';
-import { i_DefaultNetGetX } from '../config/i_DefaultNetGetX.js';
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
     // Application specific logging, throwing an error, or other logic here
@@ -96,7 +93,7 @@ export default async function nginxMenu() {
 
             
             case 'Back to NetGetX Menu':
-            const x = await i_DefaultNetGetX();
+            //const x = await i_DefaultNetGetX();
             await NetGetX_CLI(x);
             return; // Exit to prevent loop
     }
