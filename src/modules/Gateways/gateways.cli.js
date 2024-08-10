@@ -1,12 +1,14 @@
+// netget/src/modules/Gateways/gateways.cli.js
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import NetGetMainMenu from '../netget_MainMenu.cli.js';
 import { manageGateway } from './gatewayPM2.js';
 import { addNewGateway } from './addGateway.cli.js';
 import pm2 from 'pm2';
+import { io } from 'socket.io-client';
 
 export async function Gateways_CLI(g) {
-    console.clear();  // Clear the console when entering the Gateways menu
+    console.clear();
     console.log(chalk.green('Gateways Menu'));
 
     while (true) {
@@ -14,7 +16,7 @@ export async function Gateways_CLI(g) {
         const mainMenuOptions = [
             ...gatewayNames,
             'Add Gateway',
-            'Go Back'  // Added Go Back option
+            'Go Back'
         ];
 
         const { mainMenuSelection } = await inquirer.prompt({
@@ -26,21 +28,21 @@ export async function Gateways_CLI(g) {
 
         switch (mainMenuSelection) {
             case 'Go Back':
-                console.clear();  // Clear the console when going back to the main menu
+                console.clear();
                 console.log(chalk.blue('Returning to the main menu...'));
                 await NetGetMainMenu();
                 return;
 
             case 'Add Gateway':
-                console.clear();  // Clear the console when adding a new gateway
+                console.clear();
                 console.log(chalk.blue('Adding a new gateway...'));
-                g = await addNewGateway();  // Update the g object with the new gateway
+                g = await addNewGateway();
                 break;
 
             default:
                 const selectedGateway = g.gateways.find(gateway => gateway.name === mainMenuSelection);
                 if (selectedGateway) {
-                    console.clear();  // Clear the console before showing gateway actions
+                    console.clear();
                     await showGatewayActions(selectedGateway);
                 }
                 break;
@@ -50,16 +52,16 @@ export async function Gateways_CLI(g) {
 
 async function showGatewayActions(gateway) {
     await displayGatewayStatus(gateway.name);
-
     while (true) {
         const actions = [
-        'start', 
-        'stop', 
-        'restart', 
-        'delete', 
-        'status', 
-        'logs', 
-        'Go Back']; 
+            'start',
+            'stop',
+            'restart',
+            'delete',
+            'status',
+            'logs',
+            'Go Back'
+        ];
 
         const { action } = await inquirer.prompt({
             type: 'list',
@@ -69,27 +71,53 @@ async function showGatewayActions(gateway) {
         });
 
         if (action === 'Go Back') {
-            console.clear();  // Clear the console when going back to the previous menu
-            return;  // Exit the loop to go back to the previous menu
+            console.clear();
+            return;
         }
 
-        console.clear();  // Clear the console before performing an action
+        console.clear();
         try {
-            const result = await manageGateway(gateway.name, action);  // Pass the gateway name and action to manageGateway
+            const result = await manageGateway(gateway.name, action);
 
-            // Display the result of the action
-            console.log(chalk.blue(`Result of ${action} action:`));
-            console.log(result);
+            if (action === 'logs') {
+                await displayLogs(gateway.name);
+            } else {
+                console.log(chalk.blue(`Result of ${action} action:`));
+                console.log(result);
+            }
         } catch (error) {
             console.error(chalk.red(`Error during ${action} action: ${error}`));
         }
 
-        // Clear the console and redisplay the status after performing an action
         if (action !== 'status' && action !== 'logs') {
             console.clear();
             await displayGatewayStatus(gateway.name);
         }
     }
+}
+
+async function displayLogs(gatewayName) {
+    const socket = io('http://localhost:3432'); // Ajusta el puerto y URL según sea necesario
+    socket.on('connect', () => {
+        console.log(chalk.green('Connected to the log server.'));
+    });
+
+    socket.on('log', (message) => {
+        console.log(message);
+    });
+
+    socket.on('disconnect', () => {
+        console.log(chalk.red('Disconnected from the log server.'));
+    });
+
+    console.log(chalk.blue(`Displaying logs for ${gatewayName}. Press Ctrl+C to exit.`));
+    await new Promise((resolve) => {
+        process.once('SIGINT', () => {
+            socket.disconnect();
+            console.log(chalk.yellow('Stopped displaying logs.'));
+            resolve();
+        });
+    });
 }
 
 async function displayGatewayStatus(gatewayName) {
@@ -105,17 +133,13 @@ async function displayGatewayStatus(gatewayName) {
                     console.error(chalk.red(`Failed to get status for ${gatewayName}`), err);
                 } else if (desc && desc.length > 0) {
                     const statusInfo = desc[0].pm2_env;
-                    const procInfo = desc[0].monit; // Contains CPU and memory usage
-
+                    const procInfo = desc[0].monit;
                     console.log(chalk.blue(`Current status of ${gatewayName}:`));
-
                     const formatLine = (label, value) => `${chalk.bold(label.padEnd(20, ' '))}: ${chalk.green(value || 'N/A')}`;
-
                     let statusOutput = '';
-
                     statusOutput += formatLine('Name', statusInfo.name) + '\n';
-                    statusOutput += formatLine('PID', desc[0].pid || 'N/A') + '\n';  // Using desc[0].pid for PID
-                    statusOutput += formatLine('Port', statusInfo.env.PORT || 'N/A') + '\n'; // Add port information
+                    statusOutput += formatLine('PID', desc[0].pid || 'N/A') + '\n';
+                    statusOutput += formatLine('Port', statusInfo.env.PORT || 'N/A') + '\n';
                     statusOutput += formatLine('Status', statusInfo.status) + '\n';
                     if (statusInfo.pm_uptime) {
                         const uptime = Date.now() - statusInfo.pm_uptime;
@@ -135,7 +159,7 @@ async function displayGatewayStatus(gatewayName) {
                 } else {
                     console.log(chalk.yellow(`${gatewayName} is not currently managed by PM2.`));
                 }
-                pm2.disconnect(); // Disconnects from PM2
+                pm2.disconnect();
                 resolve();
             });
         });

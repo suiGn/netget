@@ -7,10 +7,11 @@ const CONFIG_FILE = path.join(getDirectoryPaths().getPath, 'gConfig.json');
 const defaultConfig = {
     gateways: [
         {
-            name: 'netget-gateway',
+            name: 'netget-default-gateway',
             port: 3432,
             fallbackPort: 3433,
-            status: 'stopped'
+            status: 'stopped',
+            count: 0
         
         }
     ]
