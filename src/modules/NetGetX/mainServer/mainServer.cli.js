@@ -15,7 +15,8 @@ import domainsMenu from '../Domains/domains.cli.js';
 async function mainServerMenu(x) {
     let exit = false;
     while (!exit) {
-        const mainServerName = parseMainServerName(x.nginxPath);
+        const xConfig = await loadOrCreateXConfig();
+        const mainServerName = xConfig.mainServerName;
         console.log(`Current Main Server Name: ${mainServerName}`);
         const answers = await inquirer.prompt({
             type: 'list',

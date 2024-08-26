@@ -31,14 +31,14 @@ const parseMainServerName = (configFilePath) => {
  */
 const changeServerName = async (configFilePath, newServerName) => {
     try {
-        //const fileContent = fs.readFileSync(configFilePath, 'utf8');
-        //const updatedContent = fileContent.replace(/server_name\s+([^;]+);/, ` ${newServerName};`);
-        //fs.writeFileSync(configFilePath, updatedContent);
-
         // Load xConfig to update it
         let xConfig = await loadOrCreateXConfig();
         xConfig.mainServerName = newServerName;
         await saveXConfig(xConfig);  // Save the entire updated xConfig object
+
+        //const fileContent = fs.readFileSync(configFilePath, 'utf8');
+        //const updatedContent = fileContent.replace(/server_name\s+([^;]+);/, ` ${newServerName};`);
+        //fs.writeFileSync(configFilePath, updatedContent);
 
         console.log(chalk.green(`Server name changed to: ${newServerName}`));
         return true;

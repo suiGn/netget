@@ -71,9 +71,11 @@ class Gateway {
     this.app.use(express.static(path.join(baseDir, 'ejsApp', 'public')));
     this.app.set('view engine', 'ejs');
     this.app.set('views', path.join(baseDir, 'ejsApp', 'views'));
-      if (!fs.existsSync(this.domainsConfigPath)) {
-        console.error(chalk.yellow('Domains Configuration File Not Found.',
-        '\n','Please provide a valid path @ .env Line DOMAINS_CONFIG_PATH=...'));
+      if (fs.existsSync(this.domainsConfigPath)) {
+        console.error(chalk.yellow(
+        'Domains Configuration File Not Found.',
+        '\n',
+        'Please provide a valid path @ .env Line DOMAINS_CONFIG_PATH=...'));
         //process.exit(1); // Exit if the configuration file doesn't exist
       }
 
