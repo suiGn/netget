@@ -43,7 +43,7 @@ const isDomainUsed = (configDir, domain) => {
  * @param {Object} xConfig - The user configuration object.
  */
 const createXBlock = async (domain, xConfig) => {
-    const { XBlocksAvailable, getPath, domains, mainServerName } = xConfig;
+    const { XBlocksAvailable, getPath, domains, mainServerName, xMainOutPutPort } = xConfig;
 
     if (isDomainUsed(XBlocksAvailable, domain)) {
         console.log(chalk.red(`The domain ${domain} is already used in a server block.`));
@@ -97,12 +97,12 @@ const createXBlock = async (domain, xConfig) => {
     const sslCertificateKey = `/etc/letsencrypt/live/${responses.sslDomain}/privkey.pem`;
 
     const xBlockContent = `
-        server {
+                server {
             listen 80;
-            
-            server_name ${domain};
+            listen [::]:80;
+            server_name *.${domain}
             return 301 https://$host$request_uri;
-            
+
             location /{
                 root ${responses.staticPath};
                 index index.html index.htm index.nginx-debian.html;
@@ -111,13 +111,61 @@ const createXBlock = async (domain, xConfig) => {
         }
 
             ${responses.enforceSSL ? `
-        server {
-            listen 443 ssl;
-            ssl_certificates ${sslCertificate};
-            ssl_certificate_key ${sslCertificateKey};
 
-        }
-            ` : ''}
+                server {
+                    listen 443 ssl http2;
+                    listen [::]:443 ssl http2;
+    
+                    server_name *.${domain};
+    
+                    ssl_certificate /etc/letsencrypt/live/${domain}/fullchain.pem;
+                    ssl_certificate_key /etc/letsencrypt/live/${domain}/privkey.pem;
+
+                    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    
+                    # root /home/bongi/.get/static/default;
+                    # index index.html index.htm index.nginx-debian.html;
+    
+                    location / {
+                        proxy_pass http://localhost:${xMainOutPutPort};
+                        proxy_set_header Host $host;
+    
+                        proxy_http_version                 1.1;
+                        proxy_cache_bypass                 $http_upgrade;
+    
+                        # Proxy SSL
+                        proxy_ssl_server_name              on;
+    
+                        # Proxy headers
+                        # proxy_set_header Upgrade         $http_upgrade;
+                        # proxy_set_header Connection      $connection_upgrade;
+                        # proxy_set_header Forwarded       $proxy_add_forwarded;
+                        proxy_set_header X-Real-IP         $remote_addr;
+                        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
+                        proxy_set_header X-Forwarded-Host  $host;
+                        proxy_set_header X-Forwarded-Port  $server_port;
+    
+                        # Proxy timeouts
+                        proxy_connect_timeout              60s;
+                        proxy_send_timeout                 60s;
+                    }
+    
+    
+                    # location @fallback {
+                    #    try_files $uri $uri/ =404;
+                    # } 
+       
+                       error_page 404 /404.html;
+                       location = /404.html {
+                           internal;
+                       }
+       
+                       error_page 500 502 503 504 /50x.html;
+                       location = /50x.html {
+                           internal;
+                       }       
+               }` : ''}
         `;
 
     const xBlockPath = path.join(XBlocksAvailable, `${domain}.conf`);
