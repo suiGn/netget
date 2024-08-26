@@ -103,11 +103,11 @@ const manageGateway = async (gatewayName, action) => {
                                 statusOutput += formatLine('Memory', `${(procInfo.memory / 1024 / 1024).toFixed(2)} MB`) + '\n';
                             }
                             if (additionalInfo) {
-                                statusOutput += formatLine('Used Heap Size', `${additionalInfo['Used Heap Size'].value} ${additionalInfo['Used Heap Size'].unit}`) + '\n';
-                                statusOutput += formatLine('Heap Usage', `${additionalInfo['Heap Usage'].value} ${additionalInfo['Heap Usage'].unit}`) + '\n';
-                                statusOutput += formatLine('Event Loop Latency', `${additionalInfo['Event Loop Latency'].value} ${additionalInfo['Event Loop Latency'].unit}`) + '\n';
-                                statusOutput += formatLine('Active Handles', additionalInfo['Active handles'].value) + '\n';
-                                statusOutput += formatLine('Active Requests', additionalInfo['Active requests'].value) + '\n';
+                                // statusOutput += formatLine('Used Heap Size', `${additionalInfo['Used Heap Size'].value} ${additionalInfo['Used Heap Size'].unit}`) + '\n';
+                                // statusOutput += formatLine('Heap Usage', `${additionalInfo['Heap Usage'].value} ${additionalInfo['Heap Usage'].unit}`) + '\n';
+                                // statusOutput += formatLine('Event Loop Latency', `${additionalInfo['Event Loop Latency'].value} ${additionalInfo['Event Loop Latency'].unit}`) + '\n';
+                                // statusOutput += formatLine('Active Handles', additionalInfo['Active handles'].value) + '\n';
+                                // statusOutput += formatLine('Active Requests', additionalInfo['Active requests'].value) + '\n';
                             }
                             statusOutput += formatLine('User', statusInfo.username) + '\n';
                             statusOutput += formatLine('Watching', statusInfo.watch ? 'Yes' : 'No') + '\n';
