@@ -86,6 +86,7 @@ const issueCertificateForDomain = async (domain, domainConfig) => {
 
     if (certificatesIssued) {
         if (!domainConfig.SSLCertificatesPath || !domainConfig.SSLCertificateKeyPath) {
+            domainConfig.SSLCertificateName = `${domain}`;
             domainConfig.SSLCertificatesPath = `/etc/letsencrypt/live/${domain}/fullchain.pem`;
             domainConfig.SSLCertificateKeyPath = `/etc/letsencrypt/live/${domain}/privkey.pem`;
             const xConfig = await loadOrCreateXConfig();
