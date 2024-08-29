@@ -1,7 +1,9 @@
 //netget/src/modules/NetGetX/Domains/domainsOptions.js
 import inquirer from 'inquirer';
 import chalk from 'chalk';
+import NetGetX_CLI from '../NetGetX.cli.js';
 import { loadOrCreateXConfig, saveXConfig } from '../config/xConfig.js';
+import { scanAndLogCertificates } from './SSL/SSLCertificates.js';
 
 const logDomainInfo = (domainConfig, domain) => {
     console.log(chalk.blue('\nDomain Information:'));
@@ -24,9 +26,18 @@ const displayDomains = (domains) => {
 const logAllDomainsTable = (domainsConfig) => {
     console.log(chalk.blue('\nDomains Information:'));
     const domainTable = Object.keys(domainsConfig).map(domain => ({
-        Domain: domainsConfig[domain].domain,
+        Domain: domain,
         Email: domainsConfig[domain].email,
         SSLCertificatesPath: domainsConfig[domain].SSLCertificatesPath || 'N/A'
+    }));
+    console.table(domainTable);
+};
+
+const domainsTable = (domainsConfig) => {
+    console.log(chalk.blue('\nDomains Information:'));
+    const domainTable = Object.keys(domainsConfig).map(domain => ({
+        Domain: domain,
+        SSLCertificateName: domainsConfig[domain].SSLCertificateName || 'N/A'
     }));
     console.table(domainTable);
 };
@@ -146,11 +157,41 @@ const editOrDeleteDomain = async (domain) => {
     }
 };
 
+const advanceSettings = async () => {
+    try{
+        const xConfig = await loadOrCreateXConfig();
+        const answers = await inquirer.prompt({
+            type : 'list',
+            name : 'option',
+            message : 'Select an option:',
+            choices: [
+                'Scan All SSL Certificates Issued',
+                'View Certbot Logs',
+                'Back to NetGetX Settings'
+            ]
+        });
+
+        switch (answers.option) {
+            case 'Scan All SSL Certificates Issued':
+                await scanAndLogCertificates();
+            case 'back':
+                console.log(chalk.green('Returning to NetGetX Settings...'));
+                await NetGetX_CLI(xConfig);
+        }
+    
+    } 
+    catch (error) {
+        console.error(chalk.red('An error occurred in the Advance Domain Menu:', error.message));
+    }    
+};
+
 export {
     displayDomains,
     validateDomain,
     addNewDomain,
     editOrDeleteDomain,
     logDomainInfo,
-    logAllDomainsTable
+    logAllDomainsTable,
+    domainsTable,
+    advanceSettings
 };
