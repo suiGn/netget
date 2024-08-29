@@ -4,10 +4,8 @@ import chalk from 'chalk';
 import { loadOrCreateXConfig } from '../config/xConfig.js';
 import NetGetX_CLI from '../NetGetX.cli.js';
 import SelectedDomain from './selectedDomain.cli.js';
-import { addNewDomain } from './domainsOptions.js';
-import { 
-    scanAndLogCertificates
-    } from './SSL/SSLCertificates.js';
+import { addNewDomain, advanceSettings, domainsTable } from './domainsOptions.js';
+import {scanAndLogCertificates} from './SSL/SSLCertificates.js';
 
 const domainsMenu = async () => {
     try {
@@ -18,13 +16,14 @@ const domainsMenu = async () => {
             console.log(chalk.red('No domains configured.'));
         }
 
+        domainsTable(xConfig.domains);
+        
         const options = [
             new inquirer.Separator(),
             ...domains.map(domain => ({ name: domain, value: domain })),
             new inquirer.Separator(),
             { name: 'Add New Domain', value: 'addNewDomain' },
-            { name: 'Scan All SSL Certificates Issued', value: 'showSSLCertificates' },
-            { name: 'View Certbot Logs', value: 'viewLogs' },
+            { name: 'Advance Domain Settings', value: 'advance'},
             { name: 'Back to NetGetX Settings', value: 'back' },
             { name: 'Exit', value: 'exit' }
         ];
@@ -42,15 +41,16 @@ const domainsMenu = async () => {
             case 'addNewDomain':
                 await addNewDomain();
                 break;
-            case 'showSSLCertificates':
-                await scanAndLogCertificates();
+            case 'advance':
+                await advanceSettings();
+                return;
             case 'back':
                 console.log(chalk.green('Returning to NetGetX Settings...'));
-                await NetGetX_CLI();
+                await NetGetX_CLI(xConfig);
                 return;
             case 'exit':
                 console.log(chalk.blue('Exiting NetGet...'));
-                process.exit();
+                process.exit();   
             default:
                 const domain = answer.action;
                 await SelectedDomain(domain);
